@@ -1,0 +1,63 @@
+{
+  "blocks": {
+    "header": {
+      "cart": "Panier",
+      "search": "Recherche",
+      "wishlist": "Favoris",
+      "menu": "Menu",
+      "search_title": "Recherche",
+      "search_placeholder": "Que cherchez-vous ?",
+      "no_results": "Aucun résultat",
+      "latest_products": "Derniers produits",
+      "browse_categories": "Parcourir par catégorie",
+      "browse_collections": "Explorer les collections",
+      "remove": "Supprimer"
+    },
+    "appBanner": {
+      "download_now": "Télécharger maintenant"
+    },
+    "products": {
+      "view_all": "Voir tout",
+      "no_products": "Aucun produit pour le moment"
+    },
+    "categories": {
+      "products_count": "produits",
+      "no_categories": "Aucune catégorie pour le moment"
+    },
+    "footer": {
+      "rights": "Tous droits réservés",
+      "privacy": "Politique de confidentialité",
+      "terms": "Conditions générales"
+    }
+  },
+  "pages": {
+    "product": {
+      "add_to_cart": "Ajouter au panier",
+      "added": "Ajouté",
+      "out_of_stock": "Rupture de stock",
+      "description": "Détails",
+      "related": "Vous aimerez aussi"
+    },
+    "cart": {
+      "cart_options": "Options du panier",
+      "subtotal": "Sous-total",
+      "discount": "Économies",
+      "total": "Total",
+      "checkout": "Passer à la caisse",
+      "empty_title": "Votre panier est vide",
+      "empty_subtitle": "Découvrez quelque chose que vous aimez",
+      "browse": "Explorer les collections",
+      "continue_shopping": "Continuer vos achats"
+    },
+    "order": {
+      "can_edit_or_delete_your_review_within": "Vous pouvez modifier ou supprimer votre avis dans",
+      "edit_period_ended": "La période pour modifier l'avis est terminée",
+      "delete_period_ended": "La période pour supprimer l'avis est terminée",
+      "days_since_added": "jours depuis son ajout"
+    }
+  },
+  "common": {
+    "bank_offer_sub_title_multiple": "Payez vos achats avec l'une des cartes bancaires suivantes et obtenez la réduction spécifiée",
+    "bank_offer_sub_title_single": "Payez vos achats avec la carte bancaire :bank_name et obtenez une réduction"
+  }
+}

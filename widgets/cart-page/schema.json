@@ -1,0 +1,26 @@
+{
+  "name": "صفحة السلة",
+  "settings": {
+    "show_savings": {
+      "type": "boolean",
+      "label": "إظهار التوفير",
+      "default": true
+    },
+    "continue_shopping_url": {
+      "type": "string",
+      "label": "رابط متابعة التسوق",
+      "default": "/"
+    },
+    "checkout_url": {
+      "type": "string",
+      "label": "رابط إتمام الطلب",
+      "default": "/checkout"
+    }
+  },
+  "presets": [
+    {
+      "category": "صفحات",
+      "name": "صفحة السلة"
+    }
+  ]
+}

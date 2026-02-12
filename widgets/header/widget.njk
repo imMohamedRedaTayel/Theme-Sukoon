@@ -1,0 +1,116 @@
+<!-- ===== SUKOON HEADER ===== -->
+<header
+  id="sukoon-header"
+  class="sticky top-0 z-40 transition-shadow duration-300 w-full"
+  style="background: var(--color-header); border-bottom: 1px solid var(--color-header-border);"
+>
+  <div class="container mx-auto px-12 max-lg:px-6 max-sm:px-4">
+    <div class="flex items-center justify-between h-[72px] max-sm:h-[60px]">
+
+      <!-- Logo -->
+      <a href="/" class="flex-shrink-0">
+        <img
+          src="{{ widget.data.header_logo.fileUrl }}"
+          alt="{{ widget.data.header_logo.mimetype }}"
+          class="h-12 w-auto object-cover"
+        />
+      </a>
+
+      <!-- Center Navigation (Desktop) -->
+      <nav class="hidden lg:flex items-center gap-8">
+        {% if widget.data.header_menu %}
+          {% for item in widget.data.header_menu %}
+            <a
+              href="{{ item.url | default('#') }}"
+              class="text-[14px] font-normal uppercase tracking-[0.08em] hover:opacity-70 transition-opacity duration-200"
+              style="color: var(--color-text-secondary);"
+            >
+              {{ item.title }}
+            </a>
+          {% endfor %}
+        {% endif %}
+      </nav>
+
+      <!-- Right Actions -->
+      <div class="flex items-center gap-5 max-sm:gap-3">
+
+        {% if widget.data.show_search %}
+          <!-- Search -->
+          <button
+            onclick="toggleModal('search')"
+            aria-label="{{t('blocks.header.search') | default('Search')}}"
+            class="hover:opacity-70 transition-opacity duration-200"
+            style="color: var(--color-text-secondary);"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="7"/>
+              <path d="m20 20-4-4" stroke-linecap="round"/>
+            </svg>
+          </button>
+        {% endif %}
+
+        <!-- Wishlist -->
+        {# <a
+          href="/wishlist"
+          aria-label="{{t('blocks.header.wishlist') | default('Wishlist')}}"
+          class="hidden sm:block hover:opacity-70 transition-opacity duration-200 relative"
+          style="color: var(--color-text-secondary);"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          {% if wishlist.count > 0 %}
+            <span
+              class="absolute -top-1.5 -end-1.5 w-4 h-4 rounded-full text-[10px] font-medium flex items-center justify-center text-white"
+              style="background: var(--color-accent);"
+            >
+              {{ wishlist.count }}
+            </span>
+          {% endif %}
+        </a> #}
+
+        <!-- Cart -->
+        <button
+          onclick="toggleModal('cart')"
+          aria-label="{{t('blocks.header.cart')}}"
+          class="hover:opacity-70 transition-opacity duration-200 relative"
+          style="color: var(--color-text-secondary);"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M3 6h18" stroke-linecap="round"/>
+            <path d="M16 10a4 4 0 01-8 0" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          {% if cart.totalQuantity > 0 %}
+            <span
+              class="absolute -top-1.5 -end-1.5 w-4 h-4 rounded-full text-[10px] font-medium flex items-center justify-center text-white"
+              style="background: var(--color-accent);"
+            >
+              {{ cart.totalQuantity }}
+            </span>
+          {% endif %}
+        </button>
+
+
+      {# Mobile Menu Button #}
+      <button onclick="toggleModal('sidebar')"  class="lg:hidden p-2 -ms-2 text-gray-700 hover:text-primary transition-colors">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Sidebar -->
+{% ui "sidebar.njk", menu=widget.data.header_menu %}
+
+<!-- Search Popup -->
+{% ui "search.njk" %}
+
+<!-- Cart Side Panel -->
+{% ui "cart.njk" %}
+
+

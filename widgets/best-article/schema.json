@@ -1,0 +1,12 @@
+{
+  "name": "best-article",
+  "settings": {
+    "article": {
+      "type": "article",
+      "label": {
+        "ar": "الบทความ",
+        "en": "Article"
+      }
+    }
+  }
+}

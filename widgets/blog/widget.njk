@@ -1,0 +1,73 @@
+{% set article = widget.data.articles %}
+<style>
+  .article-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 20px;
+    max-width: 420px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transition: all 0.25s ease;
+  }
+  .article-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+  }
+  .article-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .article-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #111827;
+    line-height: 1.4;
+  }
+  .article-meta {
+    font-size: 13px;
+    color: #6b7280;
+  }
+  .article-link {
+    margin-top: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2563eb;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  .article-link span {
+    transition: transform 0.2s ease;
+  }
+  .article-link:hover span {
+    transform: translateX(4px);
+  }
+  .empty-state {
+    padding: 20px;
+    text-align: center;
+    color: #9ca3af;
+    font-size: 14px;
+  }
+</style>
+{% if article %}
+  <div class="article-card">
+    <div class="article-content">
+      <h3 class="article-title">
+        {{ article.title }}
+      </h3>
+      <p class="article-meta">
+        {{ article.createdAt }}
+      </p>
+      <a href="/blog/{{ article.slug }}" class="article-link">
+        اقرأ المقال
+        <span>→</span>
+      </a>
+    </div>
+  </div>
+{% else %}
+  <div class="empty-state">
+    لا يوجد مقال
+  </div>
+{% endif %}

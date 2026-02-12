@@ -1,0 +1,9 @@
+{
+  "layout": "layout",
+  "widgets": [
+    {
+      "name": "collections-page",
+      "widget": "collections-page"
+    }
+  ]
+}

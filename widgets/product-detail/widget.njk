@@ -1,0 +1,507 @@
+{# ===== SUKOON PRODUCT DETAIL (Vanilla JS) ===== #}
+
+{% set p = context.product %}
+{% set showSku = widget.data.show_sku %}
+{% set showReviews = widget.data.show_reviews %}
+{% set relatedProducts = context.related_products %}
+{% set hasDiscount = p.pricing and p.pricing.compareAtPrice and p.pricing.compareAtPrice > p.pricing.price %}
+{% set discount = ((p.pricing.compareAtPrice - p.pricing.price) / p.pricing.compareAtPrice * 100) | round if hasDiscount else 0 %}
+{% set canPurchase = p.allowBackorder or (not p.trackQuantity) or p.quantity > 0 %}
+
+
+{# {{ context | json }} #}
+
+<section id="{{ widget.id }}" class="bg-primary py-12 max-sm:py-6">
+  <div class="container mx-auto px-12 max-lg:px-6 max-sm:px-4">
+
+    {# ===== BREADCRUMB ===== #}
+    <nav class="mb-4 md:mb-6" aria-label="breadcrumb">
+      <ol class="flex items-center gap-1.5 flex-wrap text-xs md:text-sm text-gray-400">
+        <li><a href="/" class="hover:text-primary transition-colors">{{t('common.home')}}</a></li>
+        <li><svg class="w-3 h-3 rtl:rotate-180 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></li>
+        {% if product.collections | length %}
+          <li><a href="/collections/{{ product.collections[0].slug }}" class="hover:text-primary transition-colors">{{ product.collections[0].title }}</a></li>
+        {% else %}
+          <li><a href="/products" class="hover:text-primary transition-colors">{{t('common.products')}}</a></li>
+        {% endif %}
+        <li><svg class="w-3 h-3 rtl:rotate-180 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></li>
+        <li class="text-gray-600 font-medium truncate max-w-[180px]">{{ product.title }}</li>
+      </ol>
+    </nav>
+
+  {# ===== MAIN PRODUCT GRID ===== #}
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 max-lg:gap-8"
+        x-data="productPage_{{ widget.id }}()"
+         x-init="init()"
+    >
+    
+      {# ——— Left: Image Gallery ——— #}
+      <div class="flex flex-col gap-4">
+        {# Main Image #}
+        <div id="pd-image-area" class="relative overflow-hidden rounded-xl bg-secondary aspect-square cursor-zoom-in">
+          {# Variant Image
+          <img
+            id="pd-variant-img"
+            src=""
+            alt="{{ p.title }}"
+            class="absolute inset-0 w-full h-full object-contain transition-transform duration-700"
+            style="display: none;"
+          /> #}
+
+          {# Product Images #}
+          {% if p.images and p.images | length > 0 %}
+            {% for image in p.images %}
+              <img
+                data-pd-img="{{ loop.index0 }}"
+                src="{{ image.fileUrl }}"
+                alt="{{ p.title }}"
+                class="absolute inset-0 w-full h-full object-cover transition-transform duration-700"
+                style="{% if loop.index0 != 0 %}display: none;{% endif %}"
+              />
+            {% endfor %}
+          {% else %}
+            <div id="pd-no-img" class="w-full h-full flex items-center justify-center">
+              <svg class="w-16 h-16 text-tertiary" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24">
+                <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          {% endif %}
+
+          {# Discount Badge #}
+          {% if hasDiscount %}
+            <span class="absolute top-4 start-4 px-3 py-1.5 rounded-full text-[12px] font-medium bg-red-500 text-white z-10">
+              -{{ discount }}%
+            </span>
+          {% endif %}
+        </div>
+
+        {# Thumbnails #}
+        {% if p.images and p.images | length > 1 %}
+          <div class="flex gap-3 overflow-x-auto pb-1">
+            {% for image in p.images %}
+              <button
+                data-pd-thumb="{{ loop.index0 }}"
+                onclick="pdSetImage({{ loop.index0 }})"
+                class="flex-shrink-0 w-20 h-20 max-sm:w-16 max-sm:h-16 rounded-lg overflow-hidden border-2 transition-all duration-200 {% if loop.index0 == 0 %}border-accent{% else %}border-transparent opacity-60{% endif %}"
+              >
+                <img src="{{ image.fileUrl }}" alt="" class="w-full h-full object-cover"/>
+              </button>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      {# ——— Right: Product Info ——— #}
+      <div class="flex flex-col gap-6 max-sm:gap-5 lg:py-4">
+        {# Title #}
+        <div class="flex flex-col gap-3">
+          <h1 class="text-[28px] max-sm:text-[22px] font-light leading-tight text-primary" style="letter-spacing: -0.02em;">
+            {{ p.title }}
+          </h1>
+
+          {# Rating #}
+          {% if p.totalReviews > 0 %}
+            <div class="flex items-center gap-2">
+              <div class="flex items-center gap-0.5">
+                {% for i in range(5) %}
+                  <svg class="w-4 h-4 {% if i < p.averageRating %}text-warning{% else %}text-tertiary{% endif %}" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                  </svg>
+                {% endfor %}
+              </div>
+              <span class="text-[13px] text-tertiary">({{ p.totalReviews }})</span>
+            </div>
+          {% endif %}
+
+          {# SKU #}
+          {% if showSku and p.sku %}
+            <span class="text-[12px] text-tertiary uppercase tracking-wider">SKU: {{ p.sku }}</span>
+          {% endif %}
+        </div>
+
+        {# Price #}
+        {% if p.pricing.price > 0 %}
+          <div class="flex items-baseline gap-3">
+            <span id="pd-price" class="text-[24px] max-sm:text-[20px] font-medium text-primary">
+              {{ p.pricing.price | money }}
+            </span>
+            <span id="pd-compare-price"
+                  class="text-[15px] line-through text-tertiary"
+                  style="{% if not hasDiscount %}display: none;{% endif %}">
+              {% if hasDiscount %}{{ p.pricing.compareAtPrice | money }}{% endif %}
+            </span>
+            {% if hasDiscount %}
+              <span class="px-2.5 py-1 rounded-full text-[11px] font-medium bg-red-500 text-white text-accent">
+                -{{ discount }}%
+              </span>
+            {% endif %}
+          </div>
+        {% endif %}
+
+        {# Divider #}
+        <hr class="border-0 h-px" style="background: var(--color-border);"/>
+
+        {# Variant Options #}
+        {% if p.options and p.options | length > 0 %}
+          <div class="flex flex-col gap-5">
+            {% for option in p.options %}
+              <div class="flex flex-col gap-3">
+                <span class="text-[13px] font-medium uppercase tracking-[0.06em] text-secondary" >
+                  {{ option.name }}
+                </span>
+
+                {% if option.type == 'color' %}
+                  {# Color Swatches #}
+                  <div class="flex flex-wrap gap-2">
+                    {% for value in option.values %}
+                      <button
+                        data-pd-option="{{ option._id }}"
+                        data-pd-value="{{ value._id }}"
+                        onclick="pdSelectOption('{{ option._id }}', '{{ value._id }}')"
+                        class="w-9 h-9 rounded-full border-2 transition-all duration-200 {% if loop.index0 == 0 %}border-accent scale-110{% else %}border-transparent{% endif %}"
+                        style="background: {{ value.value | default('#ccc') }}; box-shadow: inset 0 0 0 2px rgba(255,255,255,0.3);"
+                        aria-label="{{ value.label }}"
+                      ></button>
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  {# Text/Size Options #}
+                  <div class="flex flex-wrap gap-2">
+                    {% for value in option.values %}
+                      <button
+                        data-pd-option="{{ option._id }}"
+                        data-pd-value="{{ value._id }}"
+                        onclick="pdSelectOption('{{ option._id }}', '{{ value._id }}')"
+                        class="px-4 py-2 rounded-lg text-[14px] border transition-all duration-200 {% if loop.index0 == 0 %}border-accent bg-accent text-white{% else %}text-secondary{% endif %}"
+                        style="{% if loop.index0 != 0 %}border-color: var(--color-border);{% endif %}"
+                      >
+                        {{ value.label }}
+                      </button>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+
+          <hr class="border-0 h-px" style="background: var(--color-border);"/>
+        {% endif %}
+
+        {# Stock Status #}
+        <div class="flex items-center gap-2 text-sm mb-4">
+          <template x-if="!isOutOfStock">
+            <div class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+              <span class="text-green-600 font-medium text-xs">{{t('pages.product.in_stock')}}</span>
+            </div>
+          </template>
+          <template x-if="isOutOfStock">
+            <div class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+              <span class="text-red-600 font-medium text-xs">{{t('pages.product.out_of_stock')}}</span>
+            </div>
+          </template>
+        </div>
+
+        {# Description #}
+        {% if p.description %}
+          <div class="flex flex-col gap-3">
+            <h3 class="text-[14px] font-medium uppercase tracking-[0.06em] text-secondary">
+              {{ t('pages.product.description') | default('Description') }}
+            </h3>
+            <div class="text-[15px] leading-relaxed text-secondary">
+              {{ p.description | safe }}
+            </div>
+          </div>
+        {% endif %}
+
+        {# Quantity + Add to Cart #}
+        <div class="flex items-center gap-4 max-sm:flex-col max-sm:items-stretch">
+          {# Quantity #}
+          {# <div class="flex items-center rounded-lg" style="border: 1.5px solid var(--color-border);">
+            <button onclick="pdDecrement()" class="w-11 h-11 flex items-center justify-center hover:opacity-70 transition-opacity">
+              <svg class="w-4 h-4 text-secondary" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path d="M5 12h14" stroke-linecap="round"/>
+              </svg>
+            </button>
+            <span id="pd-qty" class="w-12 text-center text-[15px] font-medium text-primary">1</span>
+            <button onclick="pdIncrement()" class="w-11 h-11 flex items-center justify-center hover:opacity-70 transition-opacity">
+              <svg class="w-4 h-4 text-secondary" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path d="M12 5v14M5 12h14" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div> #}
+
+          {# Quantity #}
+          <div class="flex items-center border border-gray-200 rounded-xl shrink-0">
+            <button type="button" @click="qty > 1 && qty--" :disabled="qty <= 1"
+                    class="w-10 h-10 md:w-11 md:h-11 flex items-center justify-center text-gray-500 hover:bg-gray-50 transition-colors disabled:opacity-30">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M20 12H4"/></svg>
+            </button>
+            <span class="w-10 h-10 md:w-11 md:h-11 flex items-center justify-center text-sm font-bold border-x border-gray-200" x-text="qty">1</span>
+            <button type="button" @click="qty < 99 && qty++"
+                    class="w-10 h-10 md:w-11 md:h-11 flex items-center justify-center text-gray-500 hover:bg-gray-50 transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+            </button>
+          </div>
+
+          {# Add to Cart Button #}
+          {# Add to Cart #}
+          <button type="button" @click="addToCart()" :disabled="isOutOfStock || addingToCart"
+                  class="flex-1 h-10 md:h-11 rounded-xl font-semibold text-sm transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                  :class="addedSuccess ? 'bg-green-500 text-white' : 'bg-zinc-500 text-white hover:bg-primary-dark'">
+            <template x-if="addingToCart">
+              <span class="flex items-center justify-center gap-2">
+                <svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
+                {{t('common.loading')}}
+              </span>
+            </template>
+            <template x-if="addedSuccess && !addingToCart">
+              <span class="flex items-center justify-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                {{t('pages.product.added')}}
+              </span>
+            </template>
+            <template x-if="!addingToCart && !addedSuccess">
+              <span class="flex items-center justify-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                {{t('pages.product.add_to_cart')}}
+              </span>
+            </template>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    {# ——— Ratings Breakdown ——— #}
+    {% if p.totalReviews > 0 and p.ratings %}
+      <div class="mt-20 max-sm:mt-14">
+        <h2 class="text-center mb-12 max-sm:mb-8">{{ t('pages.product.reviews') | default('Customer Reviews') }}</h2>
+
+        <div class="max-w-lg mx-auto">
+          {# Average #}
+          <div class="flex items-center gap-4 mb-8">
+            <span class="text-[48px] font-light text-primary leading-none">{{ p.averageRating }}</span>
+            <div class="flex flex-col gap-1">
+              <div class="flex items-center gap-0.5">
+                {% for i in range(5) %}
+                  <svg class="w-5 h-5 {% if i < p.averageRating %}text-warning{% else %}text-tertiary{% endif %}" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                  </svg>
+                {% endfor %}
+              </div>
+              <span class="text-[13px] text-tertiary">
+                {{ p.totalReviews }} {{ t('pages.product.reviews_count') | default('reviews') }}
+              </span>
+            </div>
+          </div>
+
+          {# Rating Bars #}
+          <div class="flex flex-col gap-3">
+            {% for star in [5, 4, 3, 2, 1] %}
+              {% set count = p.ratings[star | string] | default(0) %}
+              {% set percent = (count / p.totalReviews * 100) | round if p.totalReviews > 0 else 0 %}
+              <div class="flex items-center gap-3">
+                <span class="text-[13px] text-secondary w-8 text-end">{{ star }}</span>
+                <svg class="w-4 h-4 text-warning flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+                <div class="flex-1 h-2 rounded-full overflow-hidden" style="background: var(--color-bg-secondary);">
+                  <div class="h-full rounded-full transition-all duration-700"
+                       style="width: {{ percent }}%; background: var(--color-warning);"></div>
+                </div>
+                <span class="text-[12px] text-tertiary w-8">{{ count }}</span>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
+    {# ——— Related Products ——— #}
+    {% if relatedProducts and relatedProducts | length > 0 %}
+      <div class="mt-20 max-sm:mt-14">
+        <h2 class="text-center mb-12 max-sm:mb-8">{{ t('pages.product.related_products') | default('You may also like') }}</h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-sm:gap-4">
+          {% for rp in relatedProducts %}
+            <div class="reveal">
+              {% ui "product-card.njk", product=rp %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+
+  </div>
+
+  {# ===== JAVASCRIPT ===== #}
+  <script>
+    (function() {
+      var wid = '{{ widget.id }}';
+      var container = null;
+
+      window['productPage_' + wid] = function() {
+        return {
+          qty: 1,
+          activeImageIndex: 0,
+          addingToCart: false,
+          addedSuccess: false,
+          variantSelected: false,
+          selectedOptions: {},
+          selectedLabels: {},
+          zooming: false,
+          zoomX: 50,
+          zoomY: 50,
+          currentVariantId: null,
+          currentVariantQuantity: {{ context.product.quantity | default(0) }},
+          currentPrice: '{{ context.product.pricing.price | money }}',
+          currentComparePrice: {% if hasDiscount %}'{{ context.product.pricing.compareAtPrice | money }}'{% else %}null{% endif %},
+          discountPercent: {% if hasDiscount %}{{ (((context.product.pricing.compareAtPrice - context.product.pricing.price) / context.product.pricing.compareAtPrice) * 100) | round }}{% else %}0{% endif %},
+          isOutOfStock: {{ 'true' if not canPurchase else 'false' }},
+
+          variants: [
+            {% for variant in context.product.variants %}
+            {
+              id: '{{ variant._id }}',
+              price: {{ variant.pricing.price | default(0) }},
+              priceFormatted: '{{ variant.pricing.price | money }}',
+              compareAtPrice: {{ variant.pricing.compareAtPrice | default(0) }},
+              compareAtPriceFormatted: '{{ variant.pricing.compareAtPrice | money }}',
+              quantity: {{ variant.quantity | default(0) }},
+              trackQuantity: {{ 'true' if variant.trackQuantity else 'false' }},
+              allowBackorder: {{ 'true' if variant.allowBackorder else 'false' }},
+              options: {{ variant.options | dump | safe }}
+            }{% if not loop.last %},{% endif %}
+            {% endfor %}
+          ],
+
+          init() {
+            container = document.getElementById('product-' + wid);
+            var self = this;
+
+            var thumbsSwiper = null;
+            {% if context.product.images | length > 1 %}
+              thumbsSwiper = new Swiper(container.querySelector('.product-thumbs'), {
+                spaceBetween: 8,
+                slidesPerView: 4,
+                freeMode: true,
+                watchSlidesProgress: true,
+                breakpoints: {
+                  640: { slidesPerView: 5 },
+                  1024: { slidesPerView: 5 }
+                }
+              });
+            {% endif %}
+
+            new Swiper(container.querySelector('.product-main'), {
+              spaceBetween: 0,
+              {% if context.product.images | length > 1 %}
+              thumbs: { swiper: thumbsSwiper },
+              navigation: {
+                nextEl: container.querySelector('.swiper-btn-next-main'),
+                prevEl: container.querySelector('.swiper-btn-prev-main')
+              },
+              {% endif %}
+              on: {
+                slideChange: function() {
+                  self.activeImageIndex = this.activeIndex;
+                }
+              }
+            });
+
+            {% if widget.data.image_zoom %}
+              GLightbox({
+                selector: '#product-' + wid + ' .product-gallery-item',
+                touchNavigation: true,
+                loop: true,
+                closeOnOutsideClick: true
+              });
+
+              GLightbox({
+                selector: '#product-' + wid + ' .review-image-item',
+                touchNavigation: true,
+                loop: true,
+                closeOnOutsideClick: true
+              });
+            {% endif %}
+
+            {% for option in context.product.options %}
+              {% if option.values | length > 0 %}
+                this.selectedOptions['{{ option.name }}'] = '{{ option.values[0]._id }}';
+                this.selectedLabels['{{ option.name }}'] = '{{ option.values[0].label }}';
+              {% endif %}
+            {% endfor %}
+
+            {% if context.product.options | length > 0 %}
+              this.variantSelected = true;
+              this.matchVariant();
+            {% endif %}
+          },
+
+          selectOption(name, valueId, label) {
+            this.selectedOptions[name] = valueId;
+            this.selectedLabels[name] = label;
+            this.variantSelected = true;
+            this.matchVariant();
+          },
+
+          matchVariant() {
+            var self = this;
+            var selectedIds = Object.values(self.selectedOptions);
+
+            var matched = this.variants.find(function(v) {
+              if (!v.options || !v.options.length) return false;
+              if (v.options.length !== selectedIds.length) return false;
+              for (var i = 0; i < selectedIds.length; i++) {
+                if (v.options.indexOf(selectedIds[i]) === -1) return false;
+              }
+              return true;
+            });
+
+            if (matched) {
+              this.currentVariantId = matched.id;
+              this.currentPrice = matched.priceFormatted;
+              this.currentVariantQuantity = matched.quantity;
+
+              if (matched.trackQuantity && !matched.allowBackorder) {
+                this.isOutOfStock = matched.quantity <= 0;
+              } else {
+                this.isOutOfStock = false;
+              }
+
+              if (matched.compareAtPrice && matched.compareAtPrice > matched.price) {
+                this.currentComparePrice = matched.compareAtPriceFormatted;
+                this.discountPercent = Math.round(((matched.compareAtPrice - matched.price) / matched.compareAtPrice) * 100);
+              } else {
+                this.currentComparePrice = null;
+                this.discountPercent = 0;
+              }
+            }
+          },
+
+          async addToCart() {
+            if (this.isOutOfStock || this.addingToCart) return;
+            this.addingToCart = true;
+            try {
+              var optionIds = Object.values(this.selectedOptions);
+              await Qumra.cart.add('{{ context.product._id }}', this.qty, optionIds.length ? optionIds : null);
+              this.addedSuccess = true;
+              setTimeout(() => { this.addedSuccess = false; }, 2000);
+            } catch (err) {
+              console.error('Add to cart error:', err);
+            } finally {
+              this.addingToCart = false;
+            }
+          },
+
+          copyLink() {
+            if (navigator.clipboard) {
+              navigator.clipboard.writeText(window.location.href);
+            }
+          }
+        };
+      };
+    })();
+  </script>
+</section>

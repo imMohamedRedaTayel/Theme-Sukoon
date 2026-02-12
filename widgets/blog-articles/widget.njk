@@ -1,0 +1,128 @@
+{% set articles = widget.data.articles %}
+<style>
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+  }
+  .blog-card {
+    background: #ffffff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+  .blog-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 55px rgba(0, 0, 0, 0.14);
+  }
+  .blog-image {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: #f3f4f6;
+  }
+  .blog-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .blog-card:hover .blog-image img {
+    transform: scale(1.05);
+  }
+  .blog-body {
+    padding: 18px 20px 22px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 12px;
+  }
+  .blog-title {
+    font-size: 17px;
+    font-weight: 800;
+    color: #111827;
+    line-height: 1.4;
+  }
+  .blog-excerpt {
+    font-size: 14px;
+    color: #4b5563;
+    line-height: 1.7;
+    max-height: 70px;
+    overflow: hidden;
+  }
+  .blog-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: auto;
+  }
+  .blog-meta span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .blog-link {
+    margin-top: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #2563eb, #4f46e5);
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.25s ease;
+  }
+  .blog-link:hover {
+    opacity: .9;
+    transform: translateY(-1px);
+  }
+  .empty-state {
+    padding: 40px;
+    text-align: center;
+    color: #9ca3af;
+    font-size: 15px;
+    background: #f9fafb;
+    border-radius: 16px;
+  }
+</style>
+{% if articles and articles.length %}
+  <div class="blog-grid">
+    {% for article in articles %}
+      <article class="blog-card">
+        {% if article.image and article.image.fileUrl %}
+          <div class="blog-image">
+            <img src="{{ article.image.fileUrl }}" alt="{{ article.title }}"></div>
+          {% endif %}
+          <div class="blog-body">
+            <h3 class="blog-title">
+              {{ article.title }}
+            </h3>
+            <p class="blog-excerpt">
+              {{ article.content | striptags | truncate(130, true, '...') }}
+            </p>
+            <div class="blog-meta">
+              <span>👁 {{ article.views }}</span>
+              <span>📅 {{ article.createdAt }}</span>
+            </div>
+            <a href="/blog/{{ article.slug }}" class="blog-link">
+              اقرأ المقال
+              <span>→</span>
+            </a>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="empty-state">
+      لا توجد مقالات حالياً 📭
+    </div>
+  {% endif %}

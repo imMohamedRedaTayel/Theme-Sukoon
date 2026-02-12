@@ -1,0 +1,67 @@
+{
+  "layout": "layout",
+  "widgets": [
+    {
+      "name": "hero-section",
+      "widget": "hero-section"
+    },
+    {
+      "name": "product-grid",
+      "widget": "product-grid"
+    },
+    {
+      "name": "collections-section",
+      "widget": "collections-section"
+    },
+    {
+      "name": "testimonials-reviews",
+      "widget": "testimonials-reviews",
+      "blocks": [
+        {
+          "block": "review",
+          "name": "review1",
+          "settings": {
+            "reviewer_name": "سارة أحمد",
+            "reviewer_role": "عميلة دائمة",
+            "review_text": "تجربة شراء ممتازة! المنتجات بجودة عالية والتوصيل كان سريع جداً. أنصح الكل يجرب.",
+            "rating": 5,
+            "avatar": ""
+          }
+        },
+        {
+          "block": "review",
+          "name": "review2",
+          "settings": {
+            "reviewer_name": "محمد علي",
+            "reviewer_role": "عميل جديد",
+            "review_text": "أول مرة أشتري من المتجر وكانت تجربة رائعة. الخامات ممتازة والمقاسات مظبوطة.",
+            "rating": 4,
+            "avatar": ""
+          }
+        },
+        {
+          "block": "review",
+          "name": "review3",
+          "settings": {
+            "reviewer_name": "نورة خالد",
+            "reviewer_role": "مصممة أزياء",
+            "review_text": "التصاميم بسيطة وأنيقة. بحب الستايل الهادي بتاع المتجر ده. هرجع أشتري تاني أكيد!",
+            "rating": 5,
+            "avatar": ""
+          }
+        },
+        {
+          "block": "review",
+          "name": "review4",
+          "settings": {
+            "reviewer_name": "أحمد حسن",
+            "reviewer_role": "عميل",
+            "review_text": "خدمة العملاء ممتازة وبيردوا بسرعة. المنتجات زي ما في الصور بالظبط.",
+            "rating": 5,
+            "avatar": ""
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,973 @@
+/* ===== SUKOON COLOR SYSTEM ===== */
+:root {
+    /* Primary Palette */
+    --color-bg-primary: #FAFAF8;
+    --color-bg-secondary: #F0EDE5;
+    --color-bg-tertiary: #E3DFD5;
+    --color-surface: #FFFFFF;
+
+    /* Section Alternation */
+    --color-section-a: #FFFFFF;
+    --color-section-b: #F7F5F0;
+
+    /* Header */
+    --color-header: #FFFFFF;
+    --color-header-text: #2C2C2C;
+    --color-header-border: #EEECE7;
+
+    /* Footer */
+    --color-footer: #292826;
+    --color-footer-text: #C8C5BE;
+    --color-footer-text-muted: #7A7872;
+    --color-footer-border: #3D3B38;
+    --color-footer-heading: #F0EDE5;
+
+    /* Text */
+    --color-text-primary: #2C2C2C;
+    --color-text-secondary: #6B6B6B;
+    --color-text-tertiary: #9B9B9B;
+
+    /* Accent — Foggy Blue */
+    --color-accent: #8FA7B0;
+    --color-accent-hover: #7A929B;
+    --color-accent-light: #E8EFF2;
+
+    /* Borders */
+    --color-border: #E5E2DC;
+    --color-border-hover: #D1CEC7;
+    --color-border-focus: #8FA7B0;
+
+    /* Status */
+    --color-success: #7FB69E;
+    --color-error: #C4726C;
+    --color-warning: #C9A96E;
+
+    /* Typography — Font Stacks */
+    --font-heading-ar: 'IBM Plex Sans Arabic', system-ui, -apple-system, sans-serif;
+    --font-heading-en: 'DM Sans', system-ui, -apple-system, sans-serif;
+    --font-body-ar: 'IBM Plex Sans Arabic', system-ui, -apple-system, sans-serif;
+    --font-body-en: 'DM Sans', system-ui, -apple-system, sans-serif;
+
+    /* Spacing — 8px base grid */
+    --space-1: 4px;     /* Inline icon gaps */
+    --space-2: 8px;     /* Tight padding (tags, badges) */
+    --space-3: 12px;    /* Inner component padding */
+    --space-4: 16px;    /* Default component padding */
+    --space-5: 24px;    /* Card padding */
+    --space-6: 32px;    /* Section inner padding */
+    --space-7: 48px;    /* Between related sections */
+    --space-8: 64px;    /* Section vertical padding — Sukoon minimum */
+    --space-9: 80px;    /* Large section gaps */
+    --space-10: 120px;  /* Hero/CTA vertical padding */
+
+    /* Border Radius — default: --radius-md (8px) */
+    --radius-none: 0px;     /* Full-bleed sections, images */
+    --radius-sm: 4px;       /* Tags, badges, small buttons */
+    --radius-md: 8px;       /* Cards, inputs, standard buttons */
+    --radius-lg: 12px;      /* Modals, large cards */
+    --radius-xl: 16px;      /* Featured cards, hero sections */
+    --radius-full: 9999px;  /* Pills, avatars */
+
+    /* Shadows — barely noticeable, felt not seen */
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);     /* Subtle card elevation */
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.06);     /* Elevated cards, dropdowns */
+    --shadow-lg: 0 8px 30px rgba(0,0,0,0.08);     /* Modals, floating elements */
+    --shadow-focus: 0 0 0 3px rgba(143,167,176,0.25); /* Focus ring — accent-based */
+
+    /* Animation & Motion — slow and gentle, never rushed */
+    --transition-fast: 200ms ease;
+    --transition-base: 400ms ease-in-out;
+    --transition-slow: 700ms ease-in-out;
+    --transition-glacial: 1200ms cubic-bezier(0.25, 0, 0.25, 1);
+}
+
+/* ===== DARK MODE (Optional) ===== */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-bg-primary: #1A1A18;
+        --color-bg-secondary: #222220;
+        --color-bg-tertiary: #2A2A27;
+        --color-surface: #2C2C2A;
+        --color-text-primary: #E8E6E1;
+        --color-text-secondary: #A8A8A3;
+        --color-text-tertiary: #6B6B66;
+        --color-accent: #9DBAC3;
+        --color-accent-hover: #B0CAD2;
+        --color-accent-light: #1E2A2E;
+        --color-border: #333330;
+        --color-border-hover: #44443F;
+        --color-border-focus: #9DBAC3;
+
+        --color-section-a: #1A1A18;
+        --color-section-b: #222220;
+        --color-header: #1A1A18;
+        --color-header-text: #E8E6E1;
+        --color-header-border: #333330;
+        --color-footer: #111110;
+        --color-footer-text: #A8A8A3;
+        --color-footer-text-muted: #6B6B66;
+        --color-footer-border: #2A2A27;
+        --color-footer-heading: #E8E6E1;
+    }
+}
+
+/* ===== SECTION ALTERNATION ===== */
+.section-a { background: var(--color-section-a); }
+.section-b { background: var(--color-section-b); }
+
+/* ===== RESET ===== */
+/* Tailwind v4 preflight handles the full reset. */
+/* We only keep x-cloak and base body styles. */
+
+/* Alpine.js — hide elements until initialized */
+[x-cloak] {
+    display: none !important;
+}
+
+body {
+    font-family: var(--font-body-ar);
+    background: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    line-height: 1.75;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    font-size: 16px;
+}
+
+html[lang="en"] body,
+html[dir="ltr"] body {
+    font-family: var(--font-body-en);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* ===== SUKOON TYPOGRAPHY SYSTEM ===== */
+
+/* --- Headings --- */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading-ar);
+    color: var(--color-text-primary);
+}
+
+html[lang="en"] h1, html[lang="en"] h2, html[lang="en"] h3,
+html[lang="en"] h4, html[lang="en"] h5, html[lang="en"] h6,
+html[dir="ltr"] h1, html[dir="ltr"] h2, html[dir="ltr"] h3,
+html[dir="ltr"] h4, html[dir="ltr"] h5, html[dir="ltr"] h6 {
+    font-family: var(--font-heading-en);
+}
+
+/* H1 — Page Title */
+h1 {
+    font-size: 3rem;
+    font-weight: 300;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+}
+
+/* H2 — Section Title */
+h2 {
+    font-size: 2.25rem;
+    font-weight: 300;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+}
+
+/* H3 — Card Title */
+h3 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+}
+
+/* H4 — Subtitle */
+h4 {
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0;
+}
+
+/* --- Body Variants --- */
+.text-body-lg {
+    font-size: 1.125rem;
+    font-weight: 300;
+    line-height: 1.8;
+    letter-spacing: 0.01em;
+}
+
+.text-body {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.75;
+    letter-spacing: 0.01em;
+}
+
+.text-body-sm {
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.6;
+    letter-spacing: 0.015em;
+    color: var(--color-text-secondary);
+}
+
+.text-caption {
+    font-size: 0.75rem;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0.03em;
+    color: var(--color-text-tertiary);
+}
+
+/* --- Price --- */
+.text-price {
+    font-size: 1.375rem;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: 0;
+    font-family: var(--font-heading-ar);
+}
+
+.text-price-sale {
+    font-size: 1.375rem;
+    font-weight: 300;
+    line-height: 1.2;
+    letter-spacing: 0;
+    text-decoration: line-through;
+    color: var(--color-text-tertiary);
+}
+
+/* --- Typography Rules --- */
+p {
+    max-width: 65ch;
+    margin-bottom: 1.5em;
+}
+
+p:last-child {
+    margin-bottom: 0;
+}
+
+/* --- Mobile Type Scale --- */
+@media (max-width: 768px) {
+    body { font-size: 15px; }
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.625rem; }
+    h3 { font-size: 1.25rem; }
+    h4 { font-size: 1rem; }
+    .text-body-lg { font-size: 1rem; }
+    .text-body { font-size: 0.9375rem; }
+    .text-body-sm { font-size: 0.8125rem; }
+    .text-caption { font-size: 0.6875rem; }
+    .text-price, .text-price-sale { font-size: 1.125rem; }
+}
+
+/* ===== SUKOON MOTION SYSTEM ===== */
+
+/* Scroll-triggered reveal — add .reveal to elements */
+.reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity var(--transition-slow), transform var(--transition-slow);
+}
+
+.reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stagger delay for list items */
+.reveal-stagger > *:nth-child(1) { transition-delay: 0ms; }
+.reveal-stagger > *:nth-child(2) { transition-delay: 80ms; }
+.reveal-stagger > *:nth-child(3) { transition-delay: 160ms; }
+.reveal-stagger > *:nth-child(4) { transition-delay: 240ms; }
+.reveal-stagger > *:nth-child(5) { transition-delay: 320ms; }
+.reveal-stagger > *:nth-child(6) { transition-delay: 400ms; }
+.reveal-stagger > *:nth-child(7) { transition-delay: 480ms; }
+.reveal-stagger > *:nth-child(8) { transition-delay: 560ms; }
+
+/* Image fade-in on load */
+.img-fade {
+    opacity: 0;
+    transition: opacity 600ms ease;
+}
+
+.img-fade.is-loaded {
+    opacity: 1;
+}
+
+/* Hover — subtle opacity, NO scale on cards */
+.hover-fade {
+    transition: opacity var(--transition-fast);
+}
+
+.hover-fade:hover {
+    opacity: 0.85;
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .reveal {
+        opacity: 1;
+        transform: none;
+    }
+
+    .img-fade {
+        opacity: 1;
+    }
+}
+
+/* ===== SUKOON BUTTON SYSTEM ===== */
+
+/* Base — shared by all buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 300ms ease;
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Primary */
+.btn-primary {
+    background: var(--color-accent);
+    color: #FFFFFF;
+    border: none;
+    padding: 14px 32px;
+}
+
+.btn-primary:hover {
+    background: var(--color-accent-hover);
+    transform: translateY(-1px);
+}
+
+.btn-primary:active {
+    background: #6B8790;
+    transform: translateY(0);
+}
+
+/* Secondary */
+.btn-secondary {
+    background: transparent;
+    color: var(--color-text-primary);
+    border: 1.5px solid var(--color-border);
+    padding: 14px 32px;
+}
+
+.btn-secondary:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+.btn-secondary:active {
+    border-color: var(--color-accent-hover);
+    color: var(--color-accent-hover);
+}
+
+/* Ghost */
+.btn-ghost {
+    background: transparent;
+    border: none;
+    color: var(--color-accent);
+    padding: 8px 4px;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.btn-ghost:hover {
+    text-underline-offset: 2px;
+}
+
+.btn-ghost:active {
+    color: var(--color-accent-hover);
+}
+
+/* ===== SUKOON FORM & INPUT STYLES ===== */
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="search"],
+input[type="tel"],
+input[type="url"],
+textarea,
+select,
+.input {
+    width: 100%;
+    background: var(--color-surface);
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    font-family: inherit;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--color-text-primary);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    outline: none;
+}
+
+input::placeholder,
+textarea::placeholder,
+.input::placeholder {
+    color: var(--color-text-tertiary);
+}
+
+input:focus,
+textarea:focus,
+select:focus,
+.input:focus {
+    border-color: var(--color-border-focus);
+    box-shadow: var(--shadow-focus);
+}
+
+/* Error state */
+input.is-error,
+textarea.is-error,
+select.is-error,
+.input.is-error {
+    border-color: var(--color-error);
+    box-shadow: 0 0 0 3px rgba(196,114,108,0.15);
+}
+
+/* Label */
+label,
+.label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-2);
+}
+
+/* Helper / Error text */
+.input-helper {
+    font-size: 13px;
+    color: var(--color-text-tertiary);
+    margin-top: var(--space-1);
+}
+
+.input-error {
+    font-size: 13px;
+    color: var(--color-error);
+    margin-top: var(--space-1);
+}
+
+/* ===== SUKOON ICON SYSTEM ===== */
+/* Line/outline icons, 1.5px stroke — Phosphor Icons (Light) */
+
+.icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: currentColor;
+    flex-shrink: 0;
+}
+
+.icon svg {
+    stroke-width: 1.5;
+}
+
+.icon-sm { width: 16px; height: 16px; }      /* Inline */
+.icon-md { width: 20px; height: 20px; }      /* Default */
+.icon-lg { width: 24px; height: 24px; }      /* Navigation */
+
+/* ===== SUKOON IMAGE TREATMENT ===== */
+
+/* Aspect Ratios */
+.img-product { aspect-ratio: 4 / 5; }        /* Product — portrait */
+.img-hero { aspect-ratio: 16 / 9; }          /* Hero — wide */
+.img-category { aspect-ratio: 1 / 1; }       /* Category — square */
+
+/* Base image style */
+.img-product,
+.img-hero,
+.img-category,
+.img-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.9);
+}
+
+/* Image in cards — rounded */
+.img-card {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+/* Image standalone — no radius */
+.img-full {
+    border-radius: var(--radius-none);
+    overflow: hidden;
+}
+
+/* Hover — slow subtle zoom */
+.img-zoom {
+    overflow: hidden;
+}
+
+.img-zoom img {
+    transition: transform var(--transition-slow);
+}
+
+.img-zoom:hover img {
+    transform: scale(1.02);
+}
+
+/* Placeholder — shown before image loads */
+.img-placeholder {
+    background: var(--color-bg-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Blur-up loading technique */
+.img-blur {
+    filter: blur(15px) saturate(0.9);
+    transform: scale(1.05);
+    transition: filter var(--transition-slow), transform var(--transition-slow);
+}
+
+.img-blur.is-loaded {
+    filter: blur(0) saturate(0.9);
+    transform: scale(1);
+}
+
+
+
+
+
+
+
+
+
+
+/* Qamar Theme - Stylesheet */
+
+/* ===== Base Styles ===== */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  
+  .active {
+    color: var(--color-secondary);
+  }
+  
+  .removing {
+    transform: translateX(-100%);
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+  
+  /* ===== Line Clamp ===== */
+  .line-clamp-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  /* ===== Button Styles ===== */
+  .btn-primary {
+    background-color: var(--color-primary);
+    color: #fff;
+    padding: 0.625rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  
+  .btn-primary:hover {
+    background-color: var(--color-primary-dark);
+  }
+  
+  .btn-secondary {
+    background-color: transparent;
+    color: var(--color-primary);
+    border: 1.5px solid var(--color-primary);
+    padding: 0.625rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  
+  .btn-secondary:hover {
+    background-color: var(--color-primary);
+    color: #fff;
+  }
+  
+  /* ===== Scrollbar ===== */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+  }
+  
+  /* Hide scrollbar but keep scroll */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-secondary);
+  }
+  
+  /* ===== Swiper Custom Styles ===== */
+  .swiper-pagination-bullet {
+    background: var(--color-primary) !important;
+    opacity: 0.4;
+  }
+  
+  .swiper-pagination-bullet-active {
+    opacity: 1 !important;
+  }
+  
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: var(--color-primary) !important;
+    background: rgba(255, 255, 255, 0.9);
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .swiper-button-next::after,
+  .swiper-button-prev::after {
+    font-size: 16px !important;
+    font-weight: bold;
+  }
+  
+  /* Swiper equal-height slides */
+  .swiper-outside-pagination .swiper-wrapper {
+    align-items: stretch;
+  }
+  .swiper-outside-pagination .swiper-slide {
+    height: auto;
+  }
+  
+  /* Pagination outside slides (for product sliders) */
+  .swiper-outside-pagination {
+    overflow-x: clip;
+    overflow-y: visible;
+  }
+  
+  .swiper-outside-pagination > .swiper-pagination {
+    position: relative !important;
+    bottom: auto !important;
+    margin-top: 1.5rem;
+  }
+  
+  /* ===== Toast Notifications ===== */
+  .toast {
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.5rem;
+    color: #fff;
+    font-size: 0.875rem;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    pointer-events: auto;
+    animation: toastIn 0.3s ease;
+  }
+  
+  .toast-success { background-color: #10b981; }
+  .toast-error { background-color: #ef4444; }
+  .toast-warning { background-color: #f59e0b; }
+  .toast-info { background-color: var(--color-primary); }
+  
+  @keyframes toastIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* ===== Overlay ===== */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 40;
+    backdrop-filter: blur(2px);
+  }
+  
+  /* ===== Drawer ===== */
+  .drawer {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 400px;
+    background: #fff;
+    z-index: 50;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+  }
+  
+  html[dir="rtl"] .drawer-start {
+    right: 0;
+    transform: translateX(100%);
+  }
+  
+  html[dir="ltr"] .drawer-start {
+    left: 0;
+    transform: translateX(-100%);
+  }
+  
+  html[dir="rtl"] .drawer-end {
+    left: 0;
+    transform: translateX(-100%);
+  }
+  
+  html[dir="ltr"] .drawer-end {
+    right: 0;
+    transform: translateX(100%);
+  }
+  
+  .drawer.open {
+    transform: translateX(0) !important;
+  }
+  
+  /* ===== Animations ===== */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .animate-fade-in { animation: fadeIn 0.3s ease; }
+  .animate-slide-up { animation: slideUp 0.4s ease; }
+  
+  /* ===== Product Card ===== */
+  .product-card {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .product-card:hover {
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  }
+  
+  /* Image hover zoom (only when .hover-zoom is present) */
+  .product-card.hover-zoom .card-img img {
+    transition: transform 0.45s ease;
+  }
+  .product-card.hover-zoom:hover .card-img img {
+    transform: scale(1.06);
+  }
+  
+  /* Wishlist button on card */
+  .product-card .wishlist-btn {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  .product-card:hover .wishlist-btn {
+    opacity: 1;
+  }
+  @media (max-width: 768px) {
+    .product-card .wishlist-btn {
+      opacity: 1;
+    }
+  }
+  
+  
+  /* ===== Section Header ===== */
+  .section-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .section-header h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+  }
+  
+  .section-header p {
+    color: var(--color-text-secondary);
+    font-size: 1rem;
+  }
+  
+  /* ===== Loading & Success Animations ===== */
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  .animate-spin {
+    animation: spin 0.8s linear infinite;
+  }
+  
+  @keyframes checkPop {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  
+  .animate-check {
+    animation: checkPop 0.4s ease;
+  }
+  
+  /* ===== Cart Item Enter ===== */
+  @keyframes cartItemEnter {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .cart-item-enter {
+    animation: cartItemEnter 0.3s ease-out;
+  }
+  
+  /* ===== Rating Stars ===== */
+  .stars {
+    display: inline-flex;
+    gap: 2px;
+  }
+  
+  .stars .star-filled { color: #fbbf24; }
+  .stars .star-empty { color: var(--color-border); }
+  
+  /* ===== Price Range Slider ===== */
+  .price-slider {
+    position: relative;
+    height: 28px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .price-slider .slider-track {
+    position: absolute;
+    width: 100%;
+    height: 5px;
+    background: #e5e7eb;
+    border-radius: 9999px;
+  }
+  
+  .price-slider .slider-range {
+    position: absolute;
+    height: 5px;
+    background: var(--color-primary);
+    border-radius: 9999px;
+  }
+  
+  .price-slider input[type="range"] {
+    position: absolute;
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    pointer-events: none;
+    margin: 0;
+    padding: 0;
+    height: 5px;
+    outline: none;
+  }
+  
+  .price-slider input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    pointer-events: auto;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: white;
+    border: 2.5px solid var(--color-primary);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  
+  .price-slider input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
+  }
+  
+  .price-slider input[type="range"]::-webkit-slider-thumb:active {
+    transform: scale(1.2);
+  }
+  
+  .price-slider input[type="range"]::-moz-range-thumb {
+    pointer-events: auto;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: white;
+    border: 2.5px solid var(--color-primary);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+  }
+  
+  .price-slider input[type="range"]::-moz-range-track {
+    background: transparent;
+    border: none;
+  }
+  

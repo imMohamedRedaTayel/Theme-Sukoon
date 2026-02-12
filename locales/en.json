@@ -1,0 +1,169 @@
+{
+  "common": {
+    "home": "Home",
+    "products": "Products",
+    "categories": "Categories",
+    "search": "Search",
+    "cart": "Cart",
+    "view_all": "View All",
+    "close": "Close",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "success": "Operation successful",
+    "continue": "Continue",
+    "back": "Back",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "load_more": "Load More",
+    "no_results": "No results found",
+    "on_sale": "Sale",
+    "new": "New",
+    "best_seller": "Best Seller",
+    "share": "Share",
+    "menu": "Menu",
+    "add_to_cart": "Add to Cart",
+    "remove": "Remove",
+    "continue_shopping": "Continue Shopping"
+  },
+  "blocks": {
+    "header": {
+      "cart": "Cart",
+      "search": "Search",
+      "wishlist": "Wishlist",
+      "menu": "Menu",
+      "search_title": "Search",
+      "search_placeholder": "What are you looking for?",
+      "no_results": "No results found",
+      "latest_products": "Latest products",
+      "browse_categories": "Browse by category",
+      "browse_collections": "Explore collections",
+      "remove": "Remove"
+    },
+    "appBanner": {
+      "download_now": "Download now"
+    },
+    "products": {
+      "view_all": "View all",
+      "no_products": "No products yet"
+    },
+    "categories": {
+      "products_count": "products",
+      "no_categories": "No categories yet",
+      "no_categories_desc": "Collections will appear here once added."
+    },
+    "testimonials": {
+      "no_reviews": "No reviews yet"
+    },
+    "footer": {
+      "rights": "All rights reserved",
+      "privacy": "Privacy Policy",
+      "terms": "Terms & Conditions"
+    }
+  },
+  "pages": {
+    "collections": {
+      "title": "Collections",
+      "count": "collections"
+    },
+    "product": {
+      "add_to_cart": "Add to Cart",
+      "added_to_cart": "Added to Cart",
+      "buy_now": "Buy Now",
+      "out_of_stock": "Out of Stock",
+      "in_stock": "In Stock",
+      "low_stock": "Only {{count}} left!",
+      "quantity": "Quantity",
+      "price": "Price",
+      "description": "Description",
+      "specifications": "Specifications",
+      "reviews": "Reviews",
+      "reviews_count": "reviews",
+      "shipping_info": "Shipping Info",
+      "color": "Color",
+      "size": "Size",
+      "sku": "SKU",
+      "share": "Share Product",
+      "new": "New",
+      "sale": "Sale",
+      "discount": "{{percent}}% OFF",
+      "related_products": "You may also like",
+      "no_reviews": "No reviews yet",
+      "select_option": "Select {{option}}",
+      "choose_options": "Choose Options",
+      "added": "Added!"
+    },
+    "cart": {
+      "title": "Shopping Cart",
+      "empty": "Your cart is empty",
+      "empty_message": "You haven't added any products yet. Browse our products and discover what suits you!",
+      "empty_title": "Your cart is empty",
+      "empty_subtitle": "Discover something you love",
+      "browse": "Explore collections",
+      "continue_shopping": "Continue Shopping",
+      "checkout": "Checkout",
+      "subtotal": "Subtotal",
+      "total": "Total",
+      "discount": "Discount",
+      "savings": "You saved",
+      "items": "{{count}} items",
+      "remove_item": "Remove Item",
+      "remove": "Remove",
+      "coupon_placeholder": "Enter discount code",
+      "apply_coupon": "Apply",
+      "coupon_applied": "Coupon applied",
+      "coupon": "Discount code",
+      "clear": "Clear Cart",
+      "update": "Update",
+      "quantity": "Quantity",
+      "product": "Product",
+      "price": "Price",
+      "order_summary": "Order Summary",
+      "free_shipping_message": "Free shipping on orders over 200 SAR",
+      "view_cart": "View Cart"
+    },
+    "search": {
+      "title": "Search",
+      "placeholder": "Search for products...",
+      "no_results": "No results for",
+      "try_different": "Try different search terms",
+      "results_for": "Search results for",
+      "results": "{{count}} results",
+      "sort_by": "Sort by",
+      "price_low_high": "Price: Low to High",
+      "price_high_low": "Price: High to Low",
+      "newest": "Newest",
+      "highest_rated": "Highest Rated",
+      "min_price": "Min Price",
+      "max_price": "Max Price",
+      "apply": "Apply",
+      "filter": "Filter"
+    },
+    "features": {
+      "free_shipping": "Free Shipping",
+      "free_shipping_desc": "On orders over 200 SAR",
+      "secure_payment": "Secure Payment",
+      "secure_payment_desc": "Multiple secure payment methods",
+      "easy_returns": "Easy Returns",
+      "easy_returns_desc": "14-day return policy",
+      "support": "24/7 Support",
+      "support_desc": "Round-the-clock customer service"
+    },
+    "order": {
+      "can_edit_or_delete_your_review_within": "You can edit or delete your review within",
+      "edit_period_ended": "The period to edit the review has ended",
+      "delete_period_ended": "The period to delete the review has ended",
+      "days_since_added": "days since it was added"
+    }
+  },
+  "collection": {
+    "no_products": "No products in this collection",
+    "clear_filters": "Clear all",
+    "results_for": "Results for"
+  },
+  "cart": {
+    "empty": "Your cart is empty",
+    "empty_message": "You haven't added any products yet. Browse our products and discover what suits you!",
+    "continue_shopping": "Continue Shopping"
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "name": "testimonials-reviews",
+  "settings": {
+    "title": {
+      "type": "text",
+      "label": {
+        "ar": "العنوان",
+        "en": "Title"
+      }
+    },
+    "subtitle": {
+      "type": "textarea",
+      "label": {
+        "ar": "النص التوضيحي",
+        "en": "Subtitle"
+      }
+    }
+  },
+  "blocks": {
+    "review": {
+      "name": "تقييم",
+      "settings": {
+        "reviewer_name": {
+          "type": "string",
+          "label": {
+            "ar": "اسم العميل",
+            "en": "Reviewer Name"
+          }
+        },
+        "reviewer_role": {
+          "type": "string",
+          "label": {
+            "ar": "الوصف / المسمى",
+            "en": "Role / Title"
+          }
+        },
+        "review_text": {
+          "type": "textarea",
+          "label": {
+            "ar": "نص التقييم",
+            "en": "Review Text"
+          }
+        },
+        "rating": {
+          "type": "number",
+          "label": {
+            "ar": "التقييم (1-5)",
+            "en": "Rating (1-5)"
+          },
+          "default": 5,
+          "min": 1,
+          "max": 5,
+          "step": 1
+        },
+        "avatar": {
+          "type": "media",
+          "label": {
+            "ar": "صورة العميل",
+            "en": "Reviewer Photo"
+          }
+        }
+      }
+    }
+  },
+  "presets": [
+    {
+      "category": "عام",
+      "name": "تقييمات العملاء"
+    }
+  ]
+}

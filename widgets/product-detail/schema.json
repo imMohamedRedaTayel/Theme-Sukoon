@@ -1,0 +1,59 @@
+{
+  "name": "product-detail",
+  "settings": {
+    "show_sku": {
+      "type": "boolean",
+      "label": "إظهار رمز المنتج (SKU)",
+      "default": true
+    },
+    "show_share": {
+      "type": "boolean",
+      "label": "إظهار أزرار المشاركة",
+      "default": true
+    },
+    "show_tabs": {
+      "type": "boolean",
+      "label": "إظهار تبويبات المعلومات",
+      "default": true
+    },
+    "image_position": {
+      "type": "select",
+      "label": "موضع الصور",
+      "default": "start",
+      "options": [
+        { "value": "start", "label": "البداية" },
+        { "value": "end", "label": "النهاية" }
+      ]
+    },
+    "image_zoom": {
+      "type": "boolean",
+      "label": "تفعيل تكبير الصور",
+      "default": true
+    },
+    "shipping_info": {
+      "type": "text",
+      "label": "معلومات الشحن",
+      "default": ""
+    },
+    "show_reviews": {
+      "type": "checkbox",
+      "label": {
+        "ar": "عرض التقييمات",
+        "en": "Show Reviews"
+      }
+    },
+    "related_products": {
+      "type": "products",
+      "label": {
+        "ar": "منتجات ذات صلة",
+        "en": "Related Products"
+      }
+    }
+  },
+  "presets": [
+    {
+      "category": "صفحة المنتج",
+      "name": "تفاصيل المنتج"
+    }
+  ]
+}

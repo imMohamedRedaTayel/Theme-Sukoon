@@ -1,0 +1,12 @@
+{
+    "title": "Footer Group",
+    "allowAdd": true,
+    "allowRemove": true,
+    "allowReorder": true,
+    "widgets": [
+        {
+            "name": "footer",
+            "widget": "footer"
+        }
+    ]
+}

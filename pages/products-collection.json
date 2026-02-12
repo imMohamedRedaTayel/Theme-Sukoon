@@ -1,0 +1,9 @@
+{
+  "layout": "layout",
+  "widgets": [
+    {
+      "name": "products",
+      "widget": "products"
+    }
+  ]
+}

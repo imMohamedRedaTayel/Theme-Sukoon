@@ -1,0 +1,38 @@
+{
+  "name": "الهيدر الرئيسي",
+  "settings": {
+    "header_logo": {
+      "type": "media",
+      "label": {
+        "ar": "شعار المتجر",
+        "en": "Store Logo"
+      }
+    },
+    "header_menu": {
+      "type": "menu",
+      "label": "القائمة الرئيسية",
+      "default": "header-menu"
+    },
+    "show_search": {
+      "type": "boolean",
+      "label": "إظهار البحث",
+      "default": true
+    },
+    "show_cart": {
+      "type": "boolean",
+      "label": "إظهار السلة",
+      "default": true
+    },
+    "sticky": {
+      "type": "boolean",
+      "label": "تثبيت عند التمرير",
+      "default": true
+    }
+  },
+  "presets": [
+    {
+      "category": "الهيدر",
+      "name": "الهيدر الرئيسي"
+    }
+  ]
+}

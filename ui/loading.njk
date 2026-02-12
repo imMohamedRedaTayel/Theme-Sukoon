@@ -1,0 +1,18 @@
+<!-- ===== SUKOON LOADING ===== -->
+<div class="flex w-full h-full justify-center items-center">
+    <div class="flex items-center gap-1">
+        <span class="w-1.5 h-1.5 rounded-full animate-sukoon-dot" style="background: var(--color-text-tertiary); animation-delay: 0ms;"></span>
+        <span class="w-1.5 h-1.5 rounded-full animate-sukoon-dot" style="background: var(--color-text-tertiary); animation-delay: 150ms;"></span>
+        <span class="w-1.5 h-1.5 rounded-full animate-sukoon-dot" style="background: var(--color-text-tertiary); animation-delay: 300ms;"></span>
+    </div>
+</div>
+
+<style>
+@keyframes sukoonDot {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+.animate-sukoon-dot {
+    animation: sukoonDot 1.2s ease-in-out infinite;
+}
+</style>

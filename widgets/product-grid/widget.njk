@@ -1,0 +1,56 @@
+{# ===== SUKOON PRODUCT GRID ===== #}
+
+{# {{ widget | json }} #}
+
+{% set products = widget.data.products %}
+{% set title = widget.data.title | safe %}
+{% set subtitle = widget.data.subtitle | safe %}
+{% set viewAllUrl = widget.data.view_all_url %}
+
+<section id="{{ widget.id }}" class=" bg-section-bs py-20 max-lg:py-14 max-sm:py-10">
+  <div class="container mx-auto px-12 max-lg:px-6 max-sm:px-4">
+
+    {# Section Header #}
+    {% if title or subtitle %}
+      <div class="text-center mb-14 max-sm:mb-10 reveal  flex items-center justify-items-center flex-col">
+        {% if title %}
+          <h2 class="mb-4">{{ title }}</h2>
+        {% endif %}
+        {% if subtitle %}
+          <p class="text-body text-secondary" style="max-width: 50ch; margin-inline: auto;">
+            {{ subtitle }}
+          </p>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {# Products Grid #}
+    {% if products and (products | length) > 0 %}
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-sm:gap-4 reveal-stagger">
+        {% for product in products %}
+          <div class="reveal">
+            {% ui "product-card.njk", product=product %}
+          </div>
+        {% endfor %}
+      </div>
+
+      {# View All Link #}
+      {% if viewAllUrl %}
+        <div class="text-center mt-14 max-sm:mt-10 reveal">
+          <a href="{{ viewAllUrl }}" class="btn btn-primary">
+            {{ t('blocks.products.view_all') | default('View all') }}
+          </a>
+        </div>
+      {% endif %}
+
+    {% else %}
+      <div class="text-center flex items-center justify-items-center flex-col py-16 reveal">
+        <svg class="w-12 h-12 mx-auto mb-4 text-tertiary" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24">
+          <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <p class="text-secondary text-[15px]">{{ t('blocks.products.no_products') | default('No products yet') }}</p>
+      </div>
+    {% endif %}
+
+  </div>
+</section>

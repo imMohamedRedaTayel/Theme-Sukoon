@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    {# Google Fonts #}
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+    {% seo %}
+    {% qumra_head %}
+
+
+    {# Style Css #}
+    <link rel="stylesheet" href="{{ 'style.css' | assets }}"/>
+
+    {# Tailwind CSS — CDN first, then config #}
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              accent: {
+                DEFAULT: 'var(--color-accent)',
+                hover: 'var(--color-accent-hover)',
+                light: 'var(--color-accent-light)',
+              },
+              surface: 'var(--color-surface)',
+              success: 'var(--color-success)',
+              error: 'var(--color-error)',
+              warning: 'var(--color-warning)',
+              'header': 'var(--color-header)',
+              'footer': 'var(--color-footer)',
+              'footer-text': 'var(--color-footer-text)',
+              'footer-muted': 'var(--color-footer-text-muted)',
+              'footer-heading': 'var(--color-footer-heading)',
+              'footer-border': 'var(--color-footer-border)',
+            },
+            backgroundColor: {
+              primary: 'var(--color-bg-primary)',
+              secondary: 'var(--color-bg-secondary)',
+              tertiary: 'var(--color-bg-tertiary)',
+              'section-a': 'var(--color-section-a)',
+              'section-b': 'var(--color-section-b)',
+              'header': 'var(--color-header)',
+              'footer': 'var(--color-footer)',
+            },
+            textColor: {
+              primary: 'var(--color-text-primary)',
+              secondary: 'var(--color-text-secondary)',
+              tertiary: 'var(--color-text-tertiary)',
+            },
+            borderColor: {
+              DEFAULT: 'var(--color-border)',
+              hover: 'var(--color-border-hover)',
+              focus: 'var(--color-border-focus)',
+            },
+            fontFamily: {
+              'heading-ar': ['IBM Plex Sans Arabic', 'system-ui', '-apple-system', 'sans-serif'],
+              'heading-en': ['DM Sans', 'system-ui', '-apple-system', 'sans-serif'],
+              'body-ar': ['IBM Plex Sans Arabic', 'system-ui', '-apple-system', 'sans-serif'],
+              'body-en': ['DM Sans', 'system-ui', '-apple-system', 'sans-serif'],
+            },
+            borderRadius: {
+              none: '0px',
+              sm: '4px',
+              DEFAULT: '8px',
+              md: '8px',
+              lg: '12px',
+              xl: '16px',
+              full: '9999px',
+            },
+            boxShadow: {
+              sm: '0 1px 3px rgba(0,0,0,0.04)',
+              DEFAULT: '0 4px 12px rgba(0,0,0,0.06)',
+              md: '0 4px 12px rgba(0,0,0,0.06)',
+              lg: '0 8px 30px rgba(0,0,0,0.08)',
+              focus: '0 0 0 3px rgba(143,167,176,0.25)',
+            },
+          },
+        },
+      }
+    </script>
+
+    {# Swiper.js CSS #}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+
+    {# Swiper.js #}
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    {# GLightbox CSS #}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3/dist/css/glightbox.min.css">
+
+
+  </head>
+  <body>
+    {# Header #}
+    {% template "header" %}
+
+    {# Main Content #}
+    <main>{% content %}</main>
+
+    {# Footer #}
+    {% template "footer" %}
+
+    {# Toast Notifications Container #}
+    <div id="toast-container" class="fixed top-4 left-1/2 -translate-x-1/2 z-[9999] flex flex-col items-center gap-2 pointer-events-none"></div>
+
+    {# Swiper.js #}
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    {# GLightbox #}
+    <script src="https://cdn.jsdelivr.net/npm/glightbox@3/dist/js/glightbox.min.js"></script>
+
+    {# Alpine.js #}
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+
+
+        {# Currency/Language config for JS #}
+    <script>
+      window.__QUMRA_CONFIG__ = {
+        currency: '{{ localization.currency.currencyCode | default("SAR") }}',
+        currencySymbol: '{{ localization.currency.currencySymbol | default("ر.س") }}',
+        language: '{{ localization.language | default("ar") }}',
+        exchangeRate: {{ localization.market.exchangeRate | default(1) }},
+        moneyFormatSample: '{{ 1000 | money }}',
+        wishlistIds: [{% for p in wishlist.products %}'{{ p._id }}'{% if not loop.last %},{% endif %}{% endfor %}],
+        messages: {
+          addedToCart: '{{t("pages.product.added_to_cart")}}',
+          addError: '{{t("common.error")}}'
+        }
+      };
+    </script>
+
+        {# qumra_scripts #}
+    {% qumra_scripts %}
+    {# Main Js — must load BEFORE qumra_scripts so Alpine finds xData functions #}
+    <script src="{{ 'main.js' | assets }}"></script>
+
+
+    {% if settings.customJS %}
+      <script>{{ settings.customJS | safe }}</script>
+    {% endif %}
+
+  </body>
+</html>

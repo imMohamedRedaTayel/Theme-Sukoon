@@ -1,0 +1,12 @@
+{
+  "name": "best-collections",
+  "settings": {
+    "collections": {
+      "type": "collections",
+      "label": {
+        "ar": "القليشن",
+        "en": "Collection"
+      }
+    }
+  }
+}

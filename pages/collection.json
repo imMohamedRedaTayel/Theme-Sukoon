@@ -1,0 +1,11 @@
+{
+  "layout": "layout",
+  "widgets": [
+    {
+      "name": "collection-page",
+      "widget": "collection-page"
+    }
+  ]
+}
+
+

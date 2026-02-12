@@ -1,0 +1,26 @@
+{
+  "name": "categories-section",
+  "settings": {
+    "title": {
+      "type": "text",
+      "label": {
+        "ar": "عنوان السكشن",
+        "en": "Section Title"
+      }
+    },
+    "subtitle": {
+      "type": "textarea",
+      "label": {
+        "ar": "النص التوضيحي",
+        "en": "Subtitle"
+      }
+    },
+    "collections": {
+      "type": "collections",
+      "label": {
+        "ar": "التصنيفات",
+        "en": "Collections"
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "name": "best-products",
+  "settings": {
+    "title": {
+      "type": "text",
+      "label": {
+        "ar": "عنوان السكشن",
+        "en": "Section Title"
+      }
+    },
+    "subtitle": {
+      "type": "textarea",
+      "label": {
+        "ar": "النص التوضيحي",
+        "en": "Subtitle"
+      }
+    },
+    "products": {
+      "type": "products",
+      "label": {
+        "ar": "المنتجات",
+        "en": "Products"
+      }
+    },
+    "view_all_url": {
+      "type": "url",
+      "label": {
+        "ar": "رابط عرض الكل",
+        "en": "View All URL"
+      }
+    }
+  }
+}

@@ -1,0 +1,242 @@
+{# ===== SUKOON HERO SECTION ===== #}
+
+{% set layout = widget.data.hero_layout | default('image-right') %}
+{% set title = widget.data.hero_title | safe %}
+{% set subtitle = widget.data.hero_subtitle | safe %}
+{% set btnText = widget.data.hero_button_text | safe %}
+{% set btnUrl = widget.data.hero_button_url | default('#') %}
+{% set image = widget.data.hero_image %}
+
+<style>
+  .hero-gradient { background: linear-gradient(135deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 50%, rgba(0,0,0,0.4) 100%); }
+  .hero-title-glow { text-shadow: 0 4px 40px rgba(0,0,0,0.3); }
+  .hero-img-float { animation: heroFloat 6s ease-in-out infinite; }
+  @keyframes heroFloat { 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-12px); } }
+  .hero-line { width: 0; animation: heroLine 1.2s ease forwards 0.6s; }
+  @keyframes heroLine { to { width: 60px; } }
+  .hero-fade-up { opacity: 0; transform: translateY(30px); animation: heroFadeUp 0.8s ease forwards; }
+  .hero-fade-up-d1 { animation-delay: 0.2s; }
+  .hero-fade-up-d2 { animation-delay: 0.4s; }
+  .hero-fade-up-d3 { animation-delay: 0.6s; }
+  .hero-fade-up-d4 { animation-delay: 0.8s; }
+  @keyframes heroFadeUp { to { opacity: 1; transform: translateY(0); } }
+  .hero-shine { position: relative; overflow: hidden; }
+  .hero-shine::after { content:''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(to right, transparent 0%, rgba(255,255,255,0.08) 50%, transparent 100%); transform: rotate(30deg); animation: heroShine 4s ease-in-out infinite; }
+  @keyframes heroShine { 0%,100%{ transform: rotate(30deg) translateX(-100%); } 50%{ transform: rotate(30deg) translateX(100%); } }
+  .hero-features-bar { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+</style>
+
+
+{# ——————————————————————————————————————— #}
+{# ——— Full Background Layout            #}
+{# ——————————————————————————————————————— #}
+{% if layout === 'full-background' %}
+<section id="{{ widget.id }}" class="relative overflow-hidden min-h-[100svh]">
+
+  {# Background Image with Ken Burns #}
+  {% if image %}
+    <div class="absolute inset-0" style="animation: heroFloat 20s ease-in-out infinite; will-change: transform;">
+      <img
+        src="{{ image.fileUrl }}"
+        alt="{{ title }}"
+        class="w-full h-full object-cover scale-110 img-fade"
+        onload="this.classList.add('is-loaded')"
+      />
+    </div>
+    <div class="absolute inset-0 hero-gradient"></div>
+  {% else %}
+    <div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900"></div>
+  {% endif %}
+
+  {# Content — Centered #}
+  <div class="relative z-10 flex items-center justify-center min-h-[100svh] px-12 max-lg:px-6 max-sm:px-4">
+    <div class="text-center max-w-3xl mx-auto">
+
+      {% if subtitle %}
+        <div class="hero-fade-up hero-fade-up-d1">
+          <span class="inline-flex items-center gap-2.5 px-5 py-2 rounded-full text-[13px] font-medium tracking-wide bg-white/10 text-white/90 backdrop-blur-md border border-white/10 mb-8 max-sm:mb-5">
+            {{ subtitle }}
+          </span>
+        </div>
+      {% endif %}
+
+      {% if title %}
+        <div class="hero-fade-up hero-fade-up-d2">
+          <h1 class="text-white hero-title-glow mb-8 max-sm:mb-5" style="font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.15;">
+            {{ title }}
+          </h1>
+        </div>
+      {% endif %}
+
+      {# Decorative line #}
+      <div class="flex justify-center mb-10 max-sm:mb-6">
+        <div class="hero-line h-[1.5px] bg-white/40 rounded-full"></div>
+      </div>
+
+      {% if btnText %}
+        <div class="hero-fade-up hero-fade-up-d3">
+          <a href="{{ btnUrl }}"
+             class="hero-shine inline-flex items-center gap-3 px-10 py-4 max-sm:px-7 max-sm:py-3.5 rounded-full text-sm font-semibold transition-all duration-500 bg-white text-gray-900 hover:shadow-[0_8px_40px_rgba(255,255,255,0.25)] hover:-translate-y-1">
+            {{ btnText }}
+            <svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+            </svg>
+          </a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  {# Bottom Features Bar #}
+  <div class="absolute bottom-0 inset-x-0 z-10 hero-fade-up hero-fade-up-d4">
+    <div class="hero-features-bar bg-white/[0.07] border-t border-white/10">
+      <div class="container mx-auto px-12 max-lg:px-6 max-sm:px-4">
+        <div class="flex items-center justify-center gap-8 max-sm:gap-4 py-5 max-sm:py-4 overflow-x-auto scrollbar-hide">
+          <div class="flex items-center gap-2.5 text-white/70 shrink-0">
+            <svg class="w-[18px] h-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0H21M3.375 14.25V3.375c0-.621.504-1.125 1.125-1.125h9.75c.621 0 1.125.504 1.125 1.125v3.026M12 9.75h6.75M12 9.75L9.75 12m2.25-2.25L9.75 7.5m8.25 3.375v5.25c0 .621-.504 1.125-1.125 1.125h-.872"/></svg>
+            <span class="text-xs font-medium whitespace-nowrap">{{ t('pages.features.free_shipping') | default('Free Shipping') }}</span>
+          </div>
+          <div class="w-px h-4 bg-white/15 shrink-0 max-sm:hidden"></div>
+          <div class="flex items-center gap-2.5 text-white/70 shrink-0">
+            <svg class="w-[18px] h-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
+            <span class="text-xs font-medium whitespace-nowrap">{{ t('pages.features.secure_payment') | default('Secure Payment') }}</span>
+          </div>
+          <div class="w-px h-4 bg-white/15 shrink-0 max-sm:hidden"></div>
+          <div class="flex items-center gap-2.5 text-white/70 shrink-0">
+            <svg class="w-[18px] h-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182"/></svg>
+            <span class="text-xs font-medium whitespace-nowrap">{{ t('pages.features.easy_returns') | default('Easy Returns') }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{# ——————————————————————————————————————— #}
+{# ——— Text Only Layout                  #}
+{# ——————————————————————————————————————— #}
+{% elif layout === 'text-only' %}
+<section id="{{ widget.id }}" class="relative min-h-[80svh] flex items-center overflow-hidden" style="background: linear-gradient(160deg, var(--color-section-a) 0%, var(--color-section-b) 100%);">
+
+  {# Decorative circles #}
+  <div class="absolute top-20 start-20 w-[300px] h-[300px] rounded-full opacity-[0.04]" style="background: var(--color-accent);"></div>
+  <div class="absolute bottom-10 end-10 w-[200px] h-[200px] rounded-full opacity-[0.03]" style="background: var(--color-accent);"></div>
+
+  <div class="relative container mx-auto px-12 max-lg:px-6 max-sm:px-4 py-24 max-sm:py-16">
+    <div class="text-center max-w-3xl mx-auto">
+
+      {% if subtitle %}
+        <div class="hero-fade-up hero-fade-up-d1 mb-6">
+          <span class="inline-block text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400">
+            — {{ subtitle }} —
+          </span>
+        </div>
+      {% endif %}
+
+      {% if title %}
+        <div class="hero-fade-up hero-fade-up-d2">
+          <h1 class="mb-10 max-sm:mb-6" style="font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.15;">
+            {{ title }}
+          </h1>
+        </div>
+      {% endif %}
+
+      {% if btnText %}
+        <div class="hero-fade-up hero-fade-up-d3">
+          <a href="{{ btnUrl }}"
+             class="inline-flex items-center gap-3 px-10 py-4 max-sm:px-7 max-sm:py-3.5 rounded-full text-sm font-semibold transition-all duration-300 bg-gray-900 text-white hover:bg-gray-800 hover:shadow-xl hover:-translate-y-1">
+            {{ btnText }}
+            <svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+            </svg>
+          </a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+
+{# ——————————————————————————————————————— #}
+{# ——— Split Layout (Image Right/Left)   #}
+{# ——————————————————————————————————————— #}
+{% else %}
+<section id="{{ widget.id }}" class="relative min-h-[90svh] flex items-center overflow-hidden" style="background: linear-gradient(160deg, var(--color-section-a) 0%, var(--color-section-b) 100%);">
+
+  {# Decorative blob #}
+  <div class="absolute top-1/2 -translate-y-1/2 {% if layout === 'image-left' %}start-0{% else %}end-0{% endif %} w-1/2 aspect-square rounded-full opacity-[0.03] max-lg:hidden" style="background: var(--color-accent); filter: blur(80px);"></div>
+
+  <div class="container mx-auto px-12 max-lg:px-6 max-sm:px-4 py-24 max-lg:py-14 max-sm:py-10">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 max-lg:gap-12 items-center">
+
+      {# ——— Text Side ——— #}
+      <div class="{% if layout === 'image-left' %}lg:order-2{% endif %} max-lg:text-center">
+
+        {% if subtitle %}
+          <div class="hero-fade-up hero-fade-up-d1 mb-5">
+            <span class="inline-block text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400">
+              {{ subtitle }}
+            </span>
+          </div>
+        {% endif %}
+
+        {% if title %}
+          <div class="hero-fade-up hero-fade-up-d2">
+            <h1 class="mb-5 max-sm:mb-4" style="font-size: clamp(1.8rem, 4vw, 3rem); line-height: 1.18;">
+              {{ title }}
+            </h1>
+          </div>
+        {% endif %}
+
+        {# Accent line #}
+        <div class="hero-fade-up hero-fade-up-d2 mb-8 max-lg:flex max-lg:justify-center">
+          <div class="hero-line h-[2px] rounded-full" style="background: var(--color-accent);"></div>
+        </div>
+
+        {% if btnText %}
+          <div class="hero-fade-up hero-fade-up-d3 flex items-center gap-4 max-lg:justify-center">
+            <a href="{{ btnUrl }}"
+               class="inline-flex items-center gap-3 px-9 py-4 max-sm:px-7 max-sm:py-3.5 rounded-full text-sm font-semibold transition-all duration-300 bg-gray-900 text-white hover:bg-gray-800 hover:shadow-xl hover:-translate-y-1">
+              {{ btnText }}
+              <svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+              </svg>
+            </a>
+          </div>
+        {% endif %}
+      </div>
+
+      {# ——— Image Side ——— #}
+      {% if image %}
+        <div class="{% if layout === 'image-left' %}lg:order-1{% endif %}">
+          <div class="relative hero-fade-up hero-fade-up-d2">
+
+            {# Main image #}
+            <div class="relative overflow-hidden rounded-[2rem] max-sm:rounded-2xl aspect-[4/5] shadow-[0_25px_60px_rgba(0,0,0,0.08)]">
+              <img
+                src="{{ image.fileUrl }}"
+                alt="{{ title }}"
+                class="w-full h-full object-cover img-fade transition-transform duration-[1.2s] ease-out hover:scale-[1.03]"
+                onload="this.classList.add('is-loaded')"
+              />
+              {# Subtle inner shadow for depth #}
+              <div class="absolute inset-0 rounded-[2rem] max-sm:rounded-2xl" style="box-shadow: inset 0 0 40px rgba(0,0,0,0.06);"></div>
+            </div>
+
+            {# Floating accent card — top #}
+            <div class="hero-img-float absolute -top-5 {% if layout === 'image-left' %}-start-5{% else %}-end-5{% endif %} max-sm:hidden">
+              <div class="w-20 h-20 rounded-2xl rotate-12 opacity-50" style="background: var(--color-accent-light); border: 1px solid var(--color-border);"></div>
+            </div>
+
+            {# Floating accent card — bottom #}
+            <div class="absolute -bottom-4 {% if layout === 'image-left' %}-end-4{% else %}-start-4{% endif %} max-sm:hidden" style="animation: heroFloat 5s ease-in-out infinite 1s;">
+              <div class="w-14 h-14 rounded-xl -rotate-6 opacity-40" style="background: var(--color-bg-secondary); border: 1px solid var(--color-border);"></div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endif %}

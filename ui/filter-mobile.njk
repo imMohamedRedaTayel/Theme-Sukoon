@@ -1,0 +1,163 @@
+{# ===== Mobile Filter & Sort ===== #}
+{% set show_sort = data.show_sort %}
+{% set filters = data.filters %}
+{% set hasFilters = data.hasFilters %}
+{% set hasSidebar = data.hasSidebar %}
+
+{% if hasSidebar %}
+  {# Mobile Toolbar #}
+  <div class="flex items-center gap-2 mb-4 md:hidden">
+    {% if hasFilters %}
+      <button @click="filtersOpen = true"
+              class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border border-gray-200 text-[13px] font-medium text-gray-700 hover:border-gray-400 transition-colors relative">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"/>
+        </svg>
+        {{ t('pages.search.filter') | default('Filter') }}
+        <span x-show="activeCount > 0" x-cloak
+              class="absolute -top-1.5 -end-1.5 w-5 h-5 rounded-full bg-gray-900 text-white text-[10px] font-bold flex items-center justify-center"
+              x-text="activeCount"></span>
+      </button>
+    {% endif %}
+    {% if show_sort %}
+      <button @click="sortOpen = true"
+              class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border border-gray-200 text-[13px] font-medium text-gray-700 hover:border-gray-400 transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 7.5L7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5"/>
+        </svg>
+        {{ t('pages.search.sort_by') | default('Sort by') }}
+      </button>
+    {% endif %}
+  </div>
+
+  {# Filter Bottom Sheet #}
+  {% if hasFilters %}
+    <div x-show="filtersOpen" x-cloak class="fixed inset-0 z-50">
+      {# Overlay #}
+      <div @click="filtersOpen = false" class="absolute inset-0 bg-black/40 backdrop-blur-sm"
+           x-transition:enter="transition ease-out duration-300"
+           x-transition:enter-start="opacity-0"
+           x-transition:enter-end="opacity-100"
+           x-transition:leave="transition ease-in duration-200"
+           x-transition:leave-start="opacity-100"
+           x-transition:leave-end="opacity-0"></div>
+
+      {# Sheet #}
+      <div class="absolute bottom-0 inset-x-0 bg-white rounded-t-3xl max-h-[85vh] flex flex-col"
+           x-transition:enter="transition ease-out duration-300"
+           x-transition:enter-start="translate-y-full"
+           x-transition:enter-end="translate-y-0"
+           x-transition:leave="transition ease-in duration-200"
+           x-transition:leave-start="translate-y-0"
+           x-transition:leave-end="translate-y-full">
+
+        {# Handle #}
+        <div class="flex items-center justify-center pt-3 pb-2">
+          <div class="w-10 h-1 rounded-full bg-gray-200"></div>
+        </div>
+
+        {# Header #}
+        <div class="flex items-center justify-between px-5 pb-3 border-b border-gray-100">
+          <h3 class="text-base font-bold text-gray-900">{{ t('pages.search.filter') | default('Filter') }}</h3>
+          <div class="flex items-center gap-3">
+            <button x-show="activeCount > 0" @click="clearFilters()" class="text-xs font-medium text-red-500">
+              {{ t('collection.clear_filters') | default('Clear all') }}
+            </button>
+            <button @click="filtersOpen = false" class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
+              <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+          </div>
+        </div>
+
+        {# Filters Content #}
+        <div class="flex-1 overflow-y-auto custom-scrollbar px-5 py-4 space-y-5">
+          {% for filter in filters %}
+            <div>
+              <h4 class="text-sm font-bold text-gray-900 mb-2.5">{{ filter.name }}</h4>
+
+              {% if filter.inputType == 'checkbox' or filter.inputType == 'color' or filter.inputType == 'text' %}
+                <div class="flex flex-wrap gap-2">
+                  {% for value in filter.values %}
+                    {% if filter.inputType == 'color' %}
+                      <button @click="toggleFilter('{{ filter.handle }}', '{{ value.value }}')"
+                              class="w-8 h-8 rounded-full border-2 transition-all"
+                              :class="isActive('{{ filter.handle }}', '{{ value.value }}') ? 'border-gray-900 scale-110 ring-2 ring-gray-200' : 'border-gray-200'"
+                              style="background-color: {{ value.value | default('#ccc') }};"
+                              title="{{ value.label }}">
+                      </button>
+                    {% else %}
+                      <button @click="toggleFilter('{{ filter.handle }}', '{{ value.value }}')"
+                              class="px-3.5 py-2 rounded-xl text-[13px] font-medium border transition-colors"
+                              :class="isActive('{{ filter.handle }}', '{{ value.value }}') ? 'bg-gray-900 text-white border-gray-900' : 'bg-white text-gray-600 border-gray-200 hover:border-gray-400'">
+                        {{ value.label }}
+                      </button>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+
+              {% elif filter.inputType == 'range' %}
+                <div class="flex items-center gap-2">
+                  <input type="number"
+                         x-model="priceMin"
+                         @input="_debouncedApplyPrice()"
+                         placeholder="{{ t('pages.search.min_price') | default('Min') }}"
+                         class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-[13px] text-center focus:outline-none focus:border-gray-400">
+                  <span class="text-gray-300 shrink-0">—</span>
+                  <input type="number"
+                         x-model="priceMax"
+                         @input="_debouncedApplyPrice()"
+                         placeholder="{{ t('pages.search.max_price') | default('Max') }}"
+                         class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-[13px] text-center focus:outline-none focus:border-gray-400">
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  {# Sort Bottom Sheet #}
+  {% if show_sort %}
+    <div x-show="sortOpen" x-cloak class="fixed inset-0 z-50">
+      <div @click="sortOpen = false" class="absolute inset-0 bg-black/40 backdrop-blur-sm"
+           x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+           x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"></div>
+
+      <div class="absolute bottom-0 inset-x-0 bg-white rounded-t-3xl"
+           x-transition:enter="transition ease-out duration-300" x-transition:enter-start="translate-y-full" x-transition:enter-end="translate-y-0"
+           x-transition:leave="transition ease-in duration-200" x-transition:leave-start="translate-y-0" x-transition:leave-end="translate-y-full">
+
+        <div class="flex items-center justify-center pt-3 pb-2">
+          <div class="w-10 h-1 rounded-full bg-gray-200"></div>
+        </div>
+
+        <div class="flex items-center justify-between px-5 pb-3 border-b border-gray-100">
+          <h3 class="text-base font-bold text-gray-900">{{ t('pages.search.sort_by') | default('Sort by') }}</h3>
+          <button @click="sortOpen = false" class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
+            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+
+        <div class="p-5 space-y-1.5">
+          {% set sortOptions = [
+            { value: '', label: t('pages.search.newest') | default('Newest') },
+            { value: 'price_asc', label: t('pages.search.price_low_high') | default('Price: Low to High') },
+            { value: 'price_desc', label: t('pages.search.price_high_low') | default('Price: High to Low') },
+            { value: 'highest_rated', label: t('pages.search.highest_rated') | default('Highest Rated') }
+          ] %}
+          {% for opt in sortOptions %}
+            <button @click="sortBy('{{ opt.value }}')"
+                    class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-[14px] transition-colors"
+                    :class="currentSort === '{{ opt.value }}' ? 'bg-gray-900 text-white font-medium' : 'text-gray-600 hover:bg-gray-50'">
+              {{ opt.label }}
+              <svg x-show="currentSort === '{{ opt.value }}'" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+              </svg>
+            </button>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endif %}
