@@ -2,8 +2,24 @@
     "title": "Header Group",
     "widgets": [
         {
-            "name": "header",
-            "widget": "header"
-        }
+            "name": "شريط الإعلانات",
+            "widget": "announcement-bar",
+            "settings": {
+              "text": "شحن مجاني للطلبات فوق 200 ريال 🎉",
+              "link": "",
+              "show_close": true,
+              "background_color": "#9C27B0",
+              "text_color": "#FFFFFF"
+            }
+          },
+          {
+            "name": "الهيدر الرئيسي",
+            "widget": "header",
+            "settings": {
+              "show_search": true,
+              "show_cart": true,
+              "sticky": true
+            }
+          }
     ]
 }

@@ -1,0 +1,65 @@
+{
+  "name": "النشرة البريدية",
+  "settings": {
+    "title": {
+      "type": "string",
+      "label": "العنوان",
+      "default": "اشترك في نشرتنا البريدية"
+    },
+    "subtitle": {
+      "type": "text",
+      "label": "النص التوضيحي",
+      "default": "كن أول من يعرف عن أحدث المنتجات والعروض الحصرية"
+    },
+    "placeholder": {
+      "type": "string",
+      "label": "نص حقل الإيميل",
+      "default": "أدخل بريدك الإلكتروني"
+    },
+    "button_text": {
+      "type": "string",
+      "label": "نص الزر",
+      "default": "اشترك الآن"
+    },
+    "success_message": {
+      "type": "string",
+      "label": "رسالة النجاح",
+      "default": "تم الاشتراك بنجاح!"
+    },
+    "layout": {
+      "type": "select",
+      "label": "التخطيط",
+      "default": "card",
+      "options": [
+        { "value": "card", "label": "بطاقة" },
+        { "value": "inline", "label": "سطر واحد" }
+      ]
+    },
+    "background_style": {
+      "type": "select",
+      "label": "نمط الخلفية",
+      "default": "dark",
+      "options": [
+        { "value": "dark", "label": "داكن" },
+        { "value": "accent", "label": "اللون الأساسي" },
+        { "value": "light", "label": "فاتح" }
+      ]
+    },
+    "show_note": {
+      "type": "boolean",
+      "label": "إظهار ملاحظة الخصوصية",
+      "default": true
+    },
+    "note_text": {
+      "type": "string",
+      "label": "نص الملاحظة",
+      "default": "نحترم خصوصيتك ولن نشارك بريدك مع أي طرف"
+    }
+  },
+  "presets": [
+    {
+      "category": "الصفحة الرئيسية",
+      "name": "النشرة البريدية"
+    }
+  ]
+}

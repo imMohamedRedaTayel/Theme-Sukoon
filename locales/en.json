@@ -122,6 +122,16 @@
       "free_shipping_message": "Free shipping on orders over 200 SAR",
       "view_cart": "View Cart"
     },
+    "collection": {
+      "all_products": "All Products",
+      "filter": "Filter",
+      "sort": "Sort",
+      "products_count": "{{count}} products",
+      "no_products": "No products in this category",
+      "price_range": "Price Range",
+      "clear_filters": "Clear Filters",
+      "show_results": "Show Results"
+    },
     "search": {
       "title": "Search",
       "placeholder": "Search for products...",

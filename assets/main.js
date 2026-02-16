@@ -678,7 +678,6 @@
                     else url.searchParams.delete('sort');
                     url.searchParams.delete('page');
                     this.currentSort = value;
-                    this.sortOpen = false;
                     this._fetch(url);
                 },
 
@@ -813,7 +812,7 @@
                             Alpine.initTree(el);
                         });
 
-                        wrapper.querySelectorAll('.product-card').forEach(function (card, i) {
+                        wrapper.querySelectorAll('.ajax-card').forEach(function (card, i) {
                             card.style.opacity = '0';
                             card.style.transform = 'translateY(12px)';
                             setTimeout(function () {
@@ -860,73 +859,87 @@
                     var canPurchase = product.quantity > 0 || !product.trackQuantity || product.allowBackorder;
                     var title = (product.title || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
                     var titleAttr = title.replace(/"/g, '&quot;');
-
-                    var radiusMap = { none: '0', sm: '8px', md: '12px', lg: '16px' };
-                    var radius = radiusMap[cs.borderRadius] || '16px';
-                    var ratioClass = cs.imageRatio === 'portrait' ? 'aspect-[3/4]' : cs.imageRatio === 'landscape' ? 'aspect-[4/3]' : 'aspect-square';
-                    var fitPad = cs.imageFit === 'contain' ? ' p-4' : '';
-                    var imgClass = cs.imageFit === 'contain' ? 'max-w-full max-h-full object-contain' : 'w-full h-full object-cover';
                     var imageUrl = (product.images && product.images.length) ? product.images[0].fileUrl : '';
-                    var lineClamp = cs.titleLines === '1' ? 'line-clamp-1' : 'line-clamp-2';
 
-                    var h = '<div class="product-card group flex flex-col h-full ' + (cs.hoverEffect === 'zoom' ? 'hover-zoom' : '') + '" style="border-radius: ' + radius + ';" x-data="productCard(\'' + product._id + '\')">';
+                    var h = '<div class="ajax-card group flex flex-col h-full" x-data="productCard(\'' + product._id + '\')">';
 
                     // Image
-                    h += '<a href="/product/' + product.slug + '" class="block relative overflow-hidden card-img">';
-                    h += '<div class="' + ratioClass + ' bg-white flex items-center justify-center' + fitPad + '">';
+                    h += '<div class="relative mb-3">';
+                    h += '<a href="/products/' + product.slug + '" class="block overflow-hidden rounded-2xl">';
+                    h += '<div class="aspect-[3/4] bg-gray-50">';
                     if (imageUrl) {
-                        h += '<img src="' + imageUrl + '" alt="' + titleAttr + '" class="' + imgClass + '" loading="lazy">';
+                        h += '<img src="' + imageUrl + '" alt="' + titleAttr + '" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 img-fade" loading="lazy" onload="this.classList.add(\'is-loaded\')">';
                     } else {
-                        h += '<svg class="w-16 h-16 text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>';
+                        h += '<div class="w-full h-full flex items-center justify-center"><svg class="w-12 h-12 text-gray-200" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round"/></svg></div>';
                     }
-                    h += '</div>';
+                    h += '</div></a>';
 
                     // Badge
                     if (cs.showBadge && hasDiscount) {
                         var disc = Math.round(((compareAtPrice - price) / compareAtPrice) * 100);
-                        h += '<span class="absolute top-2.5 start-2.5 bg-red-500 text-white text-[11px] font-semibold px-2 py-0.5 rounded">-' + disc + '%</span>';
+                        h += '<span class="absolute top-2.5 start-2.5 px-2 py-1 rounded-lg text-[11px] font-semibold bg-red-500 text-white">-' + disc + '%</span>';
                     }
 
                     // Wishlist
-                    if (cs.showWishlist) {
-                        h += '<button @click.prevent="toggleWishlist()" :disabled="wishlistLoading" class="wishlist-btn absolute top-2.5 end-2.5 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm transition-all hover:scale-110" :class="inWishlist ? \'text-red-500\' : \'text-gray-400 hover:text-red-400\'">';
-                        h += '<svg class="w-4 h-4" :fill="inWishlist ? \'currentColor\' : \'none\'" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>';
-                        h += '</button>';
-                    }
+                    h += '<button @click.prevent="toggleWishlist()" :disabled="wishlistLoading" class="absolute top-2.5 end-2.5 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110" :class="inWishlist ? \'text-red-500 !opacity-100\' : \'text-gray-400 hover:text-red-400\'">';
+                    h += '<svg class="w-4 h-4" :fill="inWishlist ? \'currentColor\' : \'none\'" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>';
+                    h += '</button>';
 
-                    h += '</a>';
+                    h += '</div>';
 
                     // Content
-                    h += '<div class="p-3 pt-2 flex flex-col flex-1">';
-                    h += '<a href="/product/' + product.slug + '" class="block text-sm font-medium text-gray-900 ' + lineClamp + ' leading-snug mb-2 hover:text-primary transition-colors">' + title + '</a>';
+                    h += '<div class="flex flex-col flex-1 gap-1.5 px-0.5 bg-transparent">';
+                    h += '<a href="/products/' + product.slug + '" class="text-[14px] font-medium leading-snug line-clamp-2 text-gray-800 hover:text-primary transition-colors duration-200">' + title + '</a>';
 
                     // Rating
                     if (cs.showRating && product.averageRating > 0) {
-                        h += '<div class="flex items-center gap-0.5 mb-2">';
+                        h += '<div class="flex items-center gap-1"><div class="flex items-center gap-0.5">';
                         for (var i = 0; i < 5; i++) {
-                            h += '<svg class="w-3.5 h-3.5 ' + (i < product.averageRating ? 'text-amber-400' : 'text-gray-200') + '" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>';
+                            h += '<svg class="w-3 h-3 ' + (i < product.averageRating ? 'text-amber-400' : 'text-gray-200') + '" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>';
                         }
-                        h += '<span class="text-[11px] text-gray-400 ms-1">(' + (product.reviewsCount || 0) + ')</span></div>';
+                        h += '</div>';
+                        if (product.totalReviews || product.reviewsCount) {
+                            h += '<span class="text-[11px] text-gray-400">(' + (product.totalReviews || product.reviewsCount || 0) + ')</span>';
+                        }
+                        h += '</div>';
                     }
 
-                    // Color swatches
+                    // Option swatches (color circles or text tags)
                     if (cs.showOptions && product.options) {
                         product.options.forEach(function (opt) {
-                            if (opt.type === 'color' && opt.values && opt.values.length) {
-                                h += '<div class="flex items-center gap-1.5 mb-2">';
-                                opt.values.forEach(function (v) {
-                                    h += '<span class="w-4 h-4 rounded-full border border-gray-300 shrink-0" style="background-color: ' + (v.value || '#fff') + ';" title="' + (v.label || '') + '"></span>';
-                                });
+                            if (opt.values && opt.values.length) {
+                                h += '<div class="flex items-center gap-1.5 flex-wrap mt-0.5">';
+                                if (opt.type === 'color') {
+                                    var maxColors = Math.min(opt.values.length, 5);
+                                    for (var ci = 0; ci < maxColors; ci++) {
+                                        var v = opt.values[ci];
+                                        h += '<span class="w-3.5 h-3.5 rounded-full border border-gray-200 shrink-0" style="background-color: ' + (v.value || '#ccc') + ';" title="' + (v.label || '') + '"></span>';
+                                    }
+                                    if (opt.values.length > 5) {
+                                        h += '<span class="text-[10px] text-gray-400">+' + (opt.values.length - 5) + '</span>';
+                                    }
+                                } else {
+                                    var maxTexts = Math.min(opt.values.length, 4);
+                                    for (var ti = 0; ti < maxTexts; ti++) {
+                                        var tv = opt.values[ti];
+                                        h += '<span class="px-2 py-0.5 rounded-md bg-gray-100 text-[10px] text-gray-500 leading-tight">' + (tv.label || tv.value || '') + '</span>';
+                                    }
+                                    if (opt.values.length > 4) {
+                                        h += '<span class="text-[10px] text-gray-400">+' + (opt.values.length - 4) + '</span>';
+                                    }
+                                }
                                 h += '</div>';
                             }
                         });
                     }
 
                     // Price
-                    h += '<div class="mt-auto"><div class="flex items-baseline gap-2' + (cs.showButton ? ' mb-2.5' : '') + '">';
-                    h += '<span class="text-base font-bold text-gray-900">' + Utils.formatMoney(price) + '</span>';
+                    h += '<div class="flex items-baseline gap-2 mt-auto pt-1">';
+                    if (price > 0) {
+                        h += '<span class="text-[15px] font-bold text-gray-900">' + Utils.formatMoney(price) + '</span>';
+                    }
                     if (cs.showComparePrice && hasDiscount) {
-                        h += '<span class="text-xs text-gray-400 line-through">' + Utils.formatMoney(compareAtPrice) + '</span>';
+                        h += '<span class="text-[12px] line-through text-gray-400">' + Utils.formatMoney(compareAtPrice) + '</span>';
                     }
                     h += '</div>';
 
@@ -934,24 +947,23 @@
                     if (cs.showButton) {
                         if (canPurchase) {
                             if (product.variantsCount > 0) {
-                                h += '<a href="/product/' + product.slug + '" class="flex items-center justify-center gap-1.5 w-full py-2.5 rounded-lg text-xs font-semibold border-2 border-primary text-primary hover:bg-primary hover:text-white transition-all">';
-                                h += '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>';
-                                h += (tr.chooseOptions || '') + '</a>';
+                                h += '<a href="/products/' + product.slug + '" class="flex items-center justify-center gap-2 w-full py-3 mt-2 rounded-2xl text-sm font-semibold border border-gray-200 text-gray-700 hover:border-gray-900 hover:bg-gray-900 hover:text-white transition-all duration-200">';
+                                h += (tr.chooseOptions || '');
+                                h += '<svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>';
+                                h += '</a>';
                             } else {
-                                h += '<button @click="addToCart()" :disabled="cartLoading || cartSuccess" class="flex items-center justify-center gap-1.5 w-full py-2.5 rounded-lg text-xs font-semibold transition-all" :class="cartSuccess ? \'bg-green-500 text-white border-2 border-green-500\' : \'bg-primary text-white border-2 border-primary hover:bg-primary-dark hover:border-primary-dark\'">';
-                                h += '<template x-if="cartLoading"><svg class="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg></template>';
-                                h += '<template x-if="cartSuccess"><svg class="w-4 h-4 animate-check" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></template>';
-                                h += '<template x-if="!cartLoading && !cartSuccess"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg></template>';
-                                h += '<span x-show="!cartLoading && !cartSuccess">' + (tr.addToCart || '') + '</span>';
-                                h += '<span x-show="cartSuccess" x-cloak>' + (tr.added || '') + '</span>';
+                                h += '<button @click="addToCart()" :disabled="cartLoading || cartSuccess" class="flex items-center justify-center gap-2 w-full py-3 mt-2 rounded-2xl text-sm font-semibold transition-all duration-300" :class="cartSuccess ? \'bg-green-500 text-white\' : \'bg-gray-900 text-white hover:bg-gray-800\'">';
+                                h += '<span x-show="cartLoading" class="flex items-center justify-center gap-2"><svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg></span>';
+                                h += '<span x-show="cartSuccess && !cartLoading" x-cloak class="flex items-center justify-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>' + (tr.added || '') + '</span>';
+                                h += '<span x-show="!cartLoading && !cartSuccess" class="flex items-center justify-center gap-2">' + (tr.addToCart || '') + '<svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></span>';
                                 h += '</button>';
                             }
                         } else {
-                            h += '<div class="text-center py-2 text-xs text-gray-400 font-medium">' + (tr.outOfStock || '') + '</div>';
+                            h += '<div class="flex items-center justify-center w-full py-3 mt-2 rounded-2xl text-xs font-medium text-gray-400 bg-gray-100">' + (tr.outOfStock || '') + '</div>';
                         }
                     }
 
-                    h += '</div></div></div>';
+                    h += '</div></div>';
                     return h;
                 },
 

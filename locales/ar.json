@@ -122,6 +122,16 @@
       "free_shipping_message": "شحن مجاني للطلبات فوق 200 ريال",
       "view_cart": "عرض السلة"
     },
+    "collection": {
+      "all_products": "جميع المنتجات",
+      "filter": "تصفية",
+      "sort": "ترتيب",
+      "products_count": "{{count}} منتجات",
+      "no_products": "لا توجد منتجات في هذا التصنيف",
+      "price_range": "نطاق السعر",
+      "clear_filters": "مسح الفلاتر",
+      "show_results": "عرض النتائج"
+    },
     "search": {
       "title": "البحث",
       "placeholder": "ابحث عن منتجات...",

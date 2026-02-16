@@ -1,0 +1,63 @@
+{
+  "name": "شريط الإعلانات",
+  "settings": {
+    "background_color": {
+      "type": "color",
+      "label": "لون الخلفية",
+      "default": "#2C2C2C"
+    },
+    "text_color": {
+      "type": "color",
+      "label": "لون النص",
+      "default": "#FFFFFF"
+    },
+    "speed": {
+      "type": "range",
+      "label": "سرعة التبديل (بالثانية)",
+      "default": 4,
+      "min": 2,
+      "max": 10,
+      "step": 1
+    },
+    "closable": {
+      "type": "boolean",
+      "label": "السماح بالإغلاق",
+      "default": true
+    }
+  },
+  "blocks": {
+    "announcement": {
+      "name": "إعلان",
+      "settings": {
+        "text": {
+          "type": "string",
+          "label": "نص الإعلان",
+          "default": "شحن مجاني للطلبات فوق 200 ريال"
+        },
+        "icon": {
+          "type": "select",
+          "label": "الأيقونة",
+          "default": "none",
+          "options": [
+            { "value": "none", "label": "بدون" },
+            { "value": "shipping", "label": "شحن" },
+            { "value": "offer", "label": "عرض" },
+            { "value": "star", "label": "نجمة" },
+            { "value": "time", "label": "وقت" }
+          ]
+        },
+        "link": {
+          "type": "string",
+          "label": "الرابط (اختياري)",
+          "default": ""
+        }
+      }
+    }
+  },
+  "presets": [
+    {
+      "category": "الهيدر",
+      "name": "شريط الإعلانات"
+    }
+  ]
+}

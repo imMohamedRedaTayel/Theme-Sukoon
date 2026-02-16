@@ -120,7 +120,7 @@
                     <span class="text-[13px] text-gray-500 font-medium">{{ item.price | money }}</span>
                     {% if item.compareAtPrice and item.compareAtPrice > item.price %}
                       <span class="text-[11px] text-gray-300 line-through">{{ item.compareAtPrice | money }}</span>
-                      <span class="text-[10px] font-semibold text-red-500 bg-red-50 px-1.5 py-0.5 rounded-md">{{t('pages.product.sale')}}</span>
+                      <span class="text-[10px] font-semibold text-red-500 bg-red-50 px-1.5 py-0.5 rounded-md">{{t('product.sale')}}</span>
                     {% endif %}
                   </div>
                 </div>
@@ -246,7 +246,7 @@
             <a href="{{ continue_url }}"
                class="inline-flex items-center gap-2 text-[13px] text-gray-400 hover:text-gray-700 transition-colors font-medium">
               <svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"/></svg>
-              {{t('pages.cart.continue_shopping')}}
+              {{t('cart.continue_shopping')}}
             </a>
           </div>
         </div>

@@ -23,7 +23,7 @@
       }
     },
     "view_all_url": {
-      "type": "url",
+      "type": "path",
       "label": {
         "ar": "رابط عرض الكل",
         "en": "View All URL"

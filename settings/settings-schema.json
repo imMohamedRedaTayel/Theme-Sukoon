@@ -8,52 +8,52 @@
       "primaryColor": {
         "type": "color",
         "label": "اللون الأساسي",
-        "default": "#9C27B0"
+        "default": "#8FA7B0"
       },
       "primaryColorLight": {
         "type": "color",
         "label": "اللون الأساسي الفاتح",
-        "default": "#CE93D8"
+        "default": "#E8EFF2"
       },
       "primaryColorDark": {
         "type": "color",
         "label": "اللون الأساسي الغامق",
-        "default": "#7B1FA2"
+        "default": "#7A929B"
       },
       "secondaryColor": {
         "type": "color",
         "label": "اللون الثانوي",
-        "default": "#F48FB1"
+        "default": "#C9A96E"
       },
       "secondaryColorLight": {
         "type": "color",
         "label": "اللون الثانوي الفاتح",
-        "default": "#FBBAD7"
+        "default": "#E8DCC8"
       },
       "backgroundColor": {
         "type": "color",
         "label": "لون الخلفية",
-        "default": "#FFFFFF"
+        "default": "#FAFAF8"
       },
       "surfaceColor": {
         "type": "color",
         "label": "لون السطح",
-        "default": "#FAFAFA"
+        "default": "#FFFFFF"
       },
       "textColor": {
         "type": "color",
         "label": "لون النص الرئيسي",
-        "default": "#212121"
+        "default": "#2C2C2C"
       },
       "textSecondaryColor": {
         "type": "color",
         "label": "لون النص الثانوي",
-        "default": "#757575"
+        "default": "#6B6B6B"
       },
       "borderColor": {
         "type": "color",
         "label": "لون الحدود",
-        "default": "#E0E0E0"
+        "default": "#E5E2DC"
       }
     }
   },
@@ -66,70 +66,24 @@
       "fontArabic": {
         "type": "select",
         "label": "الخط العربي",
-        "default": "Tajawal",
+        "default": "IBM Plex Sans Arabic",
         "options": [
+          { "value": "IBM Plex Sans Arabic", "label": "IBM Plex Arabic" },
           { "value": "Tajawal", "label": "Tajawal" },
           { "value": "Cairo", "label": "Cairo" },
-          { "value": "Almarai", "label": "Almarai" },
-          { "value": "IBM Plex Sans Arabic", "label": "IBM Plex Arabic" }
+          { "value": "Almarai", "label": "Almarai" }
         ]
       },
       "fontEnglish": {
         "type": "select",
         "label": "الخط الإنجليزي",
-        "default": "Poppins",
+        "default": "DM Sans",
         "options": [
+          { "value": "DM Sans", "label": "DM Sans" },
           { "value": "Poppins", "label": "Poppins" },
           { "value": "Inter", "label": "Inter" },
-          { "value": "Playfair Display", "label": "Playfair Display" },
           { "value": "Montserrat", "label": "Montserrat" }
         ]
-      }
-    }
-  },
-  {
-    "label": {
-      "ar": "إعدادات عامة",
-      "en": "General Settings"
-    },
-    "settings": {
-      "buttonStyle": {
-        "type": "select",
-        "label": "شكل الأزرار",
-        "default": "rounded",
-        "options": [
-          { "value": "square", "label": "مربع" },
-          { "value": "rounded", "label": "مستدير قليلاً" },
-          { "value": "pill", "label": "كبسولة" }
-        ]
-      },
-      "productsPerRow": {
-        "type": "select",
-        "label": "عدد المنتجات في الصف",
-        "default": "4",
-        "options": [
-          { "value": "2", "label": "2 منتجات" },
-          { "value": "3", "label": "3 منتجات" },
-          { "value": "4", "label": "4 منتجات" }
-        ]
-      }
-    }
-  },
-  {
-    "label": {
-      "ar": "كود مخصص",
-      "en": "Custom Code"
-    },
-    "settings": {
-      "customCSS": {
-        "type": "css",
-        "label": "CSS مخصص",
-        "default": ""
-      },
-      "customJS": {
-        "type": "javascript",
-        "label": "JavaScript مخصص",
-        "default": ""
       }
     }
   }

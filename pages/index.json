@@ -2,19 +2,34 @@
   "layout": "layout",
   "widgets": [
     {
-      "name": "hero-section",
+      "name": "السيكشن الرئيسي",
       "widget": "hero-section"
     },
     {
-      "name": "product-grid",
+      "name": "المنتجات المميزة",
       "widget": "product-grid"
     },
     {
-      "name": "collections-section",
+      "name": "منتجات تصنيف",
       "widget": "collections-section"
     },
     {
-      "name": "testimonials-reviews",
+      "name": "بانر ترويجي",
+      "widget": "cta-banner",
+      "settings": {
+        "title": "عرض خاص لفترة محدودة",
+        "subtitle": "خصم 50% على جميع منتجات ",
+        "show_countdown": false,
+        "countdown_date": "",
+        "button_text": " الاقسام من هنا",
+        "button_link": "/collections",
+        "background_color": "linear-gradient(135deg, #2C2C2C 0%, #1a1a1a 100%)",
+        "text_color": "white",
+        "height": "large"
+      }
+    },
+    {
+      "name": "آراء العملاء",
       "widget": "testimonials-reviews",
       "blocks": [
         {
@@ -62,6 +77,10 @@
           }
         }
       ]
+    },
+    {
+      "name": "النشرة البريدية",
+      "widget": "newsletter"
     }
   ]
 }

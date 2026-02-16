@@ -1,0 +1,187 @@
+{# ===== SUKOON CTA BANNER ===== #}
+
+{% set title = widget.data.title | safe %}
+{% set subtitle = widget.data.subtitle | safe %}
+{% set badgeText = widget.data.badge_text %}
+{% set image = widget.data.image %}
+{% set overlayOpacity = widget.data.overlay_opacity | default(70) %}
+{% set bgColor = widget.data.background_color | default('linear-gradient(135deg, #2C2C2C 0%, #1a1a1a 100%)') %}
+{% set showCountdown = widget.data.show_countdown %}
+{% set countdownDate = widget.data.countdown_date %}
+{% set btnText = widget.data.button_text %}
+{% set btnLink = widget.data.button_link | default('/collections') %}
+{% set btnStyle = widget.data.button_style | default('filled') %}
+{% set align = widget.data.text_alignment | default('center') %}
+{% set fullWidth = widget.data.full_width %}
+{% set textColor = widget.data.text_color | default('white') %}
+{% set height = widget.data.height | default('medium') %}
+{% set padding = widget.data.pp %}
+
+{# Height classes #}
+{% set heightClass = 'py-20 max-lg:py-14 max-sm:py-10' %}
+{% if height == 'small' %}
+  {% set heightClass = 'py-14 max-lg:py-10 max-sm:py-8' %}
+{% elif height == 'large' %}
+  {% set heightClass = 'py-28 max-lg:py-20 max-sm:py-14' %}
+{% endif %}
+
+{# Text color classes — force white when image exists #}
+{% set hasImage = image and image.fileUrl %}
+{% set isLight = true if hasImage else (textColor == 'white') %}
+{% set titleColor = 'text-white' if isLight else 'text-gray-900' %}
+{% set subColor = 'text-white' if isLight else 'text-white' %}
+{% set mutedColor = 'text-white/80' if isLight else 'text-gray-400' %}
+
+{# Alignment classes #}
+{% set alignClass = 'text-center items-center' %}
+{% if align == 'start' %}
+  {% set alignClass = 'text-start items-start' %}
+{% elif align == 'end' %}
+  {% set alignClass = 'text-end items-end' %}
+{% endif %}
+
+<section class="" id="{{ widget.id }}" {% if padding %}style="{{ padding }}"{% endif %}>
+
+  {# Wrapper — full-width or contained #}
+  {% if not fullWidth %}
+    <div class=" ">
+  {% endif %}
+
+  {% set minH = 'min-h-[320px] max-sm:min-h-[260px]' %}
+  {% if height == 'small' %}
+    {% set minH = 'min-h-[240px] max-sm:min-h-[200px]' %}
+  {% elif height == 'large' %}
+    {% set minH = 'min-h-[420px] max-sm:min-h-[320px]' %}
+  {% endif %}
+
+  <div class="relative overflow-hidden {{ minH }} {% if not fullWidth %} {% endif %} reveal"
+       style="background: {{ bgColor }};">
+
+    {# ——— Background Image ——— #}
+    {% if image and image.fileUrl %}
+      <img src="{{ image.fileUrl }}"
+           alt="{{ title }}"
+           class="absolute inset-0 w-full h-full object-cover img-fade"
+           loading="lazy"
+           onload="this.classList.add('is-loaded')" />
+      {# Overlay #}
+      <div class="absolute inset-0" style="background: {{ bgColor }}; opacity: {{ overlayOpacity / 100 }};"></div>
+    {% endif %}
+
+    {# ——— Decorative Elements ——— #}
+    <div class="absolute -top-24 -end-24 w-96 h-96 rounded-full opacity-[0.08] pointer-events-none"
+         style="background: {% if isLight %}#fff text-white {% else %}{{ bgColor }}{% endif %}; filter: blur(40px);"></div>
+    <div class="absolute -bottom-20 -start-20 w-72 h-72 rounded-full opacity-[0.06] pointer-events-none"
+         style="background: {% if isLight %}#fff{% else %}{{ bgColor }}{% endif %}; filter: blur(30px);"></div>
+
+    {# ——— Content ——— #}
+    <div class="relative z-10 h-full flex text-white  flex-col justify-center gap-5 max-sm:gap-4 {{ alignClass }} container mx-auto px-12 max-lg:px-8 max-sm:px-5 py-14 max-lg:py-10 max-sm:py-8">
+
+      {# Badge #}
+      {% if badgeText %}
+        <span class="inline-flex text-white  items-center gap-1.5 px-4 py-1.5 rounded-full text-[11px] font-bold tracking-wide uppercase backdrop-blur-sm
+                     {% if isLight %}bg-white/15 text-white border border-white/20{% else %}bg-gray-900/10 text-gray-900 border border-gray-900/10{% endif %}">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6z"/>
+          </svg>
+          {{ badgeText }}
+        </span>
+      {% endif %}
+
+      {# Title #}
+      {% if title %}
+        <h2 class="{{ titleColor }} font-bold leading-[1.2]"
+            style="font-size: clamp(1.5rem, 4vw, 2.75rem); {% if align == 'center' %}max-width: 28ch;{% else %}max-width: 24ch;{% endif %}">
+          {{ title }}
+        </h2>
+      {% endif %}
+
+      {# Subtitle #}
+      {% if subtitle %}
+        <p class="{{ subColor }} text-[15px] max-sm:text-[13px] leading-relaxed !text-white"
+           style="{% if align == 'center' %}max-width: 50ch;{% else %}max-width: 44ch;{% endif %}">
+          {{ subtitle }}
+        </p>
+      {% endif %}
+
+      {# ——— Countdown Timer ——— #}
+      {% if showCountdown and countdownDate %}
+        <div x-data="ctaCountdown('{{ countdownDate }}')"
+             class="flex items-center gap-3 max-sm:gap-2">
+          <template x-for="unit in units" :key="unit.label">
+            <div class="flex items-center gap-3 max-sm:gap-2">
+              <div class="flex flex-col items-center">
+                <span class="w-14 h-14 max-sm:w-11 max-sm:h-11 rounded-2xl max-sm:rounded-xl flex items-center justify-center text-xl max-sm:text-base font-bold tabular-nums
+                             {% if isLight %}bg-white/15 text-white backdrop-blur-sm border border-white/10{% else %}bg-gray-900/10 text-gray-900 border border-gray-900/10{% endif %}"
+                      x-text="unit.value"></span>
+                <span class="{{ mutedColor }} text-[10px] font-medium mt-1.5" x-text="unit.label"></span>
+              </div>
+              <span class="{{ mutedColor }} text-lg font-light -mt-4 last:hidden"
+                    x-show="unit.label !== '{{ t('common.seconds') | default('ثانية') }}'">:</span>
+            </div>
+          </template>
+        </div>
+      {% endif %}
+
+      {# ——— Button ——— #}
+      {% if btnText %}
+        <a href="{{ btnLink }}"
+           class="inline-flex items-center gap-2.5 px-8 py-3.5 max-sm:px-6 max-sm:py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg mt-2
+                  {% if btnStyle == 'outline' %}
+                    {% if isLight %}border-2 border-white text-white hover:bg-white hover:text-gray-900{% else %}border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white{% endif %}
+                  {% else %}
+                    {% if isLight %}bg-white text-gray-900 hover:bg-gray-50{% else %}bg-gray-900 text-white hover:bg-gray-800{% endif %}
+                  {% endif %}">
+          {{ btnText }}
+          <svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+          </svg>
+        </a>
+      {% endif %}
+
+    </div>
+  </div>
+
+  {% if not fullWidth %}
+    </div>
+  {% endif %}
+
+</section>
+
+{# ——— Countdown Script ——— #}
+{% if showCountdown and countdownDate %}
+<script>
+  document.addEventListener('alpine:init', function() {
+    if (Alpine.data.__ctaCountdownRegistered) return;
+    Alpine.data.__ctaCountdownRegistered = true;
+    Alpine.data('ctaCountdown', function(targetDate) {
+      return {
+        units: [],
+        _interval: null,
+        init: function() {
+          var self = this;
+          self._calc(targetDate);
+          self._interval = setInterval(function() { self._calc(targetDate); }, 1000);
+        },
+        destroy: function() {
+          if (this._interval) clearInterval(this._interval);
+        },
+        _calc: function(date) {
+          var diff = Math.max(0, new Date(date).getTime() - Date.now());
+          var d = Math.floor(diff / 86400000);
+          var h = Math.floor((diff % 86400000) / 3600000);
+          var m = Math.floor((diff % 3600000) / 60000);
+          var s = Math.floor((diff % 60000) / 1000);
+          this.units = [
+            { value: String(d).padStart(2, '0'), label: '{{ t("common.days") | default("يوم") }}' },
+            { value: String(h).padStart(2, '0'), label: '{{ t("common.hours") | default("ساعة") }}' },
+            { value: String(m).padStart(2, '0'), label: '{{ t("common.minutes") | default("دقيقة") }}' },
+            { value: String(s).padStart(2, '0'), label: '{{ t("common.seconds") | default("ثانية") }}' }
+          ];
+        }
+      };
+    });
+  });
+</script>
+{% endif %}

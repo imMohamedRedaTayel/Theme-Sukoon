@@ -11,19 +11,19 @@
 
         <!-- Text -->
         <h3 class="text-[20px] font-light tracking-[-0.01em] mb-2" style="color: var(--color-text-primary);">
-            {{ data.title | default(t('pages.cart.empty_title') | default('Your cart is empty')) }}
+            {{ data.title | default(t('cart.empty_title') | default('Your cart is empty')) }}
         </h3>
         <p class="text-[14px] mb-8" style="color: var(--color-text-secondary);">
-            {{ data.subtitle | default(t('pages.cart.empty_subtitle') | default('Discover something you love')) }}
+            {{ data.subtitle | default(t('cart.empty_subtitle') | default('Discover something you love')) }}
         </p>
 
         <!-- Actions -->
         <div class="flex flex-col gap-3">
             <a href="{{ data.BtnUrl | default('/collections') }}" class="btn btn-primary w-full py-3">
-                {{ data.BtnText | default(t('pages.cart.browse') | default('Explore collections')) }}
+                {{ data.BtnText | default(t('cart.browse') | default('Explore collections')) }}
             </a>
             <a href="/latest" class="btn btn-ghost">
-                {{t('pages.cart.continue_shopping') | default('Continue browsing')}}
+                {{t('cart.continue_shopping') | default('Continue browsing')}}
             </a>
         </div>
 

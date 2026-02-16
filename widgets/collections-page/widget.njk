@@ -3,7 +3,7 @@
 {% set collections = context.collections | default(widget.data.collections) %}
 {% set title = widget.data.title | default(t('pages.collections.title')) | default('Collections') %}
 
-{{ collections | json }}
+{# {{ collections | json }} #}
 
 <section id="{{ widget.id }}" class="bg-section-a py-16 max-lg:py-12 max-sm:py-8 min-h-[60vh]">
   <div class="container mx-auto px-12 max-lg:px-6 max-sm:px-4">
@@ -62,7 +62,7 @@
                   {{ featured.title }}
                 </h2>
                 {% if featured.description %}
-                  <p class="text-sm  ont-bold text-white mt-2 max-w-lg line-clamp-2 max-sm:hidden">
+                  <p class="text-sm text-white/80 mt-2 max-w-lg line-clamp-2 max-sm:hidden">
                     {{ featured.description | safe }}
                   </p>
                 {% endif %}
@@ -140,7 +140,7 @@
         <p class="text-gray-400 text-sm mb-8 max-w-xs mx-auto">{{ t('blocks.categories.no_categories_desc') | default('Collections will appear here once added.') }}</p>
         <a href="/"
            class="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold bg-gray-900 text-white hover:bg-gray-800 transition-colors">
-          {{ t('pages.cart.continue_shopping') | default('Continue shopping') }}
+          {{ t('cart.continue_shopping') | default('Continue shopping') }}
           <svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
           </svg>

@@ -5,7 +5,7 @@
     "allowReorder": true,
     "widgets": [
         {
-            "name": "footer",
+            "name": "الفوتر الرئيسي",
             "widget": "footer"
         }
     ]
