@@ -1,0 +1,58 @@
+{
+  "name": "لافتة اقتباس",
+  "settings": {
+    "speed": {
+      "type": "range",
+      "label": { "ar": "سرعة التبديل (بالثانية)", "en": "Rotation Speed (seconds)" },
+      "default": 6, "min": 3, "max": 15, "step": 1
+    },
+    "show_divider": {
+      "type": "boolean",
+      "label": { "ar": "إظهار خط فاصل", "en": "Show Divider" },
+      "default": true
+    },
+    "quote_size": {
+      "type": "select",
+      "label": { "ar": "حجم نص الاقتباس", "en": "Quote Text Size" },
+      "default": "large",
+      "options": [
+        { "value": "small", "label": { "ar": "صغير", "en": "Small" } },
+        { "value": "medium", "label": { "ar": "متوسط", "en": "Medium" } },
+        { "value": "large", "label": { "ar": "كبير", "en": "Large" } }
+      ]
+    },
+    "custom_colors": {
+      "type": "boolean",
+      "label": { "ar": "ألوان مخصصة (أغلقه للتلقائي)", "en": "Custom Colors (off = auto)" },
+      "default": false
+    },
+    "quote_color": {
+      "type": "color",
+      "label": { "ar": "لون الاقتباس", "en": "Quote Color" },
+      "default": "#E0EFF2"
+    },
+    "author_color": {
+      "type": "color",
+      "label": { "ar": "لون اسم الكاتب", "en": "Author Color" },
+      "default": "#607D8B"
+    }
+  },
+  "blocks": {
+    "quote": {
+      "name": "اقتباس",
+      "settings": {
+        "text": {
+          "type": "text",
+          "label": { "ar": "نص الاقتباس", "en": "Quote Text" },
+          "default": "الجمال في البساطة، والأناقة في التفاصيل"
+        },
+        "author": {
+          "type": "string",
+          "label": { "ar": "الكاتب (اختياري)", "en": "Author (optional)" },
+          "default": ""
+        }
+      }
+    }
+  },
+  "presets": [{ "category": "الصفحة الرئيسية", "name": "لافتة اقتباس" }]
+}

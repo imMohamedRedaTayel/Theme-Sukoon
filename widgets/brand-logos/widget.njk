@@ -1,0 +1,103 @@
+{# ===== SUKOON BRAND LOGOS ===== #}
+
+{% set title = widget.data.title %}
+{% set speed = widget.data.speed | default(3) %}
+{% set grayscale = widget.data.grayscale | default(true) %}
+{% set bgStyle = widget.data.background_style | default('white') %}
+{% set brands = widget.blocks | default([]) %}
+
+{% set bgClass = 'bg-[var(--color-section-a)]' %}
+{% if bgStyle == 'light' %}
+  {% set bgClass = 'bg-[var(--color-section-b)]' %}
+{% elif bgStyle == 'transparent' %}
+  {% set bgClass = '' %}
+{% endif %}
+
+<style>
+  #{{ widget.id }} .brand-logo {
+    {% if grayscale %}
+      filter: grayscale(100%);
+      opacity: 0.5;
+    {% else %}
+      opacity: 0.7;
+    {% endif %}
+    transition: filter 500ms ease, opacity 500ms ease;
+  }
+  #{{ widget.id }} .brand-logo:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+  }
+</style>
+
+<section id="{{ widget.id }}" class="{{ bgClass }} reveal">
+  <div class="container mx-auto px-12 max-lg:px-6 max-sm:px-4 py-12 max-sm:py-8">
+
+    {% if title %}
+      <p class="text-center text-xs font-semibold tracking-[0.2em] uppercase text-[var(--color-text-tertiary)] mb-8 max-sm:mb-6">{{ title }}</p>
+    {% endif %}
+
+    {% if brands | length > 0 %}
+      {# Swiper for auto-scroll #}
+      <div class="swiper brand-swiper overflow-hidden" id="brandSwiper-{{ widget.id }}">
+        <div class="swiper-wrapper items-center">
+          {% for block in brands %}
+            {% set logo = block.data.logo %}
+            {% set name = block.data.name %}
+            {% set url = block.data.url %}
+            <div class="swiper-slide !w-auto">
+              {% if url %}
+                <a href="{{ url }}" class="block brand-logo px-8 max-sm:px-5" target="_blank" rel="noopener">
+              {% else %}
+                <div class="brand-logo px-8 max-sm:px-5">
+              {% endif %}
+
+              {% if logo and logo.fileUrl %}
+                <img src="{{ logo.fileUrl }}"
+                     alt="{{ name }}"
+                     class="h-10 max-sm:h-8 w-auto object-contain max-w-[140px] max-sm:max-w-[100px]"
+                     loading="lazy" />
+              {% elif name %}
+                <span class="text-lg font-semibold text-[var(--color-text-tertiary)] whitespace-nowrap">{{ name }}</span>
+              {% endif %}
+
+              {% if url %}
+                </a>
+              {% else %}
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          new Swiper('#brandSwiper-{{ widget.id }}', {
+            slidesPerView: 'auto',
+            spaceBetween: 0,
+            loop: {{ 'true' if brands | length > 4 else 'false' }},
+            speed: 3000,
+            autoplay: {
+              delay: {{ speed * 1000 }},
+              disableOnInteraction: false
+            },
+            breakpoints: {
+              0: { slidesPerView: 2 },
+              640: { slidesPerView: 3 },
+              768: { slidesPerView: 4 },
+              1024: { slidesPerView: {{ brands | length if brands | length <= 6 else 6 }} }
+            }
+          });
+        });
+      </script>
+    {% else %}
+      {# Placeholder when no brands added #}
+      <div class="flex items-center justify-center gap-12 max-sm:gap-6 opacity-30">
+        {% for i in range(5) %}
+          <div class="w-24 h-10 max-sm:w-16 max-sm:h-7 rounded-lg bg-[var(--color-border)]"></div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+  </div>
+</section>

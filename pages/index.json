@@ -3,15 +3,92 @@
   "widgets": [
     {
       "name": "السيكشن الرئيسي",
-      "widget": "hero-section"
+      "widget": "hero-section",
+      "settings": {
+        "hero_title": "اكتشف أناقتك مع سكون",
+        "hero_subtitle": "تصاميم بسيطة تعكس جمال التفاصيل",
+        "hero_button_text": "تسوق الآن",
+        "hero_button_url": "/collections",
+        "hero_layout": "full-background"
+      }
+    },
+    {
+      "name": "شريط المزايا",
+      "widget": "features-bar",
+      "settings": {
+        "background_style": "light",
+        "show_dividers": true,
+        "layout": "horizontal"
+      },
+      "blocks": [
+        {
+          "block": "feature",
+          "name": "feature1",
+          "settings": {
+            "icon": "shipping",
+            "title": "شحن مجاني",
+            "description": "على جميع الطلبات"
+          }
+        },
+        {
+          "block": "feature",
+          "name": "feature2",
+          "settings": {
+            "icon": "shield",
+            "title": "دفع آمن",
+            "description": "حماية كاملة لبياناتك"
+          }
+        },
+        {
+          "block": "feature",
+          "name": "feature3",
+          "settings": {
+            "icon": "refresh",
+            "title": "إرجاع سهل",
+            "description": "خلال 14 يوم"
+          }
+        },
+        {
+          "block": "feature",
+          "name": "feature4",
+          "settings": {
+            "icon": "headphones",
+            "title": "دعم متواصل",
+            "description": "24/7 خدمة عملاء"
+          }
+        }
+      ]
     },
     {
       "name": "المنتجات المميزة",
-      "widget": "product-grid"
+      "widget": "product-grid",
+      "settings": {
+        "title": "منتجات مميزة",
+        "subtitle": "اختيارات منسقة بعناية لتناسب ذوقك",
+        "view_all_url": "/collections"
+      }
     },
     {
       "name": "منتجات تصنيف",
-      "widget": "collections-section"
+      "widget": "collections-section",
+      "settings": {
+        "title": "تسوق حسب التصنيف",
+        "subtitle": "استكشف مجموعاتنا المتنوعة"
+      }
+    },
+    {
+      "name": "صورة مع نص",
+      "widget": "image-with-text",
+      "settings": {
+        "title": "قصتنا",
+        "subtitle": "من نحن",
+        "text": "نؤمن أن الأناقة الحقيقية تكمن في البساطة. نختار كل قطعة بعناية لنقدم لك تجربة تسوق استثنائية تجمع بين الجودة والأسلوب العصري.",
+        "button_text": "اعرف أكثر",
+        "button_url": "/about",
+        "image_position": "right",
+        "image_style": "rounded",
+        "background_style": "white"
+      }
     },
     {
       "name": "بانر ترويجي",
@@ -19,11 +96,16 @@
       "settings": {
         "title": "عرض خاص لفترة محدودة",
         "subtitle": "خصم 50% على جميع منتجات ",
+        "badge_text": "",
+        "overlay_opacity": 70,
         "show_countdown": false,
         "countdown_date": "",
-        "button_text": " الاقسام من هنا",
+        "button_text": "الاقسام من هنا",
         "button_link": "/collections",
-        "background_color": "linear-gradient(135deg, #2C2C2C 0%, #1a1a1a 100%)",
+        "button_style": "filled",
+        "text_alignment": "center",
+        "full_width": false,
+        "background_color": "linear-gradient(135deg, #1A2C32 0%, #142328 100%)",
         "text_color": "white",
         "height": "large"
       }
@@ -31,6 +113,10 @@
     {
       "name": "آراء العملاء",
       "widget": "testimonials-reviews",
+      "settings": {
+        "title": "ماذا يقول عملاؤنا",
+        "subtitle": "آراء حقيقية من عملاء سعداء"
+      },
       "blocks": [
         {
           "block": "review",
@@ -79,8 +165,110 @@
       ]
     },
     {
+      "name": "لافتة اقتباسات ملهمة",
+      "widget": "mindful-quote-banner",
+      "settings": {
+        "speed": 6,
+        "show_divider": true
+      },
+      "blocks": [
+        {
+          "block": "quote",
+          "name": "quote1",
+          "settings": {
+            "text": "الجمال في البساطة، والأناقة في التفاصيل",
+            "author": "سكون"
+          }
+        },
+        {
+          "block": "quote",
+          "name": "quote2",
+          "settings": {
+            "text": "الأناقة ليست أن تُلاحَظ، بل أن تُتذكَّر",
+            "author": "جورجيو أرماني"
+          }
+        },
+        {
+          "block": "quote",
+          "name": "quote3",
+          "settings": {
+            "text": "البساطة هي أعلى درجات الرقي",
+            "author": "ليوناردو دا فينشي"
+          }
+        }
+      ]
+    },
+    {
+      "name": "الأسئلة الشائعة",
+      "widget": "faq-accordion",
+      "settings": {
+        "title": "الأسئلة الشائعة",
+        "subtitle": "كل ما تحتاج معرفته",
+        "layout": "centered",
+        "background_style": "light"
+      },
+      "blocks": [
+        {
+          "block": "faq",
+          "name": "faq1",
+          "settings": {
+            "question": "ما هي سياسة الإرجاع؟",
+            "answer": "يمكنك إرجاع أي منتج خلال 14 يوم من تاريخ الاستلام بشرط أن يكون بحالته الأصلية مع العلامات والتغليف."
+          }
+        },
+        {
+          "block": "faq",
+          "name": "faq2",
+          "settings": {
+            "question": "كم يستغرق الشحن؟",
+            "answer": "نقدم شحن سريع خلال 2-5 أيام عمل داخل المملكة. الشحن مجاني على جميع الطلبات."
+          }
+        },
+        {
+          "block": "faq",
+          "name": "faq3",
+          "settings": {
+            "question": "هل يمكنني تتبع طلبي؟",
+            "answer": "نعم، بمجرد شحن طلبك ستصلك رسالة بريدية تحتوي على رقم التتبع ورابط لمتابعة حالة الشحنة."
+          }
+        },
+        {
+          "block": "faq",
+          "name": "faq4",
+          "settings": {
+            "question": "ما هي طرق الدفع المتاحة؟",
+            "answer": "نقبل الدفع عبر بطاقات الائتمان (فيزا، ماستركارد)، مدى، Apple Pay، وكذلك الدفع عند الاستلام."
+          }
+        },
+        {
+          "block": "faq",
+          "name": "faq5",
+          "settings": {
+            "question": "هل المقاسات دقيقة؟",
+            "answer": "نوفر جدول مقاسات تفصيلي مع كل منتج. إذا كنت غير متأكد، تواصل مع فريق الدعم وسنساعدك في اختيار المقاس المناسب."
+          }
+        }
+      ]
+    },
+    {
       "name": "النشرة البريدية",
-      "widget": "newsletter"
+      "widget": "newsletter",
+      "settings": {
+        "title": "اشترك في نشرتنا البريدية",
+        "subtitle": "كن أول من يعرف عن أحدث المنتجات والعروض الحصرية",
+        "placeholder": "أدخل بريدك الإلكتروني",
+        "button_text": "اشترك الآن",
+        "success_message": "تم الاشتراك بنجاح!",
+        "layout": "card",
+        "background_style": "dark",
+        "show_note": true,
+        "note_text": "نحترم خصوصيتك ولن نشارك بريدك مع أي طرف"
+      }
     }
+
+ 
+
+
+    
   ]
 }

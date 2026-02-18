@@ -1,0 +1,82 @@
+{
+  "name": "نبذة عنا",
+  "settings": {
+    "hero_title": {
+      "type": "string",
+      "label": "العنوان الرئيسي",
+      "default": "قصتنا"
+    },
+    "hero_subtitle": {
+      "type": "text",
+      "label": "الوصف المختصر",
+      "default": "نؤمن بأن الأناقة تبدأ من البساطة"
+    },
+    "hero_image": {
+      "type": "media",
+      "label": "صورة الهيرو"
+    },
+    "story_title": {
+      "type": "string",
+      "label": "عنوان القصة",
+      "default": "من نحن"
+    },
+    "story_text": {
+      "type": "rich-text",
+      "label": "نص القصة"
+    },
+    "story_image": {
+      "type": "media",
+      "label": "صورة القصة"
+    },
+    "mission_title": {
+      "type": "string",
+      "label": "عنوان الرؤية",
+      "default": "رؤيتنا"
+    },
+    "mission_text": {
+      "type": "text",
+      "label": "نص الرؤية"
+    },
+    "values_title": {
+      "type": "string",
+      "label": "عنوان القيم",
+      "default": "قيمنا"
+    }
+  },
+  "blocks": {
+    "value": {
+      "name": "قيمة",
+      "settings": {
+        "icon": {
+          "type": "select",
+          "label": "الأيقونة",
+          "default": "heart",
+          "options": [
+            { "value": "heart", "label": "قلب" },
+            { "value": "star", "label": "نجمة" },
+            { "value": "shield", "label": "درع" },
+            { "value": "leaf", "label": "ورقة" },
+            { "value": "gem", "label": "جوهرة" },
+            { "value": "hand", "label": "يد" }
+          ]
+        },
+        "title": {
+          "type": "string",
+          "label": "عنوان القيمة",
+          "default": "الجودة أولاً"
+        },
+        "description": {
+          "type": "text",
+          "label": "وصف القيمة",
+          "default": "نختار أجود الخامات لنقدم لك تجربة استثنائية"
+        }
+      }
+    }
+  },
+  "presets": [
+    {
+      "category": "الصفحات",
+      "name": "نبذة عنا"
+    }
+  ]
+}

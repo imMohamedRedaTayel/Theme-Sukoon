@@ -3,17 +3,26 @@
   "settings": {
     "background_color": {
       "type": "color",
-      "label": "لون الخلفية",
-      "default": "#2C2C2C"
+      "label": {
+        "ar": "لون الخلفية",
+        "en": "Background Color"
+      },
+      "default": "#00838F"
     },
     "text_color": {
       "type": "color",
-      "label": "لون النص",
+      "label": {
+        "ar": "لون النص",
+        "en": "Text Color"
+      },
       "default": "#FFFFFF"
     },
     "speed": {
       "type": "range",
-      "label": "سرعة التبديل (بالثانية)",
+      "label": {
+        "ar": "سرعة التبديل (بالثانية)",
+        "en": "Rotation Speed (seconds)"
+      },
       "default": 4,
       "min": 2,
       "max": 10,

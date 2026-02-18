@@ -86,8 +86,10 @@
 }
 
 /* وضع الداكن */
+html.dark #spinner-container { background: rgba(0,0,0,0.6); }
+html.dark .spinner-glass { background: rgba(20,20,20,0.92); border-color: rgba(255,255,255,0.1); }
 @media (prefers-color-scheme: dark) {
-  #spinner-container { background: rgba(0,0,0,0.6); }
-  .spinner-glass { background: rgba(20,20,20,0.92); border-color: rgba(255,255,255,0.1); }
+  html:not(.light) #spinner-container { background: rgba(0,0,0,0.6); }
+  html:not(.light) .spinner-glass { background: rgba(20,20,20,0.92); border-color: rgba(255,255,255,0.1); }
 }
 </style>

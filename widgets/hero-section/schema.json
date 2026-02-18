@@ -1,12 +1,45 @@
 {
-  "name": "hero-section",
+  "name": "السيكشن الرئيسي",
   "settings": {
+    "hero_layout": {
+      "type": "select",
+      "label": {
+        "ar": "تخطيط السكشن",
+        "en": "Section Layout"
+      },
+      "options": [
+        { "value": "image-right", "label": { "ar": "صورة يمين", "en": "Image Right" } },
+        { "value": "image-left", "label": { "ar": "صورة يسار", "en": "Image Left" } },
+        { "value": "full-background", "label": { "ar": "صورة خلفية كاملة", "en": "Full Background" } },
+        { "value": "text-only", "label": { "ar": "نص فقط", "en": "Text Only" } }
+      ]
+    },
+    "hero_image": {
+      "type": "media",
+      "label": {
+        "ar": "صورة الخلفية",
+        "en": "Background Image"
+      }
+    },
     "hero_title": {
       "type": "text",
       "label": {
         "ar": "العنوان الرئيسي",
         "en": "Main Title"
       }
+    },
+    "title_size": {
+      "type": "select",
+      "label": {
+        "ar": "حجم العنوان",
+        "en": "Title Size"
+      },
+      "default": "large",
+      "options": [
+        { "value": "small", "label": { "ar": "صغير", "en": "Small" } },
+        { "value": "medium", "label": { "ar": "متوسط", "en": "Medium" } },
+        { "value": "large", "label": { "ar": "كبير", "en": "Large" } }
+      ]
     },
     "hero_subtitle": {
       "type": "textarea",
@@ -29,25 +62,51 @@
         "en": "Button URL"
       }
     },
-    "hero_image": {
-      "type": "media",
+    "custom_colors": {
+      "type": "boolean",
       "label": {
-        "ar": "صورة الخلفية",
-        "en": "Background Image"
-      }
-    },
-    "hero_layout": {
-      "type": "select",
-      "label": {
-        "ar": "تخطيط السكشن",
-        "en": "Section Layout"
+        "ar": "ألوان مخصصة (أغلقه للرجوع للتلقائي)",
+        "en": "Custom Colors (turn off to reset to auto)"
       },
-      "options": [
-        { "value": "image-right", "label": { "ar": "صورة يمين", "en": "Image Right" } },
-        { "value": "image-left", "label": { "ar": "صورة يسار", "en": "Image Left" } },
-        { "value": "full-background", "label": { "ar": "صورة خلفية كاملة", "en": "Full Background" } },
-        { "value": "text-only", "label": { "ar": "نص فقط", "en": "Text Only" } }
-      ]
+      "default": false
+    },
+    "title_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون العنوان",
+        "en": "Title Color"
+      },
+      "default": "#FFFFFF"
+    },
+    "subtitle_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون الوصف",
+        "en": "Subtitle Color"
+      },
+      "default": "#FFFFFF"
+    },
+    "button_bg_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون خلفية الزر",
+        "en": "Button Background"
+      },
+      "default": "#FFFFFF"
+    },
+    "button_text_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون نص الزر",
+        "en": "Button Text Color"
+      },
+      "default": "#1A2C32"
     }
-  }
+  },
+  "presets": [
+    {
+      "category": "Hero",
+      "name": "السيكشن الرئيسي"
+    }
+  ]
 }

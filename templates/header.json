@@ -1,15 +1,17 @@
 {
     "title": "Header Group",
+    "allowAdd": true,
+    "allowRemove": true,
+    "allowReorder": true,
     "widgets": [
         {
             "name": "شريط الإعلانات",
             "widget": "announcement-bar",
             "settings": {
-              "text": "شحن مجاني للطلبات فوق 200 ريال 🎉",
-              "link": "",
-              "show_close": true,
-              "background_color": "#9C27B0",
-              "text_color": "#FFFFFF"
+              "background_color": "#00838F",
+              "text_color": "#FFFFFF",
+              "speed": 4,
+              "show_close": true
             }
           },
           {
@@ -18,7 +20,9 @@
             "settings": {
               "show_search": true,
               "show_cart": true,
-              "sticky": true
+              "sticky": true,
+              "show_language_switcher": true,
+              "show_dark_mode": true
             }
           }
     ]

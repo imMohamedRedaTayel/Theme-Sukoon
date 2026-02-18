@@ -27,6 +27,22 @@
       "type": "boolean",
       "label": "تثبيت عند التمرير",
       "default": true
+    },
+    "show_language_switcher": {
+      "type": "boolean",
+      "label": {
+        "ar": "إظهار تبديل اللغة",
+        "en": "Show Language Switcher"
+      },
+      "default": true
+    },
+    "show_dark_mode": {
+      "type": "boolean",
+      "label": {
+        "ar": "إظهار زر الوضع الداكن",
+        "en": "Show Dark Mode Toggle"
+      },
+      "default": true
     }
   },
   "presets": [

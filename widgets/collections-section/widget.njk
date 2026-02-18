@@ -4,14 +4,35 @@
 {% set title = widget.data.title | safe %}
 {% set subtitle = widget.data.subtitle | safe %}
 
+{# Text customization #}
+{% set useCustom = widget.data.custom_colors | default(false) %}
+{% set titleSizeVal = widget.data.title_size | default('large') %}
+{% if titleSizeVal == 'small' %}
+  {% set titleClamp = 'clamp(1.2rem, 2.5vw, 1.5rem)' %}
+{% elif titleSizeVal == 'medium' %}
+  {% set titleClamp = 'clamp(1.3rem, 3vw, 1.75rem)' %}
+{% else %}
+  {% set titleClamp = 'clamp(1.5rem, 3vw, 2.25rem)' %}
+{% endif %}
+{% if useCustom %}
+  {% set titleColor = widget.data.title_color | default('#1A2C32') %}
+  {% set subtitleColor = widget.data.subtitle_color | default('#546E7A') %}
+  {% set btnBg = widget.data.button_bg_color | default('#00BCD4') %}
+  {% set btnTxt = widget.data.button_text_color | default('#FFFFFF') %}
+{% else %}
+  {% set titleColor = 'var(--color-text-primary)' %}
+  {% set subtitleColor = 'var(--color-text-secondary)' %}
+  {% set btnBg = 'var(--color-accent)' %}
+  {% set btnTxt = '#fff' %}
+{% endif %}
 
 <section id="{{ widget.id }}" class="bg-section-b py-20 max-lg:py-14 max-sm:py-10 relative overflow-hidden">
 
   {# Subtle Background Accents #}
   <div class="absolute -top-20 -start-20 w-[650px] h-[650px] rounded-full pointer-events-none"
-       style="background: radial-gradient(circle, #C8DCCA 0%, transparent 60%); opacity: 0.65;"></div>
+       style="background: radial-gradient(circle, var(--color-accent) 0%, transparent 60%); opacity: 0.07;"></div>
   <div class="absolute -bottom-24 -end-24 w-[600px] h-[600px] rounded-full pointer-events-none"
-       style="background: radial-gradient(circle, #CCBEDA 0%, transparent 60%); opacity: 0.55;"></div>
+       style="background: radial-gradient(circle, var(--color-accent) 0%, transparent 60%); opacity: 0.05;"></div>
 
   <div class="container mx-auto px-12 max-lg:px-6 max-sm:px-4 relative z-10">
 
@@ -19,10 +40,10 @@
     {% if title or subtitle %}
       <div class="text-center mb-14 max-sm:mb-10 reveal  flex items-center justify-items-center flex-col">
         {% if title %}
-          <h2 class="mb-4">{{ title }}</h2>
+          <h2 class="mb-4" style="font-size: {{ titleClamp }}; color: {{ titleColor }};">{{ title }}</h2>
         {% endif %}
         {% if subtitle %}
-          <p class="text-body text-secondary" style="max-width: 50ch; margin-inline: auto;">
+          <p class="text-body" style="max-width: 50ch; margin-inline: auto; color: {{ subtitleColor }};">
             {{ subtitle }}
           </p>
         {% endif %}
@@ -31,11 +52,14 @@
 
     {# Collections Grid #}
     {% if collections and (collections | length) > 0 %}
+      {% set maxVisible = 4 %}
+      {% set showViewAll = (collections | length) > maxVisible %}
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 max-sm:gap-3">
         {% for collection in collections %}
+          {% if loop.index0 < maxVisible %}
           <a href="/collections/{{ collection.slug }}" class="group block reveal">
             {# Image Card #}
-            <div class="relative overflow-hidden rounded-2xl aspect-[3/4] bg-gray-100">
+            <div class="relative overflow-hidden rounded-2xl aspect-[3/4] bg-secondary">
               {% if collection.image and collection.image.fileUrl %}
                 <img
                   src="{{ collection.image.fileUrl }}"
@@ -46,7 +70,7 @@
                 />
               {% else %}
                 <div class="w-full h-full flex items-center justify-center">
-                  <svg class="w-10 h-10 text-gray-200" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24">
+                  <svg class="w-10 h-10 text-tertiary" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24">
                     <path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
                 </div>
@@ -73,16 +97,32 @@
               </div>
             </div>
           </a>
+          {% endif %}
         {% endfor %}
       </div>
+
+      {# View All Button #}
+      {% if showViewAll %}
+        <div class="text-center mt-10 reveal">
+          <a href="/collections"
+             class="inline-flex items-center gap-2 px-8 py-3 rounded-full text-[14px] font-medium transition-all duration-300 hover:gap-3"
+             style="background: {{ btnBg }}; color: {{ btnTxt }};">
+            <span>{{ t('blocks.categories.view_all') | default('عرض الكل') }}</span>
+            <svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
+          </a>
+        </div>
+      {% endif %}
+
     {% else %}
-      <div class="text-center py-16 reveal rounded-2xl bg-gray-50 border border-gray-100">
-        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-100 flex items-center justify-center">
-          <svg class="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24">
+      <div class="text-center py-16 reveal rounded-2xl flex items-center justify-center flex-col" style="background: var(--color-bg-secondary); border: 1px solid var(--color-border);">
+        <div class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center flex-col" style="background: var(--color-bg-tertiary);">
+          <svg class="w-8 h-8 text-tertiary" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24">
             <path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
-        <p class="text-gray-400 text-sm">{{ t('blocks.categories.no_categories') | default('No categories yet') }}</p>
+        <p class="text-tertiary text-sm">{{ t('blocks.categories.no_categories') | default('No categories yet') }}</p>
       </div>
     {% endif %}
 

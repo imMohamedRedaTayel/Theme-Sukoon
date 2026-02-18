@@ -24,7 +24,19 @@
     "menu": "Menu",
     "add_to_cart": "Add to Cart",
     "remove": "Remove",
-    "continue_shopping": "Continue Shopping"
+    "continue_shopping": "Continue Shopping",
+    "dark_mode": "Dark Mode",
+    "light_mode": "Light Mode",
+    "language": "Language",
+    "days": "Days",
+    "hours": "Hours",
+    "minutes": "Minutes",
+    "seconds": "Seconds",
+    "subscribe": "Subscribe",
+    "email": "Email",
+    "about": "About Us",
+    "contact": "Contact Us",
+    "faq": "FAQ"
   },
   "blocks": {
     "header": {
@@ -44,16 +56,49 @@
       "download_now": "Download now"
     },
     "products": {
+      "title": "Featured Products",
+      "subtitle": "Carefully curated selections to match your taste",
       "view_all": "View all",
       "no_products": "No products yet"
     },
     "categories": {
+      "title": "Shop by Category",
+      "subtitle": "Explore our diverse collections",
       "products_count": "products",
       "no_categories": "No categories yet",
-      "no_categories_desc": "Collections will appear here once added."
+      "no_categories_desc": "Collections will appear here once added.", 
+      "view_all": "View all"
+
     },
     "testimonials": {
+      "title": "What Our Customers Say",
+      "subtitle": "Real reviews from happy customers",
       "no_reviews": "No reviews yet"
+    },
+    "newsletter": {
+      "title": "Subscribe to Our Newsletter",
+      "subtitle": "Be the first to know about new products and exclusive offers",
+      "placeholder": "Enter your email",
+      "button": "Subscribe Now",
+      "success": "Subscribed successfully!",
+      "privacy": "We respect your privacy and won't share your email"
+    },
+    "features": {
+      "shipping": "Free Shipping",
+      "shipping_desc": "On all orders",
+      "payment": "Secure Payment",
+      "payment_desc": "Complete data protection",
+      "returns": "Easy Returns",
+      "returns_desc": "Within 14 days",
+      "support": "24/7 Support",
+      "support_desc": "Round-the-clock service"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Everything you need to know"
+    },
+    "brands": {
+      "title": "Brands We're Proud Of"
     },
     "footer": {
       "rights": "All rights reserved",
@@ -87,7 +132,7 @@
       "new": "New",
       "sale": "Sale",
       "discount": "{{percent}}% OFF",
-      "related_products": "You may also like",
+      "related_products": "You May Also Like",
       "no_reviews": "No reviews yet",
       "select_option": "Select {{option}}",
       "choose_options": "Choose Options",
@@ -158,6 +203,12 @@
       "easy_returns_desc": "14-day return policy",
       "support": "24/7 Support",
       "support_desc": "Round-the-clock customer service"
+    },
+    "about": {
+      "title": "About Us",
+      "story_label": "Our Story",
+      "mission_label": "Our Mission",
+      "values_label": "Our Values"
     },
     "order": {
       "can_edit_or_delete_your_review_within": "You can edit or delete your review within",

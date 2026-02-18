@@ -24,7 +24,19 @@
     "menu": "القائمة",
     "add_to_cart": "أضف للسلة",
     "remove": "إزالة",
-    "continue_shopping": "متابعة التسوق"
+    "continue_shopping": "متابعة التسوق",
+    "dark_mode": "الوضع الداكن",
+    "light_mode": "الوضع الفاتح",
+    "language": "اللغة",
+    "days": "يوم",
+    "hours": "ساعة",
+    "minutes": "دقيقة",
+    "seconds": "ثانية",
+    "subscribe": "اشترك",
+    "email": "البريد الإلكتروني",
+    "about": "نبذة عنا",
+    "contact": "اتصل بنا",
+    "faq": "الأسئلة الشائعة"
   },
   "blocks": {
     "header": {
@@ -44,16 +56,48 @@
       "download_now": "حمّله الآن"
     },
     "products": {
+      "title": "منتجات مميزة",
+      "subtitle": "اختيارات منسقة بعناية لتناسب ذوقك",
       "view_all": "عرض الكل",
       "no_products": "لا توجد منتجات حتى الآن"
     },
     "categories": {
+      "title": "تسوق حسب التصنيف",
+      "subtitle": "استكشف مجموعاتنا المتنوعة",
       "products_count": "منتج",
       "no_categories": "لا توجد تصنيفات حتى الآن",
-      "no_categories_desc": "ستظهر التصنيفات هنا بمجرد إضافتها."
+      "no_categories_desc": "ستظهر التصنيفات هنا بمجرد إضافتها.", 
+      "view_all":"عرض الكل"
     },
     "testimonials": {
+      "title": "ماذا يقول عملاؤنا",
+      "subtitle": "آراء حقيقية من عملاء سعداء",
       "no_reviews": "لا توجد تقييمات بعد"
+    },
+    "newsletter": {
+      "title": "اشترك في نشرتنا البريدية",
+      "subtitle": "كن أول من يعرف عن أحدث المنتجات والعروض الحصرية",
+      "placeholder": "أدخل بريدك الإلكتروني",
+      "button": "اشترك الآن",
+      "success": "تم الاشتراك بنجاح!",
+      "privacy": "نحترم خصوصيتك ولن نشارك بريدك مع أي طرف"
+    },
+    "features": {
+      "shipping": "شحن مجاني",
+      "shipping_desc": "على جميع الطلبات",
+      "payment": "دفع آمن",
+      "payment_desc": "حماية كاملة لبياناتك",
+      "returns": "إرجاع سهل",
+      "returns_desc": "خلال 14 يوم",
+      "support": "دعم متواصل",
+      "support_desc": "24/7 خدمة عملاء"
+    },
+    "faq": {
+      "title": "الأسئلة الشائعة",
+      "subtitle": "كل ما تحتاج معرفته"
+    },
+    "brands": {
+      "title": "ماركات نفتخر بها"
     },
     "footer": {
       "rights": "جميع الحقوق محفوظة",
@@ -158,6 +202,12 @@
       "easy_returns_desc": "إرجاع خلال 14 يوم",
       "support": "دعم متواصل",
       "support_desc": "خدمة عملاء على مدار الساعة"
+    },
+    "about": {
+      "title": "نبذة عنا",
+      "story_label": "قصتنا",
+      "mission_label": "رسالتنا",
+      "values_label": "قيمنا"
     },
     "order": {
       "can_edit_or_delete_your_review_within": "يمكنك تعديل أو حذف تقييمك خلال",

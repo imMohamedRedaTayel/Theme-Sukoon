@@ -1,19 +1,38 @@
 {
-  "name": "testimonials-reviews",
+  "name": "آراء العملاء",
   "settings": {
     "title": {
       "type": "text",
-      "label": {
-        "ar": "العنوان",
-        "en": "Title"
-      }
+      "label": { "ar": "العنوان", "en": "Title" }
     },
     "subtitle": {
       "type": "textarea",
-      "label": {
-        "ar": "النص التوضيحي",
-        "en": "Subtitle"
-      }
+      "label": { "ar": "النص التوضيحي", "en": "Subtitle" }
+    },
+    "title_size": {
+      "type": "select",
+      "label": { "ar": "حجم العنوان", "en": "Title Size" },
+      "default": "large",
+      "options": [
+        { "value": "small", "label": { "ar": "صغير", "en": "Small" } },
+        { "value": "medium", "label": { "ar": "متوسط", "en": "Medium" } },
+        { "value": "large", "label": { "ar": "كبير", "en": "Large" } }
+      ]
+    },
+    "custom_colors": {
+      "type": "boolean",
+      "label": { "ar": "ألوان مخصصة (أغلقه للتلقائي)", "en": "Custom Colors (off = auto)" },
+      "default": false
+    },
+    "title_color": {
+      "type": "color",
+      "label": { "ar": "لون العنوان", "en": "Title Color" },
+      "default": "#1A2C32"
+    },
+    "subtitle_color": {
+      "type": "color",
+      "label": { "ar": "لون الوصف", "en": "Subtitle Color" },
+      "default": "#546E7A"
     }
   },
   "blocks": {
@@ -22,50 +41,27 @@
       "settings": {
         "reviewer_name": {
           "type": "string",
-          "label": {
-            "ar": "اسم العميل",
-            "en": "Reviewer Name"
-          }
+          "label": { "ar": "اسم العميل", "en": "Reviewer Name" }
         },
         "reviewer_role": {
           "type": "string",
-          "label": {
-            "ar": "الوصف / المسمى",
-            "en": "Role / Title"
-          }
+          "label": { "ar": "الوصف / المسمى", "en": "Role / Title" }
         },
         "review_text": {
           "type": "textarea",
-          "label": {
-            "ar": "نص التقييم",
-            "en": "Review Text"
-          }
+          "label": { "ar": "نص التقييم", "en": "Review Text" }
         },
         "rating": {
           "type": "number",
-          "label": {
-            "ar": "التقييم (1-5)",
-            "en": "Rating (1-5)"
-          },
-          "default": 5,
-          "min": 1,
-          "max": 5,
-          "step": 1
+          "label": { "ar": "التقييم (1-5)", "en": "Rating (1-5)" },
+          "default": 5, "min": 1, "max": 5, "step": 1
         },
         "avatar": {
           "type": "media",
-          "label": {
-            "ar": "صورة العميل",
-            "en": "Reviewer Photo"
-          }
+          "label": { "ar": "صورة العميل", "en": "Reviewer Photo" }
         }
       }
     }
   },
-  "presets": [
-    {
-      "category": "عام",
-      "name": "تقييمات العملاء"
-    }
-  ]
+  "presets": [{ "category": "عام", "name": "تقييمات العملاء" }]
 }

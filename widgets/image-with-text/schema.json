@@ -1,0 +1,103 @@
+{
+  "name": "صورة مع نص",
+  "settings": {
+    "title": {
+      "type": "text",
+      "label": { "ar": "العنوان", "en": "Title" }
+    },
+    "subtitle": {
+      "type": "string",
+      "label": { "ar": "العنوان الفرعي", "en": "Subtitle" },
+      "default": ""
+    },
+    "text": {
+      "type": "rich-text",
+      "label": { "ar": "النص", "en": "Text" }
+    },
+    "image": {
+      "type": "media",
+      "label": { "ar": "الصورة", "en": "Image" }
+    },
+    "button_text": {
+      "type": "string",
+      "label": { "ar": "نص الزر", "en": "Button Text" },
+      "default": ""
+    },
+    "button_url": {
+      "type": "path",
+      "label": { "ar": "رابط الزر", "en": "Button URL" },
+      "default": ""
+    },
+    "image_position": {
+      "type": "select",
+      "label": { "ar": "موضع الصورة", "en": "Image Position" },
+      "default": "right",
+      "options": [
+        { "value": "right", "label": { "ar": "يمين", "en": "Right" } },
+        { "value": "left", "label": { "ar": "يسار", "en": "Left" } }
+      ]
+    },
+    "image_style": {
+      "type": "select",
+      "label": { "ar": "شكل الصورة", "en": "Image Style" },
+      "default": "rounded",
+      "options": [
+        { "value": "rounded", "label": { "ar": "مستدير الأطراف", "en": "Rounded" } },
+        { "value": "square", "label": { "ar": "مربع", "en": "Square" } },
+        { "value": "circle", "label": { "ar": "دائري", "en": "Circle" } }
+      ]
+    },
+    "background_style": {
+      "type": "select",
+      "label": { "ar": "نمط الخلفية", "en": "Background Style" },
+      "default": "transparent",
+      "options": [
+        { "value": "transparent", "label": { "ar": "شفاف", "en": "Transparent" } },
+        { "value": "light", "label": { "ar": "فاتح", "en": "Light" } },
+        { "value": "dark", "label": { "ar": "داكن", "en": "Dark" } },
+        { "value": "accent", "label": { "ar": "اللون الأساسي", "en": "Accent" } }
+      ]
+    },
+    "pp": {
+      "type": "spacing",
+      "label": "Padding",
+      "default": ""
+    },
+    "title_size": {
+      "type": "select",
+      "label": { "ar": "حجم العنوان", "en": "Title Size" },
+      "default": "large",
+      "options": [
+        { "value": "small", "label": { "ar": "صغير", "en": "Small" } },
+        { "value": "medium", "label": { "ar": "متوسط", "en": "Medium" } },
+        { "value": "large", "label": { "ar": "كبير", "en": "Large" } }
+      ]
+    },
+    "custom_colors": {
+      "type": "boolean",
+      "label": { "ar": "ألوان مخصصة (أغلقه للتلقائي)", "en": "Custom Colors (off = auto)" },
+      "default": false
+    },
+    "title_color": {
+      "type": "color",
+      "label": { "ar": "لون العنوان", "en": "Title Color" },
+      "default": "#1A2C32"
+    },
+    "subtitle_color": {
+      "type": "color",
+      "label": { "ar": "لون الوصف", "en": "Subtitle Color" },
+      "default": "#546E7A"
+    },
+    "button_bg_color": {
+      "type": "color",
+      "label": { "ar": "لون خلفية الزر", "en": "Button Background" },
+      "default": "#00BCD4"
+    },
+    "button_text_color": {
+      "type": "color",
+      "label": { "ar": "لون نص الزر", "en": "Button Text Color" },
+      "default": "#FFFFFF"
+    }
+  },
+  "presets": [{ "category": "الصفحة الرئيسية", "name": "صورة مع نص" }]
+}

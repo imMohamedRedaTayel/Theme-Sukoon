@@ -5,7 +5,7 @@
 {% set badgeText = widget.data.badge_text %}
 {% set image = widget.data.image %}
 {% set overlayOpacity = widget.data.overlay_opacity | default(70) %}
-{% set bgColor = widget.data.background_color | default('linear-gradient(135deg, #2C2C2C 0%, #1a1a1a 100%)') %}
+{% set bgColor = widget.data.background_color | default('linear-gradient(135deg, #1A2C32 0%, #142328 100%)') %}
 {% set showCountdown = widget.data.show_countdown %}
 {% set countdownDate = widget.data.countdown_date %}
 {% set btnText = widget.data.button_text %}
@@ -25,12 +25,26 @@
   {% set heightClass = 'py-28 max-lg:py-20 max-sm:py-14' %}
 {% endif %}
 
+{# Title size #}
+{% set titleSizeVal = widget.data.title_size | default('large') %}
+{% if titleSizeVal == 'small' %}
+  {% set titleClamp = 'clamp(1.2rem, 3vw, 2rem)' %}
+{% elif titleSizeVal == 'medium' %}
+  {% set titleClamp = 'clamp(1.3rem, 3.5vw, 2.25rem)' %}
+{% else %}
+  {% set titleClamp = 'clamp(1.5rem, 4vw, 2.75rem)' %}
+{% endif %}
+
+{# Button colors from schema #}
+{% set ctaBtnBg = widget.data.button_bg_color | default('#FFFFFF') %}
+{% set ctaBtnTxt = widget.data.button_text_color | default('#1A2C32') %}
+
 {# Text color classes — force white when image exists #}
 {% set hasImage = image and image.fileUrl %}
 {% set isLight = true if hasImage else (textColor == 'white') %}
-{% set titleColor = 'text-white' if isLight else 'text-gray-900' %}
+{% set titleColor = 'text-white' if isLight else 'text-primary' %}
 {% set subColor = 'text-white' if isLight else 'text-white' %}
-{% set mutedColor = 'text-white/80' if isLight else 'text-gray-400' %}
+{% set mutedColor = 'text-white/80' if isLight else 'text-secondary' %}
 
 {# Alignment classes #}
 {% set alignClass = 'text-center items-center' %}
@@ -61,7 +75,8 @@
     {% if image and image.fileUrl %}
       <img src="{{ image.fileUrl }}"
            alt="{{ title }}"
-           class="absolute inset-0 w-full h-full object-cover img-fade"
+           class="absolute inset-0 w-full h-full object-cover parallax-hero img-fade"
+           style="transform: scale(1.05);"
            loading="lazy"
            onload="this.classList.add('is-loaded')" />
       {# Overlay #}
@@ -79,8 +94,8 @@
 
       {# Badge #}
       {% if badgeText %}
-        <span class="inline-flex text-white  items-center gap-1.5 px-4 py-1.5 rounded-full text-[11px] font-bold tracking-wide uppercase backdrop-blur-sm
-                     {% if isLight %}bg-white/15 text-white border border-white/20{% else %}bg-gray-900/10 text-gray-900 border border-gray-900/10{% endif %}">
+        <span class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[11px] font-bold tracking-wide uppercase backdrop-blur-sm
+                     {% if isLight %}bg-white/15 text-white border border-white/20{% else %}bg-[var(--color-accent-light)] text-[var(--color-accent)] border border-[var(--color-border)]{% endif %}">
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"/>
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6z"/>
@@ -92,7 +107,7 @@
       {# Title #}
       {% if title %}
         <h2 class="{{ titleColor }} font-bold leading-[1.2]"
-            style="font-size: clamp(1.5rem, 4vw, 2.75rem); {% if align == 'center' %}max-width: 28ch;{% else %}max-width: 24ch;{% endif %}">
+            style="font-size: {{ titleClamp }}; {% if align == 'center' %}max-width: 28ch;{% else %}max-width: 24ch;{% endif %}">
           {{ title }}
         </h2>
       {% endif %}
@@ -113,7 +128,7 @@
             <div class="flex items-center gap-3 max-sm:gap-2">
               <div class="flex flex-col items-center">
                 <span class="w-14 h-14 max-sm:w-11 max-sm:h-11 rounded-2xl max-sm:rounded-xl flex items-center justify-center text-xl max-sm:text-base font-bold tabular-nums
-                             {% if isLight %}bg-white/15 text-white backdrop-blur-sm border border-white/10{% else %}bg-gray-900/10 text-gray-900 border border-gray-900/10{% endif %}"
+                             {% if isLight %}bg-white/15 text-white backdrop-blur-sm border border-white/10{% else %}bg-[var(--color-accent-light)] text-primary border border-[var(--color-border)]{% endif %}"
                       x-text="unit.value"></span>
                 <span class="{{ mutedColor }} text-[10px] font-medium mt-1.5" x-text="unit.label"></span>
               </div>
@@ -127,12 +142,9 @@
       {# ——— Button ——— #}
       {% if btnText %}
         <a href="{{ btnLink }}"
-           class="inline-flex items-center gap-2.5 px-8 py-3.5 max-sm:px-6 max-sm:py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg mt-2
-                  {% if btnStyle == 'outline' %}
-                    {% if isLight %}border-2 border-white text-white hover:bg-white hover:text-gray-900{% else %}border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white{% endif %}
-                  {% else %}
-                    {% if isLight %}bg-white text-gray-900 hover:bg-gray-50{% else %}bg-gray-900 text-white hover:bg-gray-800{% endif %}
-                  {% endif %}">
+           class="{% if isLight %}btn-breathe-white{% else %}btn-breathe{% endif %} inline-flex items-center gap-2.5 px-8 py-3.5 max-sm:px-6 max-sm:py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg mt-2
+                  {% if btnStyle == 'outline' %}border-2{% endif %}"
+           style="{% if btnStyle == 'outline' %}border-color: {{ ctaBtnBg }}; color: {{ ctaBtnBg }}; background: transparent;{% else %}background: {{ ctaBtnBg }}; color: {{ ctaBtnTxt }};{% endif %}">
           {{ btnText }}
           <svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>

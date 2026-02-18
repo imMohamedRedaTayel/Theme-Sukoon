@@ -1,0 +1,76 @@
+{
+  "name": "الأسئلة الشائعة",
+  "settings": {
+    "title": {
+      "type": "text",
+      "label": { "ar": "العنوان", "en": "Title" },
+      "default": "الأسئلة الشائعة"
+    },
+    "subtitle": {
+      "type": "textarea",
+      "label": { "ar": "النص التوضيحي", "en": "Subtitle" },
+      "default": ""
+    },
+    "layout": {
+      "type": "select",
+      "label": { "ar": "التخطيط", "en": "Layout" },
+      "default": "centered",
+      "options": [
+        { "value": "centered", "label": { "ar": "وسط", "en": "Centered" } },
+        { "value": "side-by-side", "label": { "ar": "جنب لجنب", "en": "Side by Side" } }
+      ]
+    },
+    "background_style": {
+      "type": "select",
+      "label": { "ar": "نمط الخلفية", "en": "Background Style" },
+      "default": "white",
+      "options": [
+        { "value": "white", "label": { "ar": "أبيض", "en": "White" } },
+        { "value": "light", "label": { "ar": "فاتح", "en": "Light" } }
+      ]
+    },
+    "title_size": {
+      "type": "select",
+      "label": { "ar": "حجم العنوان", "en": "Title Size" },
+      "default": "large",
+      "options": [
+        { "value": "small", "label": { "ar": "صغير", "en": "Small" } },
+        { "value": "medium", "label": { "ar": "متوسط", "en": "Medium" } },
+        { "value": "large", "label": { "ar": "كبير", "en": "Large" } }
+      ]
+    },
+    "custom_colors": {
+      "type": "boolean",
+      "label": { "ar": "ألوان مخصصة (أغلقه للتلقائي)", "en": "Custom Colors (off = auto)" },
+      "default": false
+    },
+    "title_color": {
+      "type": "color",
+      "label": { "ar": "لون العنوان", "en": "Title Color" },
+      "default": "#1A2C32"
+    },
+    "subtitle_color": {
+      "type": "color",
+      "label": { "ar": "لون الوصف", "en": "Subtitle Color" },
+      "default": "#546E7A"
+    }
+  },
+  "blocks": {
+    "faq": {
+      "name": "سؤال",
+      "settings": {
+        "question": {
+          "type": "text",
+          "label": { "ar": "السؤال", "en": "Question" },
+          "default": "ما هي سياسة الإرجاع؟"
+        },
+        "answer": {
+          "type": "rich-text",
+          "label": { "ar": "الإجابة", "en": "Answer" },
+          "default": "يمكنك إرجاع المنتج خلال 14 يوم من تاريخ الاستلام."
+        }
+      }
+    }
+  },
+  "presets": [{ "category": "عام", "name": "الأسئلة الشائعة" }]
+}

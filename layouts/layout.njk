@@ -1,26 +1,62 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="{{ localization.language | default('ar') }}" dir="{{ 'ltr' if localization.language == 'en' else 'rtl' }}">
   <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    {# Google Fonts #}
+    {# Dark Mode — apply before paint to prevent flash #}
+    <script>
+      (function() {
+        var stored = localStorage.getItem('sukoon-dark-mode');
+        if (stored === 'true' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
+
+    {# Google Fonts — Dynamic from settings #}
+    {% set fontAr = settings.fontArabic | default('IBM Plex Sans Arabic') %}
+    {% set fontEn = settings.fontEnglish | default('DM Sans') %}
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family={{ fontAr | replace(' ', '+') }}:wght@300;400;500;600;700&family={{ fontEn | replace(' ', '+') }}:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 
     {% seo %}
     {% qumra_head %}
 
-
     {# Style Css #}
     <link rel="stylesheet" href="{{ 'style.css' | assets }}"/>
+
+    {# Dynamic Theme — Colors & Fonts from Settings #}
+    <style>
+      :root {
+        --color-accent: {{ settings.primaryColor | default('#00BCD4') }};
+        --color-accent-hover: {{ settings.primaryColorDark | default('#00838F') }};
+        --color-accent-light: {{ settings.primaryColorLight | default('#B2EBF2') }};
+        --color-primary: {{ settings.primaryColor | default('#00BCD4') }};
+        --color-primary-dark: {{ settings.primaryColorDark | default('#00838F') }};
+        --color-border-focus: {{ settings.primaryColor | default('#00BCD4') }};
+        --color-bg-primary: {{ settings.backgroundColor | default('#F8FAFB') }};
+        --color-surface: {{ settings.surfaceColor | default('#FFFFFF') }};
+        --color-section-a: {{ settings.surfaceColor | default('#FFFFFF') }};
+        --color-text-primary: {{ settings.textColor | default('#1A2C32') }};
+        --color-text-secondary: {{ settings.textSecondaryColor | default('#546E7A') }};
+        --color-border: {{ settings.borderColor | default('#D4DFE2') }};
+        --color-warning: {{ settings.secondaryColor | default('#C9A96E') }};
+        --color-header-text: {{ settings.textColor | default('#1A2C32') }};
+        --font-heading-ar: '{{ fontAr }}', system-ui, -apple-system, sans-serif;
+        --font-heading-en: '{{ fontEn }}', system-ui, -apple-system, sans-serif;
+        --font-body-ar: '{{ fontAr }}', system-ui, -apple-system, sans-serif;
+        --font-body-en: '{{ fontEn }}', system-ui, -apple-system, sans-serif;
+      }
+    </style>
 
     {# Tailwind CSS — CDN first, then config #}
     <script src="https://cdn.tailwindcss.com"></script>
 
     <script>
       tailwind.config = {
+        darkMode: 'class',
         theme: {
           extend: {
             colors: {
@@ -60,10 +96,10 @@
               focus: 'var(--color-border-focus)',
             },
             fontFamily: {
-              'heading-ar': ['IBM Plex Sans Arabic', 'system-ui', '-apple-system', 'sans-serif'],
-              'heading-en': ['DM Sans', 'system-ui', '-apple-system', 'sans-serif'],
-              'body-ar': ['IBM Plex Sans Arabic', 'system-ui', '-apple-system', 'sans-serif'],
-              'body-en': ['DM Sans', 'system-ui', '-apple-system', 'sans-serif'],
+              'heading-ar': ['{{ fontAr }}', 'system-ui', '-apple-system', 'sans-serif'],
+              'heading-en': ['{{ fontEn }}', 'system-ui', '-apple-system', 'sans-serif'],
+              'body-ar': ['{{ fontAr }}', 'system-ui', '-apple-system', 'sans-serif'],
+              'body-en': ['{{ fontEn }}', 'system-ui', '-apple-system', 'sans-serif'],
             },
             borderRadius: {
               none: '0px',
@@ -116,6 +152,20 @@
     {# GLightbox #}
     <script src="https://cdn.jsdelivr.net/npm/glightbox@3/dist/js/glightbox.min.js"></script>
 
+    {# Alpine.js — Dark Mode Store (must be before Alpine loads) #}
+    <script>
+      document.addEventListener('alpine:init', function() {
+        Alpine.store('darkMode', {
+          on: document.documentElement.classList.contains('dark'),
+          toggle: function() {
+            this.on = !this.on;
+            document.documentElement.classList.toggle('dark', this.on);
+            localStorage.setItem('sukoon-dark-mode', this.on);
+          }
+        });
+      });
+    </script>
+
     {# Alpine.js #}
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
@@ -137,8 +187,9 @@
       };
     </script>
 
-        {# qumra_scripts #}
+    {# qumra_scripts #}
     {% qumra_scripts %}
+    
     {# Main Js — must load BEFORE qumra_scripts so Alpine finds xData functions #}
     <script src="{{ 'main.js' | assets }}"></script>
 

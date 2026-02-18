@@ -1,0 +1,142 @@
+{# ===== SUKOON IMAGE WITH TEXT ===== #}
+
+{% set title = widget.data.title | safe %}
+{% set subtitle = widget.data.subtitle %}
+{% set text = widget.data.text | safe %}
+{% set image = widget.data.image %}
+{% set btnText = widget.data.button_text %}
+{% set btnUrl = widget.data.button_url | default('#') %}
+{% set imgPos = widget.data.image_position | default('right') %}
+{% set imgStyle = widget.data.image_style | default('rounded') %}
+{% set bgStyle = widget.data.background_style | default('transparent') %}
+{% set padding = widget.data.pp %}
+
+{# Background — same system as features-bar #}
+{% set bgClass = '' %}
+{% set textColor = 'var(--color-text-primary)' %}
+{% set subTextColor = 'var(--color-text-secondary)' %}
+{% set accentColor = 'var(--color-accent)' %}
+{% set lineColor = 'var(--color-accent)' %}
+{% set btnBg = 'var(--color-accent)' %}
+{% set btnBgHover = 'var(--color-accent-hover)' %}
+{% set btnTextColor = '#fff' %}
+
+{% if bgStyle == 'light' %}
+  {% set bgClass = 'bg-[var(--color-section-b)]' %}
+{% elif bgStyle == 'dark' %}
+  {% set textColor = '#fff' %}
+  {% set subTextColor = 'rgba(255,255,255,0.7)' %}
+  {% set accentColor = '#fff' %}
+  {% set lineColor = 'rgba(255,255,255,0.3)' %}
+  {% set btnBg = '#fff' %}
+  {% set btnBgHover = 'rgba(255,255,255,0.9)' %}
+  {% set btnTextColor = '#1A2C32' %}
+{% elif bgStyle == 'accent' %}
+  {% set textColor = '#fff' %}
+  {% set subTextColor = 'rgba(255,255,255,0.8)' %}
+  {% set accentColor = '#fff' %}
+  {% set lineColor = 'rgba(255,255,255,0.4)' %}
+  {% set btnBg = '#fff' %}
+  {% set btnBgHover = 'rgba(255,255,255,0.9)' %}
+  {% set btnTextColor = 'var(--color-accent)' %}
+{% endif %}
+
+{# Text customization overrides #}
+{% set useCustom = widget.data.custom_colors | default(false) %}
+{% set titleSizeVal = widget.data.title_size | default('large') %}
+{% if titleSizeVal == 'small' %}
+  {% set titleClamp = 'clamp(1.2rem, 2.5vw, 1.5rem)' %}
+{% elif titleSizeVal == 'medium' %}
+  {% set titleClamp = 'clamp(1.3rem, 3vw, 1.75rem)' %}
+{% else %}
+  {% set titleClamp = 'clamp(1.5rem, 3vw, 2.25rem)' %}
+{% endif %}
+{% if useCustom %}
+  {% set textColor = widget.data.title_color | default('#1A2C32') %}
+  {% set subTextColor = widget.data.subtitle_color | default('#546E7A') %}
+  {% set btnBg = widget.data.button_bg_color | default('#00BCD4') %}
+  {% set btnTextColor = widget.data.button_text_color | default('#FFFFFF') %}
+{% endif %}
+
+{# Image shape #}
+{% set imgRadius = 'rounded-2xl' %}
+{% if imgStyle == 'square' %}
+  {% set imgRadius = 'rounded-none' %}
+{% elif imgStyle == 'circle' %}
+  {% set imgRadius = 'rounded-full' %}
+{% endif %}
+
+<section id="{{ widget.id }}" class="{{ bgClass }} relative overflow-hidden"
+         style="{% if bgStyle == 'dark' %}background: linear-gradient(135deg, #1A2C32 0%, #142328 100%);{% elif bgStyle == 'accent' %}background: var(--color-accent);{% endif %}{% if padding %} {{ padding }}{% endif %}">
+
+  {# Decorative accents #}
+  {% if bgStyle == 'transparent' or bgStyle == 'light' %}
+    <div class="absolute -top-32 -end-32 w-[500px] h-[500px] rounded-full pointer-events-none"
+         style="background: radial-gradient(circle, var(--color-accent) 0%, transparent 60%); opacity: 0.08;"></div>
+  {% endif %}
+
+  <div class="container mx-auto px-12 max-lg:px-6 max-sm:px-4 py-20 max-lg:py-14 max-sm:py-10">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 max-lg:gap-10 items-center">
+
+      {# ——— Image Side ——— #}
+      {% if image and image.fileUrl %}
+        <div class="{% if imgPos == 'right' %}lg:order-2{% endif %} reveal">
+          <div class="relative">
+            <div class="overflow-hidden {{ imgRadius }} aspect-square {% if imgStyle == 'circle' %}max-w-md mx-auto{% endif %} shadow-lg">
+              <img src="{{ image.fileUrl }}"
+                   alt="{{ title }}"
+                   class="w-full h-full object-cover img-fade"
+                   loading="lazy"
+                   onload="this.classList.add('is-loaded')" />
+            </div>
+            {# Floating accent shape #}
+            {% if bgStyle == 'transparent' or bgStyle == 'light' %}
+              <div class="absolute -bottom-4 {% if imgPos == 'right' %}-start-4{% else %}-end-4{% endif %} w-24 h-24 rounded-2xl -rotate-6 -z-10 max-sm:hidden"
+                   style="background: var(--color-accent-light); border: 1px solid var(--color-border);"></div>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+
+      {# ——— Text Side ——— #}
+      <div class="{% if imgPos == 'right' %}lg:order-1{% endif %} reveal">
+
+        {% if subtitle %}
+          <span class="inline-block text-[11px] font-bold tracking-[0.2em] uppercase mb-4"
+                style="color: {{ accentColor }};">
+            {{ subtitle }}
+          </span>
+        {% endif %}
+
+        {% if title %}
+          <h2 class="mb-6 max-sm:mb-4" style="font-size: {{ titleClamp }}; color: {{ textColor }};">
+            {{ title }}
+          </h2>
+        {% endif %}
+
+        {# Accent line #}
+        <div class="w-12 h-[2px] rounded-full mb-6 max-sm:mb-5" style="background: {{ lineColor }};"></div>
+
+        {% if text %}
+          <div class="text-[15px] leading-[1.9] mb-8 max-sm:mb-6 prose-content" style="color: {{ subTextColor }};">
+            {{ text }}
+          </div>
+        {% endif %}
+
+        {% if btnText %}
+          <a href="{{ btnUrl }}"
+             class="inline-flex items-center gap-2.5 px-8 py-3.5 max-sm:px-6 max-sm:py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
+             style="background: {{ btnBg }}; color: {{ btnTextColor }};"
+             onmouseenter="this.style.background='{{ btnBgHover }}'"
+             onmouseleave="this.style.background='{{ btnBg }}'">
+            {{ btnText }}
+            <svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+            </svg>
+          </a>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+</section>

@@ -1,19 +1,39 @@
 {# ===== SUKOON PRODUCT GRID ===== #}
 
-{# {{ widget | json }} #}
-
 {% set products = widget.data.products %}
 {% set title = widget.data.title | safe %}
 {% set subtitle = widget.data.subtitle | safe %}
 {% set viewAllUrl = widget.data.view_all_url %}
 
+{# Text customization #}
+{% set useCustom = widget.data.custom_colors | default(false) %}
+{% set titleSizeVal = widget.data.title_size | default('large') %}
+{% if titleSizeVal == 'small' %}
+  {% set titleClamp = 'clamp(1.2rem, 2.5vw, 1.5rem)' %}
+{% elif titleSizeVal == 'medium' %}
+  {% set titleClamp = 'clamp(1.3rem, 3vw, 1.75rem)' %}
+{% else %}
+  {% set titleClamp = 'clamp(1.5rem, 3vw, 2.25rem)' %}
+{% endif %}
+{% if useCustom %}
+  {% set titleColor = widget.data.title_color | default('#1A2C32') %}
+  {% set subtitleColor = widget.data.subtitle_color | default('#546E7A') %}
+  {% set btnBg = widget.data.button_bg_color | default('#00BCD4') %}
+  {% set btnTxt = widget.data.button_text_color | default('#FFFFFF') %}
+{% else %}
+  {% set titleColor = 'var(--color-text-primary)' %}
+  {% set subtitleColor = 'var(--color-text-secondary)' %}
+  {% set btnBg = 'var(--color-accent)' %}
+  {% set btnTxt = '#fff' %}
+{% endif %}
+
 <section id="{{ widget.id }}" class="bg-section-a py-20 max-lg:py-14 max-sm:py-10 relative overflow-hidden">
 
   {# Subtle Background Accents #}
   <div class="absolute -top-20 -end-20 w-[700px] h-[700px] rounded-full pointer-events-none"
-       style="background: radial-gradient(circle, #B8D4DE 0%, transparent 60%); opacity: 0.7;"></div>
+       style="background: radial-gradient(circle, var(--color-accent) 0%, transparent 60%); opacity: 0.08;"></div>
   <div class="absolute -bottom-28 -start-28 w-[600px] h-[600px] rounded-full pointer-events-none"
-       style="background: radial-gradient(circle, #B8D4DE 0%, transparent 60%); opacity: 0.55;"></div>
+       style="background: radial-gradient(circle, var(--color-accent) 0%, transparent 60%); opacity: 0.06;"></div>
 
   <div class="container mx-auto px-12 max-lg:px-6 max-sm:px-4 relative z-10">
 
@@ -21,10 +41,10 @@
     {% if title or subtitle %}
       <div class="text-center mb-14 max-sm:mb-10 reveal  flex items-center justify-items-center flex-col">
         {% if title %}
-          <h2 class="mb-4">{{ title }}</h2>
+          <h2 class="mb-4" style="font-size: {{ titleClamp }}; color: {{ titleColor }};">{{ title }}</h2>
         {% endif %}
         {% if subtitle %}
-          <p class="text-body text-secondary" style="max-width: 50ch; margin-inline: auto;">
+          <p class="text-body" style="max-width: 50ch; margin-inline: auto; color: {{ subtitleColor }};">
             {{ subtitle }}
           </p>
         {% endif %}
@@ -33,19 +53,28 @@
 
     {# Products Grid #}
     {% if products and (products | length) > 0 %}
+      {% set maxVisible = 4 %}
+      {% set showViewAll = (products | length) > maxVisible %}
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-sm:gap-4 reveal-stagger">
         {% for product in products %}
+          {% if loop.index0 < maxVisible %}
           <div class="reveal">
             {% ui "product-card.njk", product=product %}
           </div>
+          {% endif %}
         {% endfor %}
       </div>
 
-      {# View All Link #}
-      {% if viewAllUrl %}
-        <div class="text-center mt-14 max-sm:mt-10 reveal">
-          <a href="{{ viewAllUrl }}" class="btn btn-primary">
-            {{ t('blocks.products.view_all') | default('View all') }}
+      {# View All Button #}
+      {% if showViewAll or viewAllUrl %}
+        <div class="text-center mt-10 reveal">
+          <a href="{{ viewAllUrl | default('/collections') }}"
+             class="inline-flex items-center gap-2 px-8 py-3 rounded-full text-[14px] font-medium transition-all duration-300 hover:gap-3"
+             style="background: {{ btnBg }}; color: {{ btnTxt }};">
+            <span>{{ t('blocks.products.view_all') | default('عرض الكل') }}</span>
+            <svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
           </a>
         </div>
       {% endif %}

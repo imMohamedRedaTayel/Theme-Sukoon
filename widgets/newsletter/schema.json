@@ -3,63 +3,93 @@
   "settings": {
     "title": {
       "type": "string",
-      "label": "العنوان",
+      "label": { "ar": "العنوان", "en": "Title" },
       "default": "اشترك في نشرتنا البريدية"
     },
     "subtitle": {
       "type": "text",
-      "label": "النص التوضيحي",
+      "label": { "ar": "النص التوضيحي", "en": "Subtitle" },
       "default": "كن أول من يعرف عن أحدث المنتجات والعروض الحصرية"
     },
     "placeholder": {
       "type": "string",
-      "label": "نص حقل الإيميل",
+      "label": { "ar": "نص حقل الإيميل", "en": "Email Placeholder" },
       "default": "أدخل بريدك الإلكتروني"
     },
     "button_text": {
       "type": "string",
-      "label": "نص الزر",
+      "label": { "ar": "نص الزر", "en": "Button Text" },
       "default": "اشترك الآن"
     },
     "success_message": {
       "type": "string",
-      "label": "رسالة النجاح",
+      "label": { "ar": "رسالة النجاح", "en": "Success Message" },
       "default": "تم الاشتراك بنجاح!"
     },
     "layout": {
       "type": "select",
-      "label": "التخطيط",
+      "label": { "ar": "التخطيط", "en": "Layout" },
       "default": "card",
       "options": [
-        { "value": "card", "label": "بطاقة" },
-        { "value": "inline", "label": "سطر واحد" }
+        { "value": "card", "label": { "ar": "بطاقة", "en": "Card" } },
+        { "value": "inline", "label": { "ar": "سطر واحد", "en": "Inline" } }
       ]
     },
     "background_style": {
       "type": "select",
-      "label": "نمط الخلفية",
+      "label": { "ar": "نمط الخلفية", "en": "Background Style" },
       "default": "dark",
       "options": [
-        { "value": "dark", "label": "داكن" },
-        { "value": "accent", "label": "اللون الأساسي" },
-        { "value": "light", "label": "فاتح" }
+        { "value": "dark", "label": { "ar": "داكن", "en": "Dark" } },
+        { "value": "accent", "label": { "ar": "اللون الأساسي", "en": "Accent" } },
+        { "value": "light", "label": { "ar": "فاتح", "en": "Light" } }
       ]
     },
     "show_note": {
       "type": "boolean",
-      "label": "إظهار ملاحظة الخصوصية",
+      "label": { "ar": "إظهار ملاحظة الخصوصية", "en": "Show Privacy Note" },
       "default": true
     },
     "note_text": {
       "type": "string",
-      "label": "نص الملاحظة",
+      "label": { "ar": "نص الملاحظة", "en": "Note Text" },
       "default": "نحترم خصوصيتك ولن نشارك بريدك مع أي طرف"
+    },
+    "title_size": {
+      "type": "select",
+      "label": { "ar": "حجم العنوان", "en": "Title Size" },
+      "default": "large",
+      "options": [
+        { "value": "small", "label": { "ar": "صغير", "en": "Small" } },
+        { "value": "medium", "label": { "ar": "متوسط", "en": "Medium" } },
+        { "value": "large", "label": { "ar": "كبير", "en": "Large" } }
+      ]
+    },
+    "custom_colors": {
+      "type": "boolean",
+      "label": { "ar": "ألوان مخصصة (أغلقه للتلقائي)", "en": "Custom Colors (off = auto)" },
+      "default": false
+    },
+    "title_color": {
+      "type": "color",
+      "label": { "ar": "لون العنوان", "en": "Title Color" },
+      "default": "#FFFFFF"
+    },
+    "subtitle_color": {
+      "type": "color",
+      "label": { "ar": "لون الوصف", "en": "Subtitle Color" },
+      "default": "#90A4AE"
+    },
+    "button_bg_color": {
+      "type": "color",
+      "label": { "ar": "لون خلفية الزر", "en": "Button Background" },
+      "default": "#00BCD4"
+    },
+    "button_text_color": {
+      "type": "color",
+      "label": { "ar": "لون نص الزر", "en": "Button Text Color" },
+      "default": "#FFFFFF"
     }
   },
-  "presets": [
-    {
-      "category": "الصفحة الرئيسية",
-      "name": "النشرة البريدية"
-    }
-  ]
+  "presets": [{ "category": "الصفحة الرئيسية", "name": "النشرة البريدية" }]
 }

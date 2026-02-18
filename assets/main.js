@@ -8,7 +8,7 @@
                 observer.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.15 });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
     function observeReveals() {
         document.querySelectorAll('.reveal').forEach(function (el) {
@@ -23,6 +23,80 @@
     } else {
         observeReveals();
     }
+})();
+
+/* ===== Parallax Hero Images ===== */
+(function () {
+    var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reducedMotion) return;
+
+    var parallaxEls = [];
+    var ticking = false;
+
+    function collectParallax() {
+        parallaxEls = Array.prototype.slice.call(document.querySelectorAll('.parallax-hero'));
+    }
+
+    function updateParallax() {
+        var scrollY = window.pageYOffset;
+        for (var i = 0; i < parallaxEls.length; i++) {
+            var el = parallaxEls[i];
+            var rect = el.getBoundingClientRect();
+            var elTop = rect.top + scrollY;
+            var elHeight = rect.height;
+            /* Only apply when element is in viewport */
+            if (scrollY + window.innerHeight > elTop && scrollY < elTop + elHeight) {
+                var offset = (scrollY - elTop) * 0.15;
+                el.style.transform = 'translateY(' + offset + 'px) scale(1.05)';
+            }
+        }
+        ticking = false;
+    }
+
+    function onScroll() {
+        if (!ticking) {
+            requestAnimationFrame(updateParallax);
+            ticking = true;
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function () {
+            collectParallax();
+            if (parallaxEls.length) window.addEventListener('scroll', onScroll, { passive: true });
+        });
+    } else {
+        collectParallax();
+        if (parallaxEls.length) window.addEventListener('scroll', onScroll, { passive: true });
+    }
+})();
+
+/* ===== Smooth Page Transitions ===== */
+(function () {
+    var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reducedMotion) return;
+
+    document.addEventListener('click', function (e) {
+        var link = e.target.closest('a');
+        if (!link) return;
+        var href = link.getAttribute('href');
+        /* Skip external links, anchors, new tabs, and special protocols */
+        if (!href || href.charAt(0) === '#' || href.indexOf('mailto:') === 0 || href.indexOf('tel:') === 0) return;
+        if (link.target === '_blank' || link.hasAttribute('download')) return;
+        if (e.ctrlKey || e.metaKey || e.shiftKey) return;
+        /* Skip same-page links */
+        try {
+            var url = new URL(href, window.location.origin);
+            if (url.origin !== window.location.origin) return;
+            if (url.pathname === window.location.pathname && url.search === window.location.search) return;
+        } catch (err) { return; }
+
+        e.preventDefault();
+        document.body.classList.add('page-leaving');
+        setTimeout(function () {
+            window.location.href = href;
+        }, 300);
+    });
 })();
 
 /* Qamar Theme - Main JavaScript */

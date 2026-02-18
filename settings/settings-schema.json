@@ -7,53 +7,83 @@
     "settings": {
       "primaryColor": {
         "type": "color",
-        "label": "اللون الأساسي",
-        "default": "#8FA7B0"
+        "label": {
+          "ar": "اللون الأساسي",
+          "en": "Primary Color"
+        },
+        "default": "#00BCD4"
       },
       "primaryColorLight": {
         "type": "color",
-        "label": "اللون الأساسي الفاتح",
-        "default": "#E8EFF2"
+        "label": {
+          "ar": "اللون الأساسي الفاتح",
+          "en": "Primary Color Light"
+        },
+        "default": "#B2EBF2"
       },
       "primaryColorDark": {
         "type": "color",
-        "label": "اللون الأساسي الغامق",
-        "default": "#7A929B"
+        "label": {
+          "ar": "اللون الأساسي الغامق",
+          "en": "Primary Color Dark"
+        },
+        "default": "#00838F"
       },
       "secondaryColor": {
         "type": "color",
-        "label": "اللون الثانوي",
+        "label": {
+          "ar": "اللون الثانوي",
+          "en": "Secondary Color"
+        },
         "default": "#C9A96E"
       },
       "secondaryColorLight": {
         "type": "color",
-        "label": "اللون الثانوي الفاتح",
+        "label": {
+          "ar": "اللون الثانوي الفاتح",
+          "en": "Secondary Color Light"
+        },
         "default": "#E8DCC8"
       },
       "backgroundColor": {
         "type": "color",
-        "label": "لون الخلفية",
-        "default": "#FAFAF8"
+        "label": {
+          "ar": "لون الخلفية",
+          "en": "Background Color"
+        },
+        "default": "#F8FAFB"
       },
       "surfaceColor": {
         "type": "color",
-        "label": "لون السطح",
+        "label": {
+          "ar": "لون السطح",
+          "en": "Surface Color"
+        },
         "default": "#FFFFFF"
       },
       "textColor": {
         "type": "color",
-        "label": "لون النص الرئيسي",
-        "default": "#2C2C2C"
+        "label": {
+          "ar": "لون النص الرئيسي",
+          "en": "Text Color"
+        },
+        "default": "#1A2C32"
       },
       "textSecondaryColor": {
         "type": "color",
-        "label": "لون النص الثانوي",
-        "default": "#6B6B6B"
+        "label": {
+          "ar": "لون النص الثانوي",
+          "en": "Secondary Text Color"
+        },
+        "default": "#546E7A"
       },
       "borderColor": {
         "type": "color",
-        "label": "لون الحدود",
-        "default": "#E5E2DC"
+        "label": {
+          "ar": "لون الحدود",
+          "en": "Border Color"
+        },
+        "default": "#D4DFE2"
       }
     }
   },
@@ -65,7 +95,10 @@
     "settings": {
       "fontArabic": {
         "type": "select",
-        "label": "الخط العربي",
+        "label": {
+          "ar": "الخط العربي",
+          "en": "Arabic Font"
+        },
         "default": "IBM Plex Sans Arabic",
         "options": [
           { "value": "IBM Plex Sans Arabic", "label": "IBM Plex Arabic" },
@@ -76,7 +109,10 @@
       },
       "fontEnglish": {
         "type": "select",
-        "label": "الخط الإنجليزي",
+        "label": {
+          "ar": "الخط الإنجليزي",
+          "en": "English Font"
+        },
         "default": "DM Sans",
         "options": [
           { "value": "DM Sans", "label": "DM Sans" },

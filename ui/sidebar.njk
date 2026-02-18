@@ -1,5 +1,4 @@
 {# Mobile Sidebar / Navigation Drawer #}
-{# {{data | json}} #}
 
 <div x-data x-cloak>
   {# Overlay #}
@@ -15,28 +14,36 @@
   </div>
 
   {# Drawer #}
-  <div class="drawer drawer-start custom-scrollbar"
+  <div class="drawer drawer-start custom-scrollbar flex flex-col"
        :class="{ 'open': $store.modal.current === 'sidebar' }">
+
     {# Header #}
-    <div class="flex items-center justify-between p-4 border-b border-gray-100">
-      <span class="text-lg font-bold">{{t('blocks.header.menu')}}</span>
-      <button @click="$store.modal.close()" class="p-1 hover:bg-gray-100 rounded-full transition-colors">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div class="flex items-center justify-between px-5 py-4 border-b" style="border-color: var(--color-border);">
+      <span class="text-[15px] font-bold" style="color: var(--color-text-primary);">{{t('blocks.header.menu')}}</span>
+      <button @click="$store.modal.close()"
+              class="w-8 h-8 flex items-center justify-center rounded-full transition-colors duration-200"
+              style="color: var(--color-text-tertiary);"
+              onmouseenter="this.style.background='var(--color-bg-secondary)'"
+              onmouseleave="this.style.background='transparent'">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
         </svg>
       </button>
     </div>
 
     {# Menu Items #}
-    <nav class="p-4">
-      <ul class="space-y-1">
+    <nav class="flex-1 overflow-y-auto px-4 py-3">
+      <ul class="space-y-0.5">
         {% for item in data.menu %}
           <li>
             <a href="{{ item.url | default('#') }}"
-               class="flex items-center justify-between py-3 px-2 rounded-lg text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors">
-              <span class="font-medium">{{ item.title }}</span>
+               class="flex items-center justify-between py-3 px-3 rounded-xl transition-all duration-200"
+               style="color: var(--color-text-primary);"
+               onmouseenter="this.style.background='var(--color-bg-secondary)'"
+               onmouseleave="this.style.background='transparent'">
+              <span class="font-medium text-[15px]">{{ item.title }}</span>
               {% if item.children | length %}
-                <svg class="w-4 h-4 text-gray-400 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-4 h-4 rtl:rotate-180 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
               {% endif %}
@@ -45,6 +52,52 @@
         {% endfor %}
       </ul>
     </nav>
+
+    {# ——— Bottom Actions (Language + Dark Mode) ——— #}
+    <div class="flex-shrink-0 px-5 py-4 border-t" style="border-color: var(--color-border);">
+
+      {# Dark Mode Toggle #}
+      {% if data.showDark %}
+        <div x-data class="flex items-center justify-between py-2.5 px-1 mb-3">
+          <div class="flex items-center gap-3">
+            <svg class="w-[18px] h-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5" style="color: var(--color-text-tertiary);">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/>
+            </svg>
+            <span class="text-[13px] font-medium" style="color: var(--color-text-primary);">{{ t('common.dark_mode') | default('Dark Mode') }}</span>
+          </div>
+          <!-- Toggle Switch -->
+          <button @click="$store.darkMode.toggle()"
+                  class="relative w-10 h-[22px] rounded-full transition-colors duration-300 cursor-pointer"
+                  :style="$store.darkMode.on ? 'background: var(--color-accent)' : 'background: var(--color-border-hover)'">
+            <span class="absolute top-[3px] start-[3px] w-4 h-4 rounded-full shadow-sm transition-transform duration-300"
+                  style="background: var(--color-surface);"
+                  :class="$store.darkMode.on ? 'translate-x-[18px] rtl:-translate-x-[18px]' : ''"></span>
+          </button>
+        </div>
+      {% endif %}
+
+      {# Language Switcher — uses {% form 'lang' %} for proper server-side switching #}
+      <div>
+        <p class="text-[10px] font-bold tracking-[0.15em] uppercase px-1 mb-2" style="color: var(--color-text-tertiary);">
+          {{ t('common.language') | default('Language') }}
+        </p>
+        {% form 'lang', class='lang-form' %}
+          <div class="flex gap-2">
+            <button type="submit" name="lang" value="ar"
+               class="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-[13px] font-medium transition-all duration-200 border cursor-pointer"
+               style="{{ 'background: var(--color-accent-light); color: var(--color-accent); border-color: var(--color-accent);' if data.currentLang == 'ar' else 'color: var(--color-text-secondary); border-color: var(--color-border); background: transparent;' }}">
+              🇪🇬 العربية
+            </button>
+            <button type="submit" name="lang" value="en"
+               class="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-[13px] font-medium transition-all duration-200 border cursor-pointer"
+               style="{{ 'background: var(--color-accent-light); color: var(--color-accent); border-color: var(--color-accent);' if data.currentLang == 'en' else 'color: var(--color-text-secondary); border-color: var(--color-border); background: transparent;' }}">
+              🇺🇸 English
+            </button>
+          </div>
+        {% endform %}
+      </div>
+
+    </div>
 
   </div>
 </div>

@@ -1,45 +1,45 @@
 /* ===== SUKOON COLOR SYSTEM ===== */
 :root {
-    /* Primary Palette */
-    --color-bg-primary: #FAFAF8;
-    --color-bg-secondary: #F0EDE5;
-    --color-bg-tertiary: #E3DFD5;
+    /* Primary Palette — cool neutral to complement cyan */
+    --color-bg-primary: #F8FAFB;
+    --color-bg-secondary: #EBF1F3;
+    --color-bg-tertiary: #DCE5E8;
     --color-surface: #FFFFFF;
 
     /* Section Alternation */
     --color-section-a: #FFFFFF;
-    --color-section-b: #F7F5F0;
+    --color-section-b: #F1F6F7;
 
     /* Header */
     --color-header: #FFFFFF;
-    --color-header-text: #2C2C2C;
-    --color-header-border: #EEECE7;
+    --color-header-text: #1A2C32;
+    --color-header-border: #E2EAEC;
 
     /* Footer */
-    --color-footer: #292826;
-    --color-footer-text: #C8C5BE;
-    --color-footer-text-muted: #7A7872;
-    --color-footer-border: #3D3B38;
-    --color-footer-heading: #F0EDE5;
+    --color-footer: #1A2C32;
+    --color-footer-text: #9FB5BD;
+    --color-footer-text-muted: #607D8B;
+    --color-footer-border: #2A3E46;
+    --color-footer-heading: #E0EFF2;
 
     /* Text */
-    --color-text-primary: #2C2C2C;
-    --color-text-secondary: #6B6B6B;
-    --color-text-tertiary: #9B9B9B;
+    --color-text-primary: #1A2C32;
+    --color-text-secondary: #546E7A;
+    --color-text-tertiary: #979797;
 
-    /* Accent — Foggy Blue */
-    --color-accent: #8FA7B0;
-    --color-accent-hover: #7A929B;
-    --color-accent-light: #E8EFF2;
+    /* Accent — Cyan */
+    --color-accent: #00BCD4;
+    --color-accent-hover: #00838F;
+    --color-accent-light: #B2EBF2;
 
     /* Primary alias (used by Tailwind & components) */
-    --color-primary: #8FA7B0;
-    --color-primary-dark: #7A929B;
+    --color-primary: #00BCD4;
+    --color-primary-dark: #00838F;
 
     /* Borders */
-    --color-border: #E5E2DC;
-    --color-border-hover: #D1CEC7;
-    --color-border-focus: #8FA7B0;
+    --color-border: #D4DFE2;
+    --color-border-hover: #C0CED2;
+    --color-border-focus: #00BCD4;
 
     /* Status */
     --color-success: #7FB69E;
@@ -76,43 +76,186 @@
     --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);     /* Subtle card elevation */
     --shadow-md: 0 4px 12px rgba(0,0,0,0.06);     /* Elevated cards, dropdowns */
     --shadow-lg: 0 8px 30px rgba(0,0,0,0.08);     /* Modals, floating elements */
-    --shadow-focus: 0 0 0 3px rgba(143,167,176,0.25); /* Focus ring — accent-based */
+    --shadow-focus: 0 0 0 3px #00BCD447; /* Focus ring — accent-based */
 
     /* Animation & Motion — slow and gentle, never rushed */
     --transition-fast: 200ms ease;
     --transition-base: 400ms ease-in-out;
-    --transition-slow: 700ms ease-in-out;
+    --transition-slow: 900ms ease-in-out;
     --transition-glacial: 1200ms cubic-bezier(0.25, 0, 0.25, 1);
 }
 
-/* ===== DARK MODE (Optional) ===== */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --color-bg-primary: #1A1A18;
-        --color-bg-secondary: #222220;
-        --color-bg-tertiary: #2A2A27;
-        --color-surface: #2C2C2A;
-        --color-text-primary: #E8E6E1;
-        --color-text-secondary: #A8A8A3;
-        --color-text-tertiary: #6B6B66;
-        --color-accent: #9DBAC3;
-        --color-accent-hover: #B0CAD2;
-        --color-accent-light: #1E2A2E;
-        --color-border: #333330;
-        --color-border-hover: #44443F;
-        --color-border-focus: #9DBAC3;
+/* ===== DARK MODE — class-based (.dark on <html>) + auto fallback ===== */
+html.dark {
+    --color-bg-primary: #141D21;
+    --color-bg-secondary: #1A2529;
+    --color-bg-tertiary: #223035;
+    --color-surface: #1E2A2F;
+    --color-text-primary: #E0EEF1;
+    --color-text-secondary: #90A4AE;
+    --color-text-tertiary: #607D8B;
+    --color-accent: #4DD0E1;
+    --color-accent-hover: #26C6DA;
+    --color-accent-light: #0D2E34;
+    --color-border: #2A3840;
+    --color-border-hover: #384850;
+    --color-border-focus: #4DD0E1;
 
-        --color-section-a: #1A1A18;
-        --color-section-b: #222220;
-        --color-header: #1A1A18;
-        --color-header-text: #E8E6E1;
-        --color-header-border: #333330;
-        --color-footer: #111110;
-        --color-footer-text: #A8A8A3;
-        --color-footer-text-muted: #6B6B66;
-        --color-footer-border: #2A2A27;
-        --color-footer-heading: #E8E6E1;
+    --color-section-a: #141D21;
+    --color-section-b: #1A2529;
+    --color-header: #141D21;
+    --color-header-text: #E0EEF1;
+    --color-header-border: #2A3840;
+    --color-footer: #0D1820;
+    --color-footer-text: #90A4AE;
+    --color-footer-text-muted: #546E7A;
+    --color-footer-border: #1A2C32;
+    --color-footer-heading: #E0EFF2;
+
+    color-scheme: dark;
+}
+
+/* Auto dark mode for users who haven't toggled manually */
+@media (prefers-color-scheme: dark) {
+    html:not(.light) {
+        --color-bg-primary: #141D21;
+        --color-bg-secondary: #1A2529;
+        --color-bg-tertiary: #223035;
+        --color-surface: #1E2A2F;
+        --color-text-primary: #E0EEF1;
+        --color-text-secondary: #90A4AE;
+        --color-text-tertiary: #607D8B;
+        --color-accent: #4DD0E1;
+        --color-accent-hover: #26C6DA;
+        --color-accent-light: #0D2E34;
+        --color-border: #2A3840;
+        --color-border-hover: #384850;
+        --color-border-focus: #4DD0E1;
+
+        --color-section-a: #141D21;
+        --color-section-b: #1A2529;
+        --color-header: #141D21;
+        --color-header-text: #E0EEF1;
+        --color-header-border: #2A3840;
+        --color-footer: #0D1820;
+        --color-footer-text: #90A4AE;
+        --color-footer-text-muted: #546E7A;
+        --color-footer-border: #1A2C32;
+        --color-footer-heading: #E0EFF2;
     }
+}
+
+/* ===== DARK MODE — Global Tailwind Utility Overrides ===== */
+/* Maps hardcoded Tailwind grays → Sukoon CSS vars so every widget adapts automatically */
+
+/* --- Backgrounds --- */
+html.dark .bg-white          { background-color: var(--color-surface) !important; }
+html.dark .bg-gray-50        { background-color: var(--color-bg-secondary) !important; }
+html.dark .bg-gray-100       { background-color: var(--color-bg-tertiary) !important; }
+html.dark .bg-gray-200       { background-color: #2A3840 !important; }
+
+/* Buttons: gray-900 bg → accent in dark mode */
+html.dark .bg-gray-800       { background-color: #384850 !important; }
+html.dark .bg-gray-900       { background-color: var(--color-accent) !important; }
+html.dark .hover\:bg-gray-800:hover { background-color: var(--color-accent-hover) !important; }
+html.dark .hover\:bg-gray-900:hover { background-color: var(--color-accent-hover) !important; }
+html.dark .hover\:bg-gray-50:hover  { background-color: var(--color-bg-tertiary) !important; }
+html.dark .hover\:bg-gray-100:hover { background-color: #2A3840 !important; }
+html.dark .hover\:bg-gray-200:hover { background-color: #384850 !important; }
+
+/* --- Text --- */
+html.dark .text-gray-900     { color: var(--color-text-primary) !important; }
+html.dark .text-gray-800     { color: var(--color-text-primary) !important; }
+html.dark .text-gray-700     { color: var(--color-text-secondary) !important; }
+html.dark .text-gray-600     { color: var(--color-text-secondary) !important; }
+html.dark .text-gray-500     { color: var(--color-text-tertiary) !important; }
+html.dark .text-gray-400     { color: var(--color-text-tertiary) !important; }
+html.dark .text-gray-300     { color: #4A5E66 !important; }
+html.dark .text-gray-200     { color: #384850 !important; }
+html.dark .hover\:text-gray-600:hover { color: var(--color-text-primary) !important; }
+html.dark .hover\:text-gray-700:hover { color: var(--color-text-primary) !important; }
+html.dark .hover\:text-gray-900:hover { color: var(--color-text-primary) !important; }
+
+/* --- Borders --- */
+html.dark .border-gray-50    { border-color: var(--color-border) !important; }
+html.dark .border-gray-100   { border-color: var(--color-border) !important; }
+html.dark .border-gray-200   { border-color: var(--color-border) !important; }
+html.dark .border-gray-300   { border-color: var(--color-border-hover) !important; }
+html.dark .hover\:border-gray-400:hover { border-color: var(--color-border-hover) !important; }
+html.dark .hover\:border-gray-900:hover { border-color: var(--color-accent) !important; }
+html.dark .focus\:border-gray-400:focus { border-color: var(--color-border-focus) !important; }
+html.dark .focus\:border-gray-900:focus { border-color: var(--color-accent) !important; }
+
+/* --- Placeholder --- */
+html.dark .placeholder-gray-400::placeholder { color: var(--color-text-tertiary) !important; }
+
+/* --- Focus backgrounds --- */
+html.dark .focus\:bg-white:focus { background-color: var(--color-surface) !important; }
+
+/* --- Ring --- */
+html.dark .ring-gray-200     { --tw-ring-color: var(--color-border) !important; }
+
+/* --- Component-specific dark overrides --- */
+html.dark .drawer {
+    background: var(--color-surface);
+}
+
+html.dark img {
+    filter: brightness(0.95);
+}
+
+/* Swiper nav buttons */
+html.dark .swiper-button-next,
+html.dark .swiper-button-prev {
+    background: var(--color-surface) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Loading screen & opacity variants */
+html.dark .bg-white\/80  { background-color: rgba(26,26,24,0.8) !important; }
+html.dark .bg-white\/90  { background-color: rgba(44,44,42,0.9) !important; }
+html.dark .bg-gray-50\/80 { background-color: rgba(34,34,32,0.8) !important; }
+html.dark .bg-gray-50\/50 { background-color: rgba(34,34,32,0.5) !important; }
+
+/* Product card wishlist button */
+html.dark .bg-white\/90.backdrop-blur-sm { background-color: rgba(44,44,42,0.9) !important; }
+
+/* Price slider thumb */
+html.dark .price-slider input[type="range"]::-webkit-slider-thumb {
+    background: var(--color-surface);
+}
+html.dark .price-slider input[type="range"]::-moz-range-thumb {
+    background: var(--color-surface);
+}
+
+/* Cart badge — red in dark mode */
+html.dark .cart-badge {
+    background: #ef4444 !important;
+}
+
+/* Decorative section gradients — dim in dark mode */
+html.dark [style*="radial-gradient"] {
+    opacity: 0.25 !important;
+}
+
+/* Red accents (discount badges, delete buttons) stay as-is in dark mode */
+/* Green accents (success states) stay as-is in dark mode */
+
+/* Pagination */
+html.dark .border-gray-200.bg-white {
+    background-color: var(--color-surface) !important;
+    border-color: var(--color-border) !important;
+}
+
+/* ===== HEADER — Scroll State ===== */
+.header-scrolled {
+    backdrop-filter: blur(12px) saturate(1.2);
+    -webkit-backdrop-filter: blur(12px) saturate(1.2);
+    box-shadow: 0 1px 8px rgba(0,0,0,0.04);
+}
+
+html.dark .header-scrolled {
+    box-shadow: 0 1px 8px rgba(0,0,0,0.2);
 }
 
 /* ===== SECTION ALTERNATION ===== */
@@ -136,6 +279,7 @@ body {
     font-weight: 400;
     letter-spacing: 0.01em;
     font-size: 16px;
+    animation: pageEnter 600ms ease both;
 }
 
 html[lang="en"] body,
@@ -273,7 +417,7 @@ p:last-child {
 /* Scroll-triggered reveal — add .reveal to elements */
 .reveal {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(24px);
     transition: opacity var(--transition-slow), transform var(--transition-slow);
 }
 
@@ -284,18 +428,18 @@ p:last-child {
 
 /* Stagger delay for list items */
 .reveal-stagger > *:nth-child(1) { transition-delay: 0ms; }
-.reveal-stagger > *:nth-child(2) { transition-delay: 80ms; }
-.reveal-stagger > *:nth-child(3) { transition-delay: 160ms; }
-.reveal-stagger > *:nth-child(4) { transition-delay: 240ms; }
-.reveal-stagger > *:nth-child(5) { transition-delay: 320ms; }
-.reveal-stagger > *:nth-child(6) { transition-delay: 400ms; }
-.reveal-stagger > *:nth-child(7) { transition-delay: 480ms; }
-.reveal-stagger > *:nth-child(8) { transition-delay: 560ms; }
+.reveal-stagger > *:nth-child(2) { transition-delay: 100ms; }
+.reveal-stagger > *:nth-child(3) { transition-delay: 200ms; }
+.reveal-stagger > *:nth-child(4) { transition-delay: 300ms; }
+.reveal-stagger > *:nth-child(5) { transition-delay: 400ms; }
+.reveal-stagger > *:nth-child(6) { transition-delay: 500ms; }
+.reveal-stagger > *:nth-child(7) { transition-delay: 600ms; }
+.reveal-stagger > *:nth-child(8) { transition-delay: 700ms; }
 
 /* Image fade-in on load */
 .img-fade {
     opacity: 0;
-    transition: opacity 600ms ease;
+    transition: opacity 800ms ease;
 }
 
 .img-fade.is-loaded {
@@ -304,11 +448,62 @@ p:last-child {
 
 /* Hover — subtle opacity, NO scale on cards */
 .hover-fade {
-    transition: opacity var(--transition-fast);
+    transition: opacity 400ms ease;
 }
 
 .hover-fade:hover {
     opacity: 0.85;
+}
+
+/* ——— Parallax Hero Image ——— */
+.parallax-hero {
+    will-change: transform;
+    transition: transform 0.1s linear;
+}
+
+/* ——— Breathing CTA Button ——— */
+@keyframes btnBreathe {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(143, 167, 176, 0.4); }
+    50% { box-shadow: 0 0 0 10px rgba(143, 167, 176, 0); }
+}
+
+.btn-breathe {
+    animation: btnBreathe 3s ease-in-out infinite;
+}
+
+/* White variant for dark/image backgrounds */
+@keyframes btnBreatheWhite {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.3); }
+    50% { box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+}
+
+.btn-breathe-white {
+    animation: btnBreatheWhite 3s ease-in-out infinite;
+}
+
+/* ——— Page Transition Fade ——— */
+@keyframes pageEnter {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+body.page-leaving {
+    animation: pageLeave 300ms ease both;
+}
+
+@keyframes pageLeave {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+/* ——— Subtle link/interactive hover ——— */
+.hover-lift {
+    transition: transform 400ms ease, opacity 400ms ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
 }
 
 /* Respect prefers-reduced-motion */
@@ -327,6 +522,19 @@ p:last-child {
 
     .img-fade {
         opacity: 1;
+    }
+
+    .btn-breathe,
+    .btn-breathe-white {
+        animation: none;
+    }
+
+    .parallax-hero {
+        transform: none !important;
+    }
+
+    body {
+        animation: none;
     }
 }
 
@@ -708,6 +916,12 @@ label,
   }
   
   /* ===== Overlay ===== */
+  /* Lang form reset — remove default form spacing */
+  .lang-form {
+    margin: 0;
+    padding: 0;
+  }
+
   .overlay {
     position: fixed;
     inset: 0;

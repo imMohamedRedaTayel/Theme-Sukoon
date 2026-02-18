@@ -3,13 +3,40 @@
 {% set bgStyle = widget.data.background_style | default('dark') %}
 {% set showNote = widget.data.show_note %}
 
+{# Text customization #}
+{% set useCustom = widget.data.custom_colors | default(false) %}
+{% set titleSizeVal = widget.data.title_size | default('large') %}
+{% if titleSizeVal == 'small' %}
+  {% set titleClamp = 'clamp(1.2rem, 2.5vw, 1.5rem)' %}
+{% elif titleSizeVal == 'medium' %}
+  {% set titleClamp = 'clamp(1.3rem, 3vw, 1.75rem)' %}
+{% else %}
+  {% set titleClamp = 'clamp(1.5rem, 3vw, 2.25rem)' %}
+{% endif %}
+{% if useCustom %}
+  {% set titleColor = widget.data.title_color | default('#FFFFFF') %}
+  {% set subtitleColor = widget.data.subtitle_color | default('#90A4AE') %}
+  {% set btnBg = widget.data.button_bg_color | default('#00BCD4') %}
+  {% set btnTxt = widget.data.button_text_color | default('#FFFFFF') %}
+{% elif bgStyle == 'light' %}
+  {% set titleColor = 'var(--color-text-primary)' %}
+  {% set subtitleColor = 'var(--color-text-secondary)' %}
+  {% set btnBg = 'var(--color-accent)' %}
+  {% set btnTxt = '#fff' %}
+{% else %}
+  {% set titleColor = '#fff' %}
+  {% set subtitleColor = 'rgba(255,255,255,0.7)' %}
+  {% set btnBg = '#fff' %}
+  {% set btnTxt = 'var(--color-text-primary)' %}
+{% endif %}
+
 <section id="{{ widget.id }}" class="py-20 max-lg:py-14 max-sm:py-10 relative overflow-hidden"
   {% if bgStyle == 'accent' %}
     style="background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);"
   {% elif bgStyle == 'light' %}
     style="background: var(--color-section-b);"
   {% else %}
-    style="background: linear-gradient(135deg, #3a4a50 0%, #2C3E50 50%, #1a2a35 100%);"
+    style="background: linear-gradient(135deg, #1A2C32 0%, #142328 100%);"
   {% endif %}
 >
 
@@ -35,7 +62,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
             </svg>
           </div>
-          <p class="text-lg font-bold {% if bgStyle == 'light' %}text-gray-900{% else %}text-white{% endif %}">
+          <p class="text-lg font-bold {% if bgStyle == 'light' %}text-[var(--color-text-primary)]{% else %}text-white{% endif %}">
             {{ widget.data.success_message | default('تم الاشتراك بنجاح!') }}
           </p>
         </div>
@@ -46,24 +73,23 @@
 
         {# Mail Icon #}
         <div class="w-12 h-12 mx-auto mb-6 max-sm:mb-5 rounded-2xl flex items-center justify-center
-                    {% if bgStyle == 'light' %}bg-gray-100{% else %}bg-white/10 backdrop-blur-sm{% endif %}">
-          <svg class="w-5 h-5 {% if bgStyle == 'light' %}text-gray-500{% else %}text-white/80{% endif %}" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                    {% if bgStyle == 'light' %}bg-[var(--color-bg-tertiary)]{% else %}bg-white/10 backdrop-blur-sm{% endif %}">
+          <svg class="w-5 h-5 {% if bgStyle == 'light' %}text-[var(--color-text-secondary)]{% else %}text-white/80{% endif %}" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/>
           </svg>
         </div>
 
         {# Title #}
         {% if widget.data.title %}
-          <h2 class="text-2xl max-sm:text-xl font-bold mb-3 {% if bgStyle == 'light' %}text-gray-900{% else %}text-white{% endif %}">
+          <h2 class="font-bold mb-3" style="font-size: {{ titleClamp }}; color: {{ titleColor }};">
             {{ widget.data.title }}
           </h2>
         {% endif %}
 
         {# Subtitle #}
         {% if widget.data.subtitle %}
-          <p class="text-[14px] max-sm:text-[13px] leading-relaxed mb-8 max-sm:mb-6 mx-auto
-                    {% if bgStyle == 'light' %}text-gray-500{% else %}text-white/70{% endif %}"
-             style="max-width: 42ch;">
+          <p class="text-[14px] max-sm:text-[13px] leading-relaxed mb-8 max-sm:mb-6 mx-auto"
+             style="max-width: 42ch; color: {{ subtitleColor }};">
             {{ widget.data.subtitle }}
           </p>
         {% endif %}
@@ -76,13 +102,12 @@
                  required
                  placeholder="{{ widget.data.placeholder | default('أدخل بريدك الإلكتروني') }}"
                  class="flex-1 h-12 max-sm:h-11 px-5 rounded-full text-[13px] outline-none transition-all duration-200
-                        {% if bgStyle == 'light' %}bg-transparent text-gray-900 placeholder-gray-400 border border-gray-300 focus:bg-white focus:border-gray-900
+                        {% if bgStyle == 'light' %}bg-transparent text-[var(--color-text-primary)] placeholder-[var(--color-text-tertiary)] border border-[var(--color-border)] focus:bg-white focus:border-[var(--color-accent)]
                         {% else %}bg-transparent text-white placeholder-white/50 border border-white/30 focus:bg-white/[0.1] focus:border-white/50 backdrop-blur-sm{% endif %}">
           <button type="submit"
                   :disabled="loading"
-                  class="h-12 max-sm:h-11 px-8 max-sm:px-6 rounded-full text-[13px] font-semibold transition-all duration-300 shrink-0 flex items-center justify-center gap-2 disabled:opacity-60
-                         {% if bgStyle == 'light' %}bg-gray-900 text-white hover:bg-gray-800
-                         {% else %}bg-white text-gray-900 hover:bg-gray-100{% endif %}">
+                  class="h-12 max-sm:h-11 px-8 max-sm:px-6 rounded-full text-[13px] font-semibold transition-all duration-300 shrink-0 flex items-center justify-center gap-2 disabled:opacity-60"
+                  style="background: {{ btnBg }}; color: {{ btnTxt }};">
             <span x-show="!loading">{{ widget.data.button_text | default('اشترك الآن') }}</span>
             <svg x-show="loading" x-cloak class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
               <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -94,10 +119,10 @@
         {# Privacy Note #}
         {% if showNote and widget.data.note_text %}
           <div class="flex items-center justify-center gap-1.5 mt-5">
-            <svg class="w-3 h-3 shrink-0 {% if bgStyle == 'light' %}text-gray-400{% else %}text-white/40{% endif %}" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+            <svg class="w-3 h-3 shrink-0 {% if bgStyle == 'light' %}text-[var(--color-text-tertiary)]{% else %}text-white/40{% endif %}" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/>
             </svg>
-            <span class="text-[11px] {% if bgStyle == 'light' %}text-gray-400{% else %}text-white/40{% endif %}">
+            <span class="text-[11px] {% if bgStyle == 'light' %}text-[var(--color-text-tertiary)]{% else %}text-white/40{% endif %}">
               {{ widget.data.note_text }}
             </span>
           </div>

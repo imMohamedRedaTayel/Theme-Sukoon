@@ -1,0 +1,172 @@
+{# ===== SUKOON MINDFUL QUOTE BANNER ===== #}
+
+{% set quotes = widget.blocks %}
+{% set speed = widget.data.speed | default(6) %}
+{% set showDivider = widget.data.show_divider | default(true) %}
+{% set barId = widget.id %}
+
+{# Text customization #}
+{% set useCustom = widget.data.custom_colors | default(false) %}
+{% set quoteSizeVal = widget.data.quote_size | default('large') %}
+{% if quoteSizeVal == 'small' %}
+  {% set quoteClamp = 'clamp(0.95rem, 2vw, 1.1rem)' %}
+{% elif quoteSizeVal == 'medium' %}
+  {% set quoteClamp = 'clamp(1.05rem, 2.5vw, 1.3rem)' %}
+{% else %}
+  {% set quoteClamp = 'clamp(1.15rem, 2.5vw, 1.45rem)' %}
+{% endif %}
+
+{% if quotes and quotes | length > 0 %}
+
+{# Footer-matched colors #}
+{% set textColor = 'var(--color-footer-heading)' %}
+{% set mutedColor = 'var(--color-footer-text-muted)' %}
+{% set borderColor = 'var(--color-footer-border)' %}
+{% if useCustom %}
+  {% set textColor = widget.data.quote_color | default('#E0EFF2') %}
+  {% set mutedColor = widget.data.author_color | default('#607D8B') %}
+{% endif %}
+
+{# ——— Scoped Styles ——— #}
+<style>
+  #{{ barId }} .quote-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #{{ barId }} .quote-icon::before,
+  #{{ barId }} .quote-icon::after {
+    content: '';
+    flex: 1;
+    max-width: 80px;
+    height: 1px;
+    background: {{ borderColor }};
+  }
+  #{{ barId }} .quote-icon::before { margin-inline-end: 20px; }
+  #{{ barId }} .quote-icon::after  { margin-inline-start: 20px; }
+
+  #{{ barId }} .quote-author::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: {{ borderColor }};
+    vertical-align: middle;
+    margin-inline-end: 12px;
+  }
+  #{{ barId }} .quote-author::after {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: {{ borderColor }};
+    vertical-align: middle;
+    margin-inline-start: 12px;
+  }
+</style>
+
+<section id="{{ barId }}" class="py-20 max-lg:py-16 max-sm:py-12 relative overflow-hidden" style="background: var(--color-footer);">
+
+  {# ——— Top divider ——— #}
+  {% if showDivider %}
+    <div class="absolute top-0 inset-x-0" style="height: 1px; background: linear-gradient(to right, transparent 10%, {{ borderColor }} 50%, transparent 90%);"></div>
+  {% endif %}
+
+  <div class="container mx-auto px-12 max-lg:px-6 max-sm:px-4 relative z-10">
+    <div class="max-w-2xl mx-auto text-center">
+
+      {# ——— Quote Icon ——— #}
+      <div class="quote-icon mb-10 max-sm:mb-8 reveal">
+        <svg class="w-8 h-8 max-sm:w-6 max-sm:h-6 shrink-0" viewBox="0 0 24 24" fill="none" style="color: {{ mutedColor }}; opacity: 0.5;">
+          <path d="M11 7.5a4.5 4.5 0 00-4.5 4.5c0 1.5.5 2.5 1.5 3.5L5 19h4l2-2.5c1.5-1 2.5-2.5 2.5-4.5A4.5 4.5 0 0011 7.5zm-8 0A4.5 4.5 0 001.5 12c0 1.5.5 2.5 1.5 3.5L0 19h4l2-2.5C7.5 15.5 8.5 14 8.5 12A4.5 4.5 0 003 7.5z" fill="currentColor" transform="translate(3, -1)"/>
+        </svg>
+      </div>
+
+      {# ——— Single Quote ——— #}
+      {% if quotes | length == 1 %}
+        {% set q = quotes[0] %}
+        <div class="reveal">
+          <p class="font-light italic leading-[1.9]"
+             style="font-size: {{ quoteClamp }}; color: {{ textColor }};">
+            {{ q.data.text }}
+          </p>
+
+          {% if q.data.author %}
+            <div class="mt-8 max-sm:mt-6">
+              <span class="quote-author text-[11px] font-semibold tracking-[0.2em] uppercase" style="color: {{ mutedColor }};">
+                {{ q.data.author }}
+              </span>
+            </div>
+          {% endif %}
+        </div>
+
+      {# ——— Multiple Quotes — Fade Rotation ——— #}
+      {% else %}
+        <div x-data="quoteRotator_{{ barId | replace('-','_') }}()"
+             class="relative min-h-[140px] max-sm:min-h-[160px] flex items-center justify-center">
+
+          {% for q in quotes %}
+            <div x-show="active === {{ loop.index0 }}"
+                 x-transition:enter="transition ease-out duration-700"
+                 x-transition:enter-start="opacity-0 translate-y-2"
+                 x-transition:enter-end="opacity-100 translate-y-0"
+                 x-transition:leave="transition ease-in duration-500"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 class="absolute inset-0 flex flex-col items-center justify-center">
+
+              <p class="font-light italic leading-[1.9]"
+                 style="font-size: {{ quoteClamp }}; color: {{ textColor }};">
+                {{ q.data.text }}
+              </p>
+
+              {% if q.data.author %}
+                <div class="mt-8 max-sm:mt-6">
+                  <span class="quote-author text-[11px] font-semibold tracking-[0.2em] uppercase" style="color: {{ mutedColor }};">
+                    {{ q.data.author }}
+                  </span>
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+
+        {# Pagination dots #}
+        <div class="flex items-center justify-center gap-2 mt-10 max-sm:mt-8">
+          {% for q in quotes %}
+            <button @click="goTo({{ loop.index0 }})"
+                    class="rounded-full transition-all duration-400 cursor-pointer"
+                    :class="active === {{ loop.index0 }}
+                      ? 'w-6 h-1.5 opacity-100'
+                      : 'w-1.5 h-1.5 opacity-30 hover:opacity-50'"
+                    style="background: {{ textColor }};"
+                    aria-label="Quote {{ loop.index }}"></button>
+          {% endfor %}
+        </div>
+
+        <script>
+          document.addEventListener('alpine:init', function() {
+            Alpine.data('quoteRotator_{{ barId | replace("-","_") }}', function() {
+              return {
+                active: 0,
+                total: {{ quotes | length }},
+                _timer: null,
+                init: function() { this._start(); },
+                _start: function() {
+                  var self = this;
+                  if (self._timer) clearInterval(self._timer);
+                  self._timer = setInterval(function() { self.next(); }, {{ speed * 1000 }});
+                },
+                next: function() { this.active = (this.active + 1) % this.total; },
+                goTo: function(i) { this.active = i; this._start(); },
+                destroy: function() { if (this._timer) clearInterval(this._timer); }
+              };
+            });
+          });
+        </script>
+      {% endif %}
+
+    </div>
+  </div>
+</section>
+{% endif %}

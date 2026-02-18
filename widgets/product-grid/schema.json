@@ -1,33 +1,56 @@
 {
-  "name": "product-grid",
+  "name": "المنتجات المميزة",
   "settings": {
     "title": {
       "type": "text",
-      "label": {
-        "ar": "عنوان السكشن",
-        "en": "Section Title"
-      }
+      "label": { "ar": "عنوان السكشن", "en": "Section Title" }
     },
     "subtitle": {
       "type": "textarea",
-      "label": {
-        "ar": "النص التوضيحي",
-        "en": "Subtitle"
-      }
+      "label": { "ar": "النص التوضيحي", "en": "Subtitle" }
     },
     "products": {
       "type": "products",
-      "label": {
-        "ar": "المنتجات",
-        "en": "Products"
-      }
+      "label": { "ar": "المنتجات", "en": "Products" }
     },
     "view_all_url": {
       "type": "path",
-      "label": {
-        "ar": "رابط عرض الكل",
-        "en": "View All URL"
-      }
+      "label": { "ar": "رابط عرض الكل", "en": "View All URL" }
+    },
+    "title_size": {
+      "type": "select",
+      "label": { "ar": "حجم العنوان", "en": "Title Size" },
+      "default": "large",
+      "options": [
+        { "value": "small", "label": { "ar": "صغير", "en": "Small" } },
+        { "value": "medium", "label": { "ar": "متوسط", "en": "Medium" } },
+        { "value": "large", "label": { "ar": "كبير", "en": "Large" } }
+      ]
+    },
+    "custom_colors": {
+      "type": "boolean",
+      "label": { "ar": "ألوان مخصصة (أغلقه للتلقائي)", "en": "Custom Colors (off = auto)" },
+      "default": false
+    },
+    "title_color": {
+      "type": "color",
+      "label": { "ar": "لون العنوان", "en": "Title Color" },
+      "default": "#1A2C32"
+    },
+    "subtitle_color": {
+      "type": "color",
+      "label": { "ar": "لون الوصف", "en": "Subtitle Color" },
+      "default": "#546E7A"
+    },
+    "button_bg_color": {
+      "type": "color",
+      "label": { "ar": "لون خلفية الزر", "en": "Button Background" },
+      "default": "#00BCD4"
+    },
+    "button_text_color": {
+      "type": "color",
+      "label": { "ar": "لون نص الزر", "en": "Button Text Color" },
+      "default": "#FFFFFF"
     }
   }
 }

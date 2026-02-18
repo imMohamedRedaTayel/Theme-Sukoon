@@ -1,0 +1,81 @@
+{
+  "name": "شعارات الماركات",
+  "settings": {
+    "title": {
+      "type": "string",
+      "label": {
+        "ar": "العنوان (اختياري)",
+        "en": "Title (optional)"
+      },
+      "default": ""
+    },
+    "speed": {
+      "type": "range",
+      "label": {
+        "ar": "سرعة التمرير (بالثانية)",
+        "en": "Scroll Speed (seconds)"
+      },
+      "default": 3,
+      "min": 1,
+      "max": 8,
+      "step": 1
+    },
+    "grayscale": {
+      "type": "boolean",
+      "label": {
+        "ar": "تأثير أبيض وأسود",
+        "en": "Grayscale Effect"
+      },
+      "default": true
+    },
+    "background_style": {
+      "type": "select",
+      "label": {
+        "ar": "نمط الخلفية",
+        "en": "Background Style"
+      },
+      "default": "white",
+      "options": [
+        { "value": "white", "label": { "ar": "أبيض", "en": "White" } },
+        { "value": "light", "label": { "ar": "فاتح", "en": "Light" } },
+        { "value": "transparent", "label": { "ar": "شفاف", "en": "Transparent" } }
+      ]
+    }
+  },
+  "blocks": {
+    "brand": {
+      "name": "ماركة",
+      "settings": {
+        "logo": {
+          "type": "media",
+          "label": {
+            "ar": "الشعار",
+            "en": "Logo"
+          }
+        },
+        "name": {
+          "type": "string",
+          "label": {
+            "ar": "اسم الماركة",
+            "en": "Brand Name"
+          },
+          "default": ""
+        },
+        "url": {
+          "type": "string",
+          "label": {
+            "ar": "الرابط (اختياري)",
+            "en": "URL (optional)"
+          },
+          "default": ""
+        }
+      }
+    }
+  },
+  "presets": [
+    {
+      "category": "الصفحة الرئيسية",
+      "name": "شعارات الماركات"
+    }
+  ]
+}
