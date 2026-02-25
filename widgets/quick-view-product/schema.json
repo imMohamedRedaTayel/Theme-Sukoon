@@ -1,0 +1,10 @@
+{
+  "name": "quick-view-product",
+  "settings": {},
+  "presets": [
+    {
+      "category": "صفحة المنتج",
+      "name": "عرض سريع للمنتج"
+    }
+  ]
+}

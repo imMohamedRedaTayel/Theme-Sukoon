@@ -1,0 +1,50 @@
+{
+  "name": "صفحة المتجر",
+  "settings": {
+    "collections": {
+      "type": "collections",
+      "label": "التصنيفات"
+    },
+    "title_size": {
+      "type": "select",
+      "label": { "ar": "حجم العنوان", "en": "Title Size" },
+      "default": "large",
+      "options": [
+        { "value": "small", "label": { "ar": "صغير", "en": "Small" } },
+        { "value": "medium", "label": { "ar": "متوسط", "en": "Medium" } },
+        { "value": "large", "label": { "ar": "كبير", "en": "Large" } }
+      ]
+    },
+    "custom_colors": {
+      "type": "boolean",
+      "label": { "ar": "ألوان مخصصة", "en": "Custom Colors" },
+      "default": false
+    },
+    "title_color": {
+      "type": "color",
+      "label": { "ar": "لون العنوان", "en": "Title Color" },
+      "default": "#1A2C32"
+    },
+    "show_search": {
+      "type": "boolean",
+      "label": "إظهار البحث",
+      "default": true
+    },
+    "show_sort": {
+      "type": "boolean",
+      "label": "إظهار خيارات الترتيب",
+      "default": true
+    },
+    "show_filters": {
+      "type": "boolean",
+      "label": "إظهار الفلاتر",
+      "default": true
+    }
+  },
+  "presets": [
+    {
+      "category": "صفحة المتجر",
+      "name": "صفحة المتجر"
+    }
+  ]
+}

@@ -7,10 +7,10 @@
   <div x-show="$store.modal.current === 'cart'"
        @click="$store.modal.close()"
        class="overlay"
-       x-transition:enter="transition ease-out duration-300"
+       x-transition:enter="transition ease-out duration-400"
        x-transition:enter-start="opacity-0"
        x-transition:enter-end="opacity-100"
-       x-transition:leave="transition ease-in duration-200"
+       x-transition:leave="transition ease-in duration-300"
        x-transition:leave-start="opacity-100"
        x-transition:leave-end="opacity-0">
   </div>
@@ -48,7 +48,7 @@
                x-transition:leave="transition ease-in duration-200"
                x-transition:leave-start="opacity-100"
                x-transition:leave-end="opacity-0"
-               :class="{ 'opacity-20 scale-95 pointer-events-none': removingId === '{{ item._id }}' }">
+               :class="{ 'opacity-20 pointer-events-none': removingId === '{{ item._id }}' }">
 
             {# Product Card #}
             <div class="flex gap-3.5">

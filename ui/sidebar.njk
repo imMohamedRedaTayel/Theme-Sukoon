@@ -5,10 +5,10 @@
   <div x-show="$store.modal.current === 'sidebar'"
        @click="$store.modal.close()"
        class="overlay"
-       x-transition:enter="transition ease-out duration-300"
+       x-transition:enter="transition ease-out duration-400"
        x-transition:enter-start="opacity-0"
        x-transition:enter-end="opacity-100"
-       x-transition:leave="transition ease-in duration-200"
+       x-transition:leave="transition ease-in duration-300"
        x-transition:leave-start="opacity-100"
        x-transition:leave-end="opacity-0">
   </div>
@@ -55,26 +55,6 @@
 
     {# ——— Bottom Actions (Language + Dark Mode) ——— #}
     <div class="flex-shrink-0 px-5 py-4 border-t" style="border-color: var(--color-border);">
-
-      {# Dark Mode Toggle #}
-      {% if data.showDark %}
-        <div x-data class="flex items-center justify-between py-2.5 px-1 mb-3">
-          <div class="flex items-center gap-3">
-            <svg class="w-[18px] h-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5" style="color: var(--color-text-tertiary);">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/>
-            </svg>
-            <span class="text-[13px] font-medium" style="color: var(--color-text-primary);">{{ t('common.dark_mode') | default('Dark Mode') }}</span>
-          </div>
-          <!-- Toggle Switch -->
-          <button @click="$store.darkMode.toggle()"
-                  class="relative w-10 h-[22px] rounded-full transition-colors duration-300 cursor-pointer"
-                  :style="$store.darkMode.on ? 'background: var(--color-accent)' : 'background: var(--color-border-hover)'">
-            <span class="absolute top-[3px] start-[3px] w-4 h-4 rounded-full shadow-sm transition-transform duration-300"
-                  style="background: var(--color-surface);"
-                  :class="$store.darkMode.on ? 'translate-x-[18px] rtl:-translate-x-[18px]' : ''"></span>
-          </button>
-        </div>
-      {% endif %}
 
       {# Language Switcher — uses {% form 'lang' %} for proper server-side switching #}
       <div>

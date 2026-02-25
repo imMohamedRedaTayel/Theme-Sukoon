@@ -21,8 +21,7 @@
               "show_search": true,
               "show_cart": true,
               "sticky": true,
-              "show_language_switcher": true,
-              "show_dark_mode": true
+              "show_language_switcher": true
             }
           }
     ]

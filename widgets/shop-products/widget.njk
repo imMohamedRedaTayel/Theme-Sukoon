@@ -1,0 +1,101 @@
+{# Shop Products Widget — rendered via widgetKey for AJAX swap #}
+{# On initial page load this renders as a hidden container;
+   JS moves its content into #products-grid-wrapper on init.
+   On widgetKey AJAX requests, the response HTML is injected directly. #}
+<div id="shop-products-initial" style="display:none">
+{% set columns_desktop = widget.data.columns_desktop | default('3') %}
+{% set _cs_rating = widget.data.card_show_rating if widget.data.card_show_rating is defined else true %}
+{% set _cs_options = widget.data.card_show_options if widget.data.card_show_options is defined else true %}
+{% set _cs_badge = widget.data.card_show_badge if widget.data.card_show_badge is defined else true %}
+{% set _cs_button = widget.data.card_show_button if widget.data.card_show_button is defined else true %}
+{% set _cs_compare = widget.data.card_show_compare_price if widget.data.card_show_compare_price is defined else true %}
+{% set _cs_wishlist = widget.data.card_show_wishlist | default(false) %}
+{% set _cs_ratio = widget.data.card_image_ratio | default('square') %}
+{% set _cs_lines = widget.data.card_title_lines | default('2') %}
+{% set _cs_fit = widget.data.card_image_fit | default('contain') %}
+{% set _cs_hover = widget.data.card_hover_effect | default('zoom') %}
+{% set _cs_radius = widget.data.card_border_radius | default('lg') %}
+
+{% set products = context.shop.products | default([]) %}
+{% set pagination = context.shop.pagination %}
+{% set totalItems = pagination.totalItems if pagination else products | length %}
+
+{# Hidden count data — JS extracts this to update sidebar #}
+<div id="products-count-data" style="display:none">
+  <p class="text-sm text-gray-600">
+    <span class="font-bold text-gray-800">{{ totalItems }}</span>
+    {{t('common.products')}}
+  </p>
+</div>
+
+{% if products | length > 0 %}
+  <div class="grid grid-cols-2 gap-3 md:gap-5 {% if columns_desktop == '4' %}md:grid-cols-3 lg:grid-cols-4{% else %}md:grid-cols-2 lg:grid-cols-3{% endif %}">
+    {% for product in products %}
+      {% ui "product-card.njk", product=product, show_rating=_cs_rating, show_options=_cs_options, show_badge=_cs_badge, image_ratio=_cs_ratio, show_button=_cs_button, show_compare_price=_cs_compare, title_lines=_cs_lines, image_fit=_cs_fit, hover_effect=_cs_hover, show_wishlist=_cs_wishlist, border_radius=_cs_radius %}
+    {% endfor %}
+  </div>
+
+  {# Pagination — uses goToPage() from parent collectionFilter scope #}
+  {% if pagination and pagination.totalPages > 1 %}
+    <nav class="flex items-center justify-center gap-1.5 mt-10" aria-label="pagination">
+      {% if pagination.currentPage > 1 %}
+        <button @click.prevent="goToPage({{ pagination.currentPage - 1 }})"
+           class="w-10 h-10 rounded-xl flex items-center justify-center text-gray-500 hover:bg-gray-100 hover:text-primary transition-colors">
+          <svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </button>
+      {% else %}
+        <span class="w-10 h-10 rounded-xl flex items-center justify-center text-gray-200">
+          <svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </span>
+      {% endif %}
+
+      {% for i in range(1, pagination.totalPages + 1) %}
+        {% if i == pagination.currentPage %}
+          <span class="w-10 h-10 rounded-xl flex items-center justify-center bg-primary text-white font-semibold text-sm">{{ i }}</span>
+        {% elif i == 1 or i == pagination.totalPages or (i >= pagination.currentPage - 1 and i <= pagination.currentPage + 1) %}
+          <button @click.prevent="goToPage({{ i }})"
+             class="w-10 h-10 rounded-xl flex items-center justify-center text-gray-600 hover:bg-gray-100 hover:text-primary transition-colors text-sm font-medium">{{ i }}</button>
+        {% elif i == pagination.currentPage - 2 or i == pagination.currentPage + 2 %}
+          <span class="w-6 flex items-center justify-center text-gray-300 text-sm">...</span>
+        {% endif %}
+      {% endfor %}
+
+      {% if pagination.hasNextPage %}
+        <button @click.prevent="goToPage({{ pagination.currentPage + 1 }})"
+           class="w-10 h-10 rounded-xl flex items-center justify-center text-gray-500 hover:bg-gray-100 hover:text-primary transition-colors">
+          <svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </button>
+      {% else %}
+        <span class="w-10 h-10 rounded-xl flex items-center justify-center text-gray-200">
+          <svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </span>
+      {% endif %}
+    </nav>
+  {% endif %}
+
+{% else %}
+  <div class="flex flex-col items-center justify-center py-20 text-center">
+    <div class="w-24 h-24 rounded-full bg-gray-50 flex items-center justify-center mb-5">
+      <svg class="w-12 h-12 text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+      </svg>
+    </div>
+    <h3 class="text-lg font-bold text-gray-800 mb-2">{{t('collection.no_products')}}</h3>
+    <p class="text-gray-500 text-sm mb-6">{{t('common.no_results')}}</p>
+    <a href="/" class="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:opacity-80 transition-colors">
+      {{t('common.home')}}
+      <svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+      </svg>
+    </a>
+  </div>
+{% endif %}
+</div>{# /shop-products-initial #}

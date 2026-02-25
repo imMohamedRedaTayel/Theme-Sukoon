@@ -1,0 +1,13 @@
+{
+  "layout": "layout",
+  "widgets": [
+    {
+      "name": "shop-page",
+      "widget": "shop-page"
+    },
+    {
+      "name": "shop-products",
+      "widget": "shop-products"
+    }
+  ]
+}

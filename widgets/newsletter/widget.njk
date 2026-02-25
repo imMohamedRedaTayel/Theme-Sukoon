@@ -53,8 +53,8 @@
       {# ——— Success State ——— #}
       <div x-show="submitted" x-cloak
            x-transition:enter="transition ease-out duration-300"
-           x-transition:enter-start="opacity-0 scale-95"
-           x-transition:enter-end="opacity-100 scale-100">
+           x-transition:enter-start="opacity-0"
+           x-transition:enter-end="opacity-100"
         <div class="py-8">
           <div class="w-16 h-16 mx-auto mb-5 rounded-full flex items-center justify-center
                       {% if bgStyle == 'light' %}bg-green-50{% else %}bg-white/15 backdrop-blur-sm{% endif %}">
@@ -81,7 +81,7 @@
 
         {# Title #}
         {% if widget.data.title %}
-          <h2 class="font-bold mb-3" style="font-size: {{ titleClamp }}; color: {{ titleColor }};">
+          <h2 class="font-bold mb-3 text-center" style="font-size: {{ titleClamp }}; color: {{ titleColor }};">
             {{ widget.data.title }}
           </h2>
         {% endif %}

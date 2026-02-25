@@ -1,0 +1,257 @@
+{# Shop Page Widget - Sukoon Theme #}
+{# Unified shop page: /shop | /shop/:handle | /shop?q=... #}
+{# Modes: all (/shop), collection (/shop/:handle), search (/shop?q=...) #}
+
+{% set collections = widget.data.collections | default([]) %}
+{% set show_search = widget.data.show_search if widget.data.show_search is defined else true %}
+{% set show_sort = widget.data.show_sort if widget.data.show_sort is defined else true %}
+{% set show_filters = widget.data.show_filters if widget.data.show_filters is defined else true %}
+{% set filters = context.filters | default([]) %}
+{% set hasFilters = show_filters and filters | length > 0 %}
+{% set hasSidebar = true %}
+
+{# Text customization #}
+{% set useCustom = widget.data.custom_colors | default(false) %}
+{% set titleSizeVal = widget.data.title_size | default('large') %}
+{% if titleSizeVal == 'small' %}
+  {% set titleClamp = 'clamp(1.2rem, 2.5vw, 1.5rem)' %}
+{% elif titleSizeVal == 'medium' %}
+  {% set titleClamp = 'clamp(1.3rem, 3vw, 1.75rem)' %}
+{% else %}
+  {% set titleClamp = 'clamp(1.5rem, 3vw, 2.25rem)' %}
+{% endif %}
+{% if useCustom %}
+  {% set titleColor = widget.data.title_color | default('#1A2C32') %}
+{% else %}
+  {% set titleColor = 'var(--color-text-primary)' %}
+{% endif %}
+
+{# Discover range filter handle dynamically #}
+{% set _rangeHandle = 'price' %}
+{% for filter in filters %}
+  {% if filter.inputType == 'range' %}
+    {% set _rangeHandle = filter.handle %}
+  {% endif %}
+{% endfor %}
+
+<section class="py-6 md:py-10" x-data="collectionFilter({
+  collectionId: '',
+  rangeHandle: '{{ _rangeHandle }}',
+  widgetKey: 'shop-products',
+  collections: [{% for col in collections %}{ id: {{ col._id | dump | safe }}, slug: {{ col.slug | dump | safe }}, title: {{ col.title | dump | safe }}, description: {{ (col.description | default('')) | dump | safe }}, image: {{ (col.image.fileUrl if col.image else '') | dump | safe }} }{% if not loop.last %},{% endif %}{% endfor %}]
+})">
+  <div class="container mx-auto px-4">
+
+    {# ===== Breadcrumb ===== #}
+    <nav class="mb-5 md:mb-6" aria-label="breadcrumb">
+      <ol class="flex items-center gap-1.5 text-xs md:text-sm text-gray-400 flex-wrap">
+        {# Home #}
+        <li><a href="/" class="hover:text-primary transition-colors">{{t('common.home')}}</a></li>
+        <li>
+          <svg class="w-3 h-3 rtl:rotate-180 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </li>
+
+        {# Shop: plain text in "all" mode, link when collection or search is active #}
+        <li>
+          <span x-show="!collectionId && !searchQuery" class="text-gray-600 font-medium">{{t('pages.shop.title')}}</span>
+          <a x-show="collectionId || searchQuery" x-cloak href="/shop" class="hover:text-primary transition-colors">{{t('pages.shop.title')}}</a>
+        </li>
+
+        {# Collection name (when viewing a specific collection) #}
+        <template x-if="collectionId">
+          <li class="flex items-center gap-1.5">
+            <svg class="w-3 h-3 rtl:rotate-180 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+            <span x-show="!searchQuery" class="text-gray-600 font-medium" x-text="currentCollection?.title || ''"></span>
+            <a x-show="searchQuery" x-cloak
+               :href="'/shop/' + (currentCollection?.slug || '')"
+               class="hover:text-primary transition-colors"
+               x-text="currentCollection?.title || ''"></a>
+          </li>
+        </template>
+
+        {# Search label #}
+        <template x-if="searchQuery">
+          <li class="flex items-center gap-1.5">
+            <svg class="w-3 h-3 rtl:rotate-180 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+            <span class="text-gray-600 font-medium">{{t('pages.search.title')}}</span>
+          </li>
+        </template>
+      </ol>
+    </nav>
+
+    {# ===== Page Header ===== #}
+    <div class="mb-6 md:mb-8">
+      {# All Products mode #}
+      <h1 x-show="!collectionId && !searchQuery"
+          class="font-bold" style="font-size: {{ titleClamp }}; color: {{ titleColor }};">
+        {{t('pages.shop.title')}}
+      </h1>
+
+      {# Collection mode #}
+      <h1 x-show="collectionId && !searchQuery" x-cloak
+          class="font-bold" style="font-size: {{ titleClamp }}; color: {{ titleColor }};"
+          x-text="currentCollection?.title || ''">
+      </h1>
+
+      {# Search mode #}
+      <h1 x-show="searchQuery" x-cloak
+          class="font-bold" style="font-size: {{ titleClamp }}; color: {{ titleColor }};">
+        {{t('pages.search.results_for')}} "<span x-text="searchQuery"></span>"
+        <span x-show="collectionId && currentCollection" x-cloak
+              class="text-gray-500 font-normal text-lg md:text-xl block mt-1"
+              x-text="currentCollection?.title ? ('— ' + currentCollection.title) : ''"></span>
+      </h1>
+
+      {# Collection description (when viewing a specific collection) #}
+      <p x-show="collectionId && !searchQuery && currentCollection?.description" x-cloak
+         class="text-gray-500 text-sm md:text-base mt-2 max-w-2xl"
+         x-text="currentCollection?.description || ''">
+      </p>
+
+      {# Search input #}
+      {% if show_search %}
+        <div class="max-w-md mt-4">
+          <div class="relative">
+            <input type="text"
+                   x-model="searchQuery"
+                   @input.debounce.500ms="setSearchQuery(searchQuery)"
+                   placeholder="{{t('pages.shop.search_placeholder')}}"
+                   class="w-full !ps-10 pe-4 py-2.5 rounded-xl border border-gray-200 text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-colors">
+            <svg class="absolute start-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+
+    {# Mobile Toolbar + Bottom Sheets #}
+    {% ui "filter-mobile.njk", show_sort=show_sort, filters=filters, hasFilters=hasFilters, hasSidebar=hasSidebar %}
+
+    {# ===== Main Layout: Sidebar + Grid ===== #}
+    <div class="flex gap-8">
+
+      {# ===== Desktop Sidebar ===== #}
+      <aside class="hidden md:block w-64 flex-shrink-0">
+        <div class="sticky bottom-6 space-y-5">
+
+          {# Products Count + Clear Filters #}
+          <div class="bg-white rounded-2xl border border-gray-100 p-5">
+            <div id="products-count">
+              <p class="text-sm text-gray-600">
+                <span class="font-bold text-gray-800">0</span>
+                {{t('common.products')}}
+              </p>
+            </div>
+            <button x-show="activeCount > 0" x-cloak
+                    @click="clearFilters()"
+                    class="mt-2 text-xs text-red-500 hover:text-red-600 font-medium transition-colors">
+              {{t('collection.clear_filters')}}
+            </button>
+          </div>
+
+          {# Collections List #}
+          {% if collections | length > 0 %}
+            <div class="rounded-2xl border border-gray-100 overflow-hidden">
+              <div class="px-5 py-4 bg-white">
+                <h3 class="text-[13px] font-bold text-gray-900 flex items-center gap-2">
+                  <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25a2.25 2.25 0 01-2.25-2.25v-2.25z"/>
+                  </svg>
+                  {{t('pages.shop.collections')}}
+                </h3>
+              </div>
+              <div class="border-t border-gray-50 p-2 space-y-0.5 max-h-80 overflow-y-auto custom-scrollbar">
+                {# All Products #}
+                <button @click="setCollection('', '')"
+                        class="w-full text-start px-3 py-2 text-[13px] rounded-xl transition-all duration-150 flex items-center justify-between"
+                        :class="!collectionId ? 'bg-gray-900 text-white font-medium shadow-sm' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'">
+                  <span>{{t('pages.shop.all_products')}}</span>
+                  <svg x-show="!collectionId" x-cloak class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                  </svg>
+                </button>
+                {# Each Collection #}
+                {% for col in collections %}
+                  <button @click="setCollection('{{ col._id }}', '{{ col.slug }}')"
+                          class="w-full text-start px-3 py-2 text-[13px] rounded-xl transition-all duration-150 flex items-center justify-between"
+                          :class="collectionId === '{{ col._id }}' ? 'bg-gray-900 text-white font-medium shadow-sm' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'">
+                    <span>{{ col.title }}</span>
+                    <svg x-show="collectionId === '{{ col._id }}'" x-cloak class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                    </svg>
+                  </button>
+                {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+
+          {# Sort & Filters #}
+          {% ui "filter-sidebar.njk", show_sort=show_sort, filters=filters, hasFilters=hasFilters %}
+
+          {# Collection Image (when viewing a specific collection) #}
+          <div x-show="currentCollection?.image" x-cloak class="rounded-2xl overflow-hidden">
+            <img :src="currentCollection?.image || ''"
+                 :alt="currentCollection?.title || ''"
+                 class="w-full h-auto object-cover"
+                 loading="lazy">
+          </div>
+
+        </div>
+      </aside>
+
+      {# ===== Products Area ===== #}
+      <div class="flex-1 min-w-0">
+
+        {# Mobile: Collection Chips (horizontal scroll) #}
+        {% if collections | length > 0 %}
+          <div class="flex gap-2 mb-4 md:hidden overflow-x-auto pb-2 -mx-1 px-1 scrollbar-hide">
+            <button @click="setCollection('', '')"
+                    class="shrink-0 px-3.5 py-1.5 rounded-full text-[12px] font-medium border transition-colors whitespace-nowrap"
+                    :class="!collectionId ? 'bg-gray-900 text-white border-gray-900' : 'bg-white text-gray-600 border-gray-200'">
+              {{t('pages.shop.all_products')}}
+            </button>
+            {% for col in collections %}
+              <button @click="setCollection('{{ col._id }}', '{{ col.slug }}')"
+                      class="shrink-0 px-3.5 py-1.5 rounded-full text-[12px] font-medium border transition-colors whitespace-nowrap"
+                      :class="collectionId === '{{ col._id }}' ? 'bg-gray-900 text-white border-gray-900' : 'bg-white text-gray-600 border-gray-200'">
+                {{ col.title }}
+              </button>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        {# Products Grid + Loading Overlay #}
+        <div class="relative min-h-[200px]">
+
+          {# Loading Overlay (outside wrapper so it survives innerHTML swap) #}
+          <div x-show="loading" x-cloak
+               class="absolute inset-0 bg-white/70 z-10 flex items-center justify-center rounded-2xl"
+               style="backdrop-filter: blur(2px);"
+               x-transition:enter="transition ease-out duration-300"
+               x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+               x-transition:leave="transition ease-in duration-200"
+               x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+            <svg class="w-8 h-8 animate-spin text-primary" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+          </div>
+
+          {# Products content (swapped via widgetKey AJAX) #}
+          <div id="products-grid-wrapper">
+            <div class="py-20"></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>

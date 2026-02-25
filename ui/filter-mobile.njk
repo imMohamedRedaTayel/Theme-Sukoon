@@ -35,19 +35,19 @@
     <div x-show="filtersOpen" x-cloak class="fixed inset-0 z-50">
       {# Overlay #}
       <div @click="filtersOpen = false" class="absolute inset-0 bg-black/40 backdrop-blur-sm"
-           x-transition:enter="transition ease-out duration-300"
+           x-transition:enter="transition ease-out duration-400"
            x-transition:enter-start="opacity-0"
            x-transition:enter-end="opacity-100"
-           x-transition:leave="transition ease-in duration-200"
+           x-transition:leave="transition ease-in duration-300"
            x-transition:leave-start="opacity-100"
            x-transition:leave-end="opacity-0"></div>
 
       {# Sheet #}
       <div class="absolute bottom-0 inset-x-0 bg-white rounded-t-3xl max-h-[85vh] flex flex-col"
-           x-transition:enter="transition ease-out duration-300"
+           x-transition:enter="transition ease-out duration-400"
            x-transition:enter-start="translate-y-full"
            x-transition:enter-end="translate-y-0"
-           x-transition:leave="transition ease-in duration-200"
+           x-transition:leave="transition ease-in duration-300"
            x-transition:leave-start="translate-y-0"
            x-transition:leave-end="translate-y-full">
 
@@ -121,12 +121,12 @@
   {% if show_sort %}
     <div x-show="sortOpen" x-cloak class="fixed inset-0 z-50">
       <div @click="sortOpen = false" class="absolute inset-0 bg-black/40 backdrop-blur-sm"
-           x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-           x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"></div>
+           x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+           x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"></div>
 
       <div class="absolute bottom-0 inset-x-0 bg-white rounded-t-3xl"
-           x-transition:enter="transition ease-out duration-300" x-transition:enter-start="translate-y-full" x-transition:enter-end="translate-y-0"
-           x-transition:leave="transition ease-in duration-200" x-transition:leave-start="translate-y-0" x-transition:leave-end="translate-y-full">
+           x-transition:enter="transition ease-out duration-400" x-transition:enter-start="translate-y-full" x-transition:enter-end="translate-y-0"
+           x-transition:leave="transition ease-in duration-300" x-transition:leave-start="translate-y-0" x-transition:leave-end="translate-y-full">
 
         <div class="flex items-center justify-center pt-3 pb-2">
           <div class="w-10 h-1 rounded-full bg-gray-200"></div>

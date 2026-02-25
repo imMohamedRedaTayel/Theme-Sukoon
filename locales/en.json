@@ -25,8 +25,6 @@
     "add_to_cart": "Add to Cart",
     "remove": "Remove",
     "continue_shopping": "Continue Shopping",
-    "dark_mode": "Dark Mode",
-    "light_mode": "Light Mode",
     "language": "Language",
     "days": "Days",
     "hours": "Hours",
@@ -136,7 +134,9 @@
       "no_reviews": "No reviews yet",
       "select_option": "Select {{option}}",
       "choose_options": "Choose Options",
-      "added": "Added!"
+      "added": "Added!",
+      "view_full_details": "View full details",
+      "quick_view": "Quick View"
     },
     "cart": {
       "title": "Shopping Cart",
@@ -176,6 +176,12 @@
       "price_range": "Price Range",
       "clear_filters": "Clear Filters",
       "show_results": "Show Results"
+    },
+    "shop": {
+      "title": "Shop",
+      "search_placeholder": "Search products...",
+      "all_products": "All Products",
+      "collections": "Collections"
     },
     "search": {
       "title": "Search",

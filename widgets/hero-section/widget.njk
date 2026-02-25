@@ -47,11 +47,11 @@
   @keyframes heroFloat { 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-12px); } }
   .hero-line { width: 0; animation: heroLine 1.2s ease forwards 0.6s; }
   @keyframes heroLine { to { width: 60px; } }
-  .hero-fade-up { opacity: 0; transform: translateY(30px); animation: heroFadeUp 0.8s ease forwards; }
-  .hero-fade-up-d1 { animation-delay: 0.2s; }
-  .hero-fade-up-d2 { animation-delay: 0.4s; }
-  .hero-fade-up-d3 { animation-delay: 0.6s; }
-  .hero-fade-up-d4 { animation-delay: 0.8s; }
+  .hero-fade-up { opacity: 0; transform: translateY(30px); animation: heroFadeUp 0.7s ease forwards; }
+  .hero-fade-up-d1 { animation-delay: 80ms; }
+  .hero-fade-up-d2 { animation-delay: 160ms; }
+  .hero-fade-up-d3 { animation-delay: 240ms; }
+  .hero-fade-up-d4 { animation-delay: 320ms; }
   @keyframes heroFadeUp { to { opacity: 1; transform: translateY(0); } }
   .hero-shine { position: relative; overflow: hidden; }
   .hero-shine::after { content:''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(to right, transparent 0%, rgba(255,255,255,0.08) 50%, transparent 100%); transform: rotate(30deg); animation: heroShine 4s ease-in-out infinite; }
@@ -111,7 +111,7 @@
       {% if btnText %}
         <div class="hero-fade-up hero-fade-up-d3">
           <a href="{{ btnUrl }}"
-             class="hero-shine inline-flex items-center gap-3 px-10 py-4 max-sm:px-7 max-sm:py-3.5 rounded-full text-sm font-semibold transition-all duration-500 hover:shadow-[0_8px_40px_rgba(255,255,255,0.25)] hover:-translate-y-1"
+             class="hero-shine inline-flex items-center gap-3 px-10 py-4 max-sm:px-7 max-sm:py-3.5 rounded-full text-sm font-semibold transition-all duration-500 hover:shadow-[0_8px_40px_rgba(255,255,255,0.25)] hover:opacity-85"
              style="background: {{ btnBg }}; color: {{ btnTxt }};">
             {{ btnText }}
             <svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
@@ -181,7 +181,7 @@
       {% if btnText %}
         <div class="hero-fade-up hero-fade-up-d3">
           <a href="{{ btnUrl }}"
-             class="inline-flex items-center gap-3 px-10 py-4 max-sm:px-7 max-sm:py-3.5 rounded-full text-sm font-semibold transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+             class="inline-flex items-center gap-3 px-10 py-4 max-sm:px-7 max-sm:py-3.5 rounded-full text-sm font-semibold transition-all duration-300 hover:shadow-xl hover:opacity-85"
              style="background: {{ btnBg }}; color: {{ btnTxt }};">
             {{ btnText }}
             <svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
@@ -234,7 +234,7 @@
         {% if btnText %}
           <div class="hero-fade-up hero-fade-up-d3 flex items-center gap-4 max-lg:justify-center">
             <a href="{{ btnUrl }}"
-               class="inline-flex items-center gap-3 px-9 py-4 max-sm:px-7 max-sm:py-3.5 rounded-full text-sm font-semibold transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+               class="inline-flex items-center gap-3 px-9 py-4 max-sm:px-7 max-sm:py-3.5 rounded-full text-sm font-semibold transition-all duration-300 hover:shadow-xl hover:opacity-85"
                style="background: {{ btnBg }}; color: {{ btnTxt }};">
               {{ btnText }}
               <svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">

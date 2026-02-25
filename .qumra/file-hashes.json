@@ -1,28 +1,28 @@
 {
   "assets/main.js": {
-    "hash": "157bf7f12682effd9a541859b37fef49815c9ea22e1b1bb71eed80c4785ecc7d",
-    "lastSynced": "2026-02-16T11:39:07.971Z",
-    "size": 55350
+    "hash": "9556c653d2a3c88554e0659aeec016e1045b0ac8bb64bdf6268301dde0e89a72",
+    "lastSynced": "2026-02-25T12:46:23.297Z",
+    "size": 61742
   },
   "assets/style.css": {
-    "hash": "b413b0c48d0e803f096bab11dd20213bd993904ea37315cd60b0d3bc3bf0d19d",
-    "lastSynced": "2026-02-17T12:55:05.917Z",
-    "size": 28312
+    "hash": "0be42db25c0ea52288668a6c7bf84279eb39b1ec563599470da4d527e6a7f839",
+    "lastSynced": "2026-02-25T10:31:50.125Z",
+    "size": 20758
   },
   "layouts/layout.njk": {
-    "hash": "7ddb2feac9f63a1783dc4ec8253279e9c8de9180d56ccc0c960d41ab171ddb77",
-    "lastSynced": "2026-02-17T15:25:52.411Z",
-    "size": 8110
+    "hash": "641db88d8a2e93987298b70a122238f99d7fbfcb8918309d7da587fce7f2a4e7",
+    "lastSynced": "2026-02-25T12:46:53.298Z",
+    "size": 8754
   },
   "locales/ar.json": {
-    "hash": "0ba8287e9f47a36841ea00a27a09a46cdfc9fb99124879352f35a390e3b99ea6",
-    "lastSynced": "2026-02-17T15:15:34.837Z",
-    "size": 8872
+    "hash": "00c013bf72f8e9dfcd014bf30aba1f912ba1e1d6158f53d63e485a51a7ab05c7",
+    "lastSynced": "2026-02-25T12:43:10.548Z",
+    "size": 9091
   },
   "locales/en.json": {
-    "hash": "00760cc4b686cc3410368b2153ee02d3d37b35368674e8fa89bd5b53729e3a0e",
-    "lastSynced": "2026-02-17T15:15:33.994Z",
-    "size": 7285
+    "hash": "3d364ce5d1c6e3ae917f21f4686eda9b6b0495549f29bcc56b31a18557b3a798",
+    "lastSynced": "2026-02-25T12:43:14.919Z",
+    "size": 7472
   },
   "pages/article.json": {
     "hash": "b4159fadfdf1cdac697ccf08ce3361988be1334e47297ba4c278bdb969df4b64",
@@ -84,11 +84,6 @@
     "lastSynced": "2026-02-09T05:08:59.059Z",
     "size": 41
   },
-  "settings/settings-data.json": {
-    "hash": "f0d46a9b03e5120372cd84feb88492c253cdadcb70df036a0243165725606022",
-    "lastSynced": "2026-02-09T05:08:59.230Z",
-    "size": 28
-  },
   "settings/settings-schema.json": {
     "hash": "2f24ecf97cae845e27ff154d9013339532e1bec662f968a991dffeb9af773702",
     "lastSynced": "2026-02-17T15:25:06.911Z",
@@ -115,9 +110,9 @@
     "size": 189
   },
   "widgets/best-articles/widget.njk": {
-    "hash": "4d65da053a993a5db10a0eecd318fcc62790d4d88e01bea69c0bae1e713eab8b",
-    "lastSynced": "2026-02-09T05:09:00.510Z",
-    "size": 3442
+    "hash": "817fc075b2975b077d583a783c728359d54d3c795fabe1f7d85c01e9938f6ec6",
+    "lastSynced": "2026-02-25T11:06:50.678Z",
+    "size": 3348
   },
   "widgets/best-collections/schema.json": {
     "hash": "3269046df443d1be37261c1659610b1072370bcf214f795a26c1f2aaea198a75",
@@ -165,9 +160,9 @@
     "size": 185
   },
   "widgets/blog-articles/widget.njk": {
-    "hash": "63983185179543d8e1f48248ba710c3ae09566b7ebcaa38074be0fcbeb6d55e6",
-    "lastSynced": "2026-02-09T05:09:02.688Z",
-    "size": 3091
+    "hash": "4f86c0ae09b86cdc2b7c1dac5c7177cfdbc8cd7d2ffa20a1e86c2b5f75acee42",
+    "lastSynced": "2026-02-25T10:34:27.157Z",
+    "size": 3059
   },
   "widgets/features/schema.json": {
     "hash": "a981a4621e41cba539f42071a15ca88cded026d92af33dbf42bc5f67357e352a",
@@ -190,14 +185,14 @@
     "size": 8948
   },
   "widgets/header/schema.json": {
-    "hash": "f9eb53217e8741d37f9ea450e1d18ca2d48af61e416e0d7ba78d4b742cb23127",
-    "lastSynced": "2026-02-17T09:04:03.455Z",
-    "size": 1196
+    "hash": "fa184d22a317f1316ff71729cdb11824d98406451a4964e1ebab8905809d5313",
+    "lastSynced": "2026-02-25T10:16:13.946Z",
+    "size": 997
   },
   "widgets/header/widget.njk": {
-    "hash": "a67324182865170f8c24723a892eba20dbf3849c87c77c178e0a8d7ffae0dec2",
-    "lastSynced": "2026-02-18T11:40:30.977Z",
-    "size": 11478
+    "hash": "9ff9184ab5e97990b45ab2b6498b583fb08fd2f0a87d37d9fa3de8f548a58dba",
+    "lastSynced": "2026-02-24T22:14:02.277Z",
+    "size": 9766
   },
   "ui/button.njk": {
     "hash": "dcea060959c36de5591258bf4f8fe22cdfea95adb368d6ba67192230c5763919",
@@ -205,9 +200,9 @@
     "size": 29
   },
   "ui/cart.njk": {
-    "hash": "9f556ef548121638a23d45656c76f864f4cb78e5ee320eca6895a435af427d3c",
-    "lastSynced": "2026-02-15T06:01:30.516Z",
-    "size": 12099
+    "hash": "f96c6a09a4d468a2e8d9722a004d911011986cb474ea5f19dc4a6d3da135c871",
+    "lastSynced": "2026-02-25T10:27:18.544Z",
+    "size": 12090
   },
   "ui/empty.njk": {
     "hash": "d017ad068725b799f03d0aac465b968376d39f440c62b877125571e596e1899b",
@@ -215,9 +210,9 @@
     "size": 1480
   },
   "ui/loading-screen.njk": {
-    "hash": "68b915b792ea42580919d9e050357ab2ffea5edb80ea682bf636a868b66abc40",
-    "lastSynced": "2026-02-17T09:20:15.974Z",
-    "size": 3221
+    "hash": "28f498461f1a331288693f5d410d5fec0dfc3a256c8952dc1a6918ca23f1aa63",
+    "lastSynced": "2026-02-24T22:14:21.005Z",
+    "size": 2815
   },
   "ui/loading.njk": {
     "hash": "7b22e2ae889928dcc14e50fa95ec1906f3df236897f7496328f9dec65be57206",
@@ -225,24 +220,24 @@
     "size": 767
   },
   "ui/pagination.njk": {
-    "hash": "07bc7e7f95197e39a5c17995567dc6dd091499add41649d5d0f2ad878e43a02f",
-    "lastSynced": "2026-02-09T05:09:06.037Z",
+    "hash": "76e2b4626eb81ed9e5a27233ec58a07617c745b8b3827d883e6d761be13f4d75",
+    "lastSynced": "2026-02-22T07:30:36.013Z",
     "size": 1865
   },
   "ui/product-card.njk": {
-    "hash": "e90312c7d2c62d08d08a5fe91d7d69edb4a277dfef46d0fa247320927537a9a7",
-    "lastSynced": "2026-02-17T11:55:07.396Z",
-    "size": 8747
+    "hash": "67bbd457d72615e9731bf19b65011a87ca1e99960a4f61b9b46ed1af7ff5bd49",
+    "lastSynced": "2026-02-25T12:41:49.181Z",
+    "size": 9536
   },
   "ui/search.njk": {
-    "hash": "572f843a0def461488864a69f2eb90b34d2ca92034f1bbbcf40d844f32a0cc06",
-    "lastSynced": "2026-02-17T10:01:01.751Z",
-    "size": 3110
+    "hash": "bef14f013e79941edfb0d1b4d62f1308d02f050e9463abfeefb4bbb83976c4e7",
+    "lastSynced": "2026-02-22T07:30:51.301Z",
+    "size": 3108
   },
   "ui/sidebar.njk": {
-    "hash": "f19f35fa22c8e276b76ecbdb4f31ed63423da447d46d3ec63c042998d08bdeb5",
-    "lastSynced": "2026-02-17T10:06:16.151Z",
-    "size": 5617
+    "hash": "363d049e481661fc5a81db7238bf0daa184a744f972aa8d05bb72019c23d466c",
+    "lastSynced": "2026-02-24T22:14:13.332Z",
+    "size": 4175
   },
   "templates/footer.json": {
     "hash": "ca00726909f48cc101b103a1a476aa32db259de3a0c755657eb47a833db6a375",
@@ -250,9 +245,9 @@
     "size": 230
   },
   "templates/header.json": {
-    "hash": "1c38a0f842aa69407b72928f3eea67c3bb05baedc72b5429787fd2ed3298eac1",
-    "lastSynced": "2026-02-18T11:34:05.652Z",
-    "size": 756
+    "hash": "768fb687fce73f15d6d7a5c8c4968ede6e0402a45a421ce67fa54d0a2c5f94e0",
+    "lastSynced": "2026-02-24T22:14:49.710Z",
+    "size": 718
   },
   "widgets/hero-section/schema.json": {
     "hash": "3477d4762f43bb2e64bec7c13af5db5e2bd0a1482200219e0f006d795a056955",
@@ -260,9 +255,9 @@
     "size": 2857
   },
   "widgets/hero-section/widget.njk": {
-    "hash": "5666c70ce30928511eb5485a2f8cb9439c90aeb67dc70eed1c3212b48978a659",
-    "lastSynced": "2026-02-18T12:20:54.012Z",
-    "size": 15119
+    "hash": "62e566af4c99d0bc05dbba4f2aa4c368fca44bd65a30864bd1d502974a63c9cf",
+    "lastSynced": "2026-02-22T07:31:44.589Z",
+    "size": 15110
   },
   "widgets/product-grid/schema.json": {
     "hash": "812121e7c8cc2522facf77a41ab5988a7ae7ceeaabcf593e801c54587f027f0f",
@@ -270,8 +265,8 @@
     "size": 1769
   },
   "widgets/product-grid/widget.njk": {
-    "hash": "096c44688b7332112a5ddf942f50d86c2d1688a9518e0fc6dd28e5156e04b834",
-    "lastSynced": "2026-02-18T14:21:15.600Z",
+    "hash": "ddcdec88173e543a45bfc01d825fc5a2d8053ee00edcf335fbb70f3a600d0cc5",
+    "lastSynced": "2026-02-19T05:28:31.349Z",
     "size": 4158
   },
   "widgets/product-detail/schema.json": {
@@ -290,8 +285,8 @@
     "size": 49
   },
   "widgets/category-detail/widget.njk": {
-    "hash": "9163114098638d62341c51a8cd8699eefe59646df8bb7f092da7c7b63102acd2",
-    "lastSynced": "2026-02-15T05:48:52.419Z",
+    "hash": "3f2a8293b6cdc3c89cec057df4ccbac456a82082d804770678f5cbbcef23655f",
+    "lastSynced": "2026-02-22T07:31:13.064Z",
     "size": 14689
   },
   "widgets/testimonials-reviews/schema.json": {
@@ -310,9 +305,9 @@
     "size": 543
   },
   "widgets/cart-page/widget.njk": {
-    "hash": "753d1b8e8e21994058d9f969eb33820faa0a7974d6fc5bddf19bd56eed8e05af",
-    "lastSynced": "2026-02-15T06:04:15.155Z",
-    "size": 23275
+    "hash": "ae2bd7683bf9ebfacc96af5d696309f5dd6a67b3d5d6b9b3bc8a9e55d9b4e298",
+    "lastSynced": "2026-02-25T10:28:54.716Z",
+    "size": 23156
   },
   "widgets/products/schema.json": {
     "hash": "5939384f4ea0f8860c8e0edc79f96c75b931789fbe0543dff186e083799b7bd7",
@@ -330,9 +325,9 @@
     "size": 1647
   },
   "widgets/collections-section/widget.njk": {
-    "hash": "bfd596441f13da88e06d0b20cfd4117967b1f8475faa5b91a922e7c38dacc95e",
-    "lastSynced": "2026-02-18T14:21:17.562Z",
-    "size": 6838
+    "hash": "60813c99b6b6a5d61f93276a8b58f897dbcf9c180cdfa5ad40e1fd97cc3ab1ae",
+    "lastSynced": "2026-02-22T07:30:37.683Z",
+    "size": 6814
   },
   "widgets/collections-page/schema.json": {
     "hash": "d68f656130b9c2108b791e609e3d5ca1c30eac017dbbc11763d96570dfce6208",
@@ -340,9 +335,9 @@
     "size": 50
   },
   "widgets/collections-page/widget.njk": {
-    "hash": "dc8ac0396d961e18b48e0b31dba611b56e260a95c4bea3a768dd4566c3d2a748",
-    "lastSynced": "2026-02-15T05:58:19.985Z",
-    "size": 8505
+    "hash": "eac0d1652a3f64e396968a8eadf3988f301f5da15869bc1920429eb7d53828da",
+    "lastSynced": "2026-02-22T07:30:40.804Z",
+    "size": 8454
   },
   "widgets/collection-page/schema.json": {
     "hash": "675d651f52aaa75597f2d3ddf6812cfd86bd365ac3cf87cb77b7e2879b0fe4fa",
@@ -350,8 +345,8 @@
     "size": 3130
   },
   "widgets/collection-page/widget.njk": {
-    "hash": "8e3babdcf12621fc35aed088b0c5d36c8834f130166ff892fbb38a51b759091b",
-    "lastSynced": "2026-02-14T13:26:09.389Z",
+    "hash": "327ecd82a61938d57d4c131e7165a2847c2ac1f5c0d3f2d4909fd35b8091eb9b",
+    "lastSynced": "2026-02-22T07:31:10.037Z",
     "size": 12351
   },
   "ui/filter-sidebar.njk": {
@@ -360,8 +355,8 @@
     "size": 7773
   },
   "ui/filter-mobile.njk": {
-    "hash": "de5ce509bbc310815d84bd3a4a711367336f333e6e2377e0397a35a45a93aa01",
-    "lastSynced": "2026-02-15T05:47:03.834Z",
+    "hash": "1a06f65a9621f047759a579a2f125d5fad5dcf9a1e62ae06c25f3ba560149a08",
+    "lastSynced": "2026-02-22T07:31:05.602Z",
     "size": 9412
   },
   "widgets/cta-banner/schema.json": {
@@ -370,9 +365,9 @@
     "size": 4157
   },
   "widgets/cta-banner/widget.njk": {
-    "hash": "01e42b677a1bbb6b02bee62ec3d049e4575108badaeacaf1ed36f454d9f90b15",
-    "lastSynced": "2026-02-18T14:22:04.564Z",
-    "size": 9370
+    "hash": "f612b05aa2ae6aeae08d1ab928938077c1d7ab64f7796d130f8f2d375ef2016a",
+    "lastSynced": "2026-02-22T07:31:32.188Z",
+    "size": 9348
   },
   "widgets/announcement-bar/schema.json": {
     "hash": "3e6ffff410e9bfb5251dc3c3d6b8193133685dddf9863c71eb2fa013c555f7c1",
@@ -390,9 +385,9 @@
     "size": 3448
   },
   "widgets/newsletter/widget.njk": {
-    "hash": "4bf2c9f2b9c2bacdfef2ace5063a566e1b3bc808a67f65f925b0b9395315673c",
-    "lastSynced": "2026-02-18T14:21:38.738Z",
-    "size": 7397
+    "hash": "7161debbf36622deb9adbfb5977957cccab8ab5da9857e1e9cf153d12fc748d8",
+    "lastSynced": "2026-02-25T09:13:05.249Z",
+    "size": 7389
   },
   "widgets/about-page/schema.json": {
     "hash": "77f87b53a800d5d8b5ed25fce8920e7395a70d8080a579b95a414e1ca6e0088c",
@@ -435,9 +430,9 @@
     "size": 3461
   },
   "widgets/image-with-text/widget.njk": {
-    "hash": "f1af14e43675cf53b1033e3d7897f8748006dc1538b746c13d37b1bd4547b883",
-    "lastSynced": "2026-02-18T14:11:26.156Z",
-    "size": 6119
+    "hash": "a32bc9d53e3d11ad77edb5f892d39d2317936cc443497fca7fb3bb52fcec7e4d",
+    "lastSynced": "2026-02-22T07:31:35.232Z",
+    "size": 6097
   },
   "widgets/faq-accordion/schema.json": {
     "hash": "baa2586a80c9bc7fa1d967aa8f3ded64ebd7609985db5e63454d56e027d077fc",
@@ -463,5 +458,40 @@
     "hash": "115aa391cbd92b4c562ab4b7ed8f7100eebe0982af38d6c9236a49c72cbac09b",
     "lastSynced": "2026-02-17T10:44:32.801Z",
     "size": 382759
+  },
+  "pages/shop.json": {
+    "hash": "aa10fb2e354528e5766178cc3c269087967a66a816b9ad062e0a112d81b013a0",
+    "lastSynced": "2026-02-25T10:06:27.620Z",
+    "size": 188
+  },
+  "widgets/shop-page/schema.json": {
+    "hash": "2d2d2d2ea9ff27e5c6d2fc416441ff72699032f1bc4155ee5bc7fbcdc96ff158",
+    "lastSynced": "2026-02-25T10:10:01.362Z",
+    "size": 1334
+  },
+  "widgets/shop-page/widget.njk": {
+    "hash": "4c59250bb2ec3eb249de04672205998af1d5aab884b43c9d3c7457687d8736ee",
+    "lastSynced": "2026-02-25T10:11:34.389Z",
+    "size": 13391
+  },
+  "widgets/shop-products/schema.json": {
+    "hash": "a8fb9dab4e09bdab245bade63d031e652ca0a8d62b0b77860990a3a0e752d645",
+    "lastSynced": "2026-02-25T10:05:35.710Z",
+    "size": 2751
+  },
+  "widgets/shop-products/widget.njk": {
+    "hash": "3a19dd02da56d88b96e933bdc185975d19e88cd25c61e64dff03d0f5adf38a5e",
+    "lastSynced": "2026-02-25T11:23:02.534Z",
+    "size": 6189
+  },
+  "widgets/quick-view-product/schema.json": {
+    "hash": "e8dea85e1298fe793a9d263d77143484905109695728d078a49636c8a1767ae4",
+    "lastSynced": "2026-02-25T12:40:22.859Z",
+    "size": 173
+  },
+  "widgets/quick-view-product/widget.njk": {
+    "hash": "edbf9e4442de51ed5bae36feb72fd4209a8d0727a24fda2c38b2cb26f0a34c16",
+    "lastSynced": "2026-02-25T12:41:19.692Z",
+    "size": 13976
   }
 }

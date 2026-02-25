@@ -35,14 +35,6 @@
         "en": "Show Language Switcher"
       },
       "default": true
-    },
-    "show_dark_mode": {
-      "type": "boolean",
-      "label": {
-        "ar": "إظهار زر الوضع الداكن",
-        "en": "Show Dark Mode Toggle"
-      },
-      "default": true
     }
   },
   "presets": [

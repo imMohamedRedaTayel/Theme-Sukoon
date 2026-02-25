@@ -8,7 +8,7 @@
     {# السابق #}
     {% if current > 1 %}
     <a href="?page={{ current - 1 }}" rel="prev" aria-label="الصفحة السابقة" class="h-10 w-10 md:h-12 md:w-12 flex items-center justify-center rounded-full
-                transition transform hover:scale-105">
+                transition transform hover:opacity-85">
       <i class="fi fi-ts-angle-right  text-gray-700 text-xl md:text-2xl"></i>
     </a>
     {% else %}
@@ -29,7 +29,7 @@
     {# التالي #}
     {% if current < total %} <a href="?page={{ current + 1 }}" rel="next" aria-label="الصفحة التالية" class="h-10 w-10 md:h-12 md:w-12 flex items-center justify-center rounded-full
                 
-                transition transform hover:scale-105  ">
+                transition transform hover:opacity-85">
       <i class="fi fi-ts-angle-left  text-gray-700 text-xl md:text-2xl"></i>
       </a>
       {% else %}

@@ -4,16 +4,6 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    {# Dark Mode — apply before paint to prevent flash #}
-    <script>
-      (function() {
-        var stored = localStorage.getItem('sukoon-dark-mode');
-        if (stored === 'true' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-          document.documentElement.classList.add('dark');
-        }
-      })();
-    </script>
-
     {# Google Fonts — Dynamic from settings #}
     {% set fontAr = settings.fontArabic | default('IBM Plex Sans Arabic') %}
     {% set fontEn = settings.fontEnglish | default('DM Sans') %}
@@ -27,36 +17,11 @@
     {# Style Css #}
     <link rel="stylesheet" href="{{ 'style.css' | assets }}"/>
 
-    {# Dynamic Theme — Colors & Fonts from Settings #}
-    <style>
-      :root {
-        --color-accent: {{ settings.primaryColor | default('#00BCD4') }};
-        --color-accent-hover: {{ settings.primaryColorDark | default('#00838F') }};
-        --color-accent-light: {{ settings.primaryColorLight | default('#B2EBF2') }};
-        --color-primary: {{ settings.primaryColor | default('#00BCD4') }};
-        --color-primary-dark: {{ settings.primaryColorDark | default('#00838F') }};
-        --color-border-focus: {{ settings.primaryColor | default('#00BCD4') }};
-        --color-bg-primary: {{ settings.backgroundColor | default('#F8FAFB') }};
-        --color-surface: {{ settings.surfaceColor | default('#FFFFFF') }};
-        --color-section-a: {{ settings.surfaceColor | default('#FFFFFF') }};
-        --color-text-primary: {{ settings.textColor | default('#1A2C32') }};
-        --color-text-secondary: {{ settings.textSecondaryColor | default('#546E7A') }};
-        --color-border: {{ settings.borderColor | default('#D4DFE2') }};
-        --color-warning: {{ settings.secondaryColor | default('#C9A96E') }};
-        --color-header-text: {{ settings.textColor | default('#1A2C32') }};
-        --font-heading-ar: '{{ fontAr }}', system-ui, -apple-system, sans-serif;
-        --font-heading-en: '{{ fontEn }}', system-ui, -apple-system, sans-serif;
-        --font-body-ar: '{{ fontAr }}', system-ui, -apple-system, sans-serif;
-        --font-body-en: '{{ fontEn }}', system-ui, -apple-system, sans-serif;
-      }
-    </style>
-
     {# Tailwind CSS — CDN first, then config #}
     <script src="https://cdn.tailwindcss.com"></script>
 
     <script>
       tailwind.config = {
-        darkMode: 'class',
         theme: {
           extend: {
             colors: {
@@ -143,6 +108,59 @@
     {# Footer #}
     {% template "footer" %}
 
+    {# Quick View Modal #}
+    <div x-data="quickView()" @quick-view.window="openQuickView($event.detail.slug)" x-cloak>
+      {# Overlay #}
+      <div x-show="$store.modal.current === 'quick-view'"
+           @click="$store.modal.close()"
+           class="overlay"
+           x-transition:enter="transition ease-out duration-300"
+           x-transition:enter-start="opacity-0"
+           x-transition:enter-end="opacity-100"
+           x-transition:leave="transition ease-in duration-200"
+           x-transition:leave-start="opacity-100"
+           x-transition:leave-end="opacity-0">
+      </div>
+
+      {# Modal #}
+      <div x-show="$store.modal.current === 'quick-view'"
+           x-transition:enter="transition ease-out duration-300"
+           x-transition:enter-start="opacity-0 scale-95"
+           x-transition:enter-end="opacity-100 scale-100"
+           x-transition:leave="transition ease-in duration-200"
+           x-transition:leave-start="opacity-100 scale-100"
+           x-transition:leave-end="opacity-0 scale-95"
+           class="fixed inset-0 z-[60] flex items-center justify-center p-4">
+        <div class="bg-primary rounded-2xl shadow-lg w-full max-w-3xl max-h-[90vh] overflow-y-auto relative" @click.outside="$store.modal.close()">
+          {# Close Button #}
+          <button @click="$store.modal.close()"
+                  class="absolute top-3 end-3 z-10 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+
+          {# Content #}
+          <div class="p-6">
+            {# Loading State #}
+            <div x-show="loading" class="flex items-center justify-center py-20">
+              <svg class="w-8 h-8 animate-spin text-accent" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+              </svg>
+            </div>
+
+            {# Error State #}
+            <div x-show="error && !loading" class="flex flex-col items-center justify-center py-20 text-center">
+              <svg class="w-12 h-12 text-gray-200 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"/></svg>
+              <p class="text-sm text-tertiary">{{t('common.error')}}</p>
+            </div>
+
+            {# Product HTML — injected dynamically, Alpine.initTree() runs on it #}
+            <div x-show="!loading && !error" id="quick-view-content-dynamic"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     {# Toast Notifications Container #}
     <div id="toast-container" class="fixed top-4 left-1/2 -translate-x-1/2 z-[9999] flex flex-col items-center gap-2 pointer-events-none"></div>
 
@@ -151,20 +169,6 @@
 
     {# GLightbox #}
     <script src="https://cdn.jsdelivr.net/npm/glightbox@3/dist/js/glightbox.min.js"></script>
-
-    {# Alpine.js — Dark Mode Store (must be before Alpine loads) #}
-    <script>
-      document.addEventListener('alpine:init', function() {
-        Alpine.store('darkMode', {
-          on: document.documentElement.classList.contains('dark'),
-          toggle: function() {
-            this.on = !this.on;
-            document.documentElement.classList.toggle('dark', this.on);
-            localStorage.setItem('sukoon-dark-mode', this.on);
-          }
-        });
-      });
-    </script>
 
     {# Alpine.js #}
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
