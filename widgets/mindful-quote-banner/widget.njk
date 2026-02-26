@@ -88,13 +88,13 @@
         <div class="reveal">
           <p class="font-light italic leading-[1.9]"
              style="font-size: {{ quoteClamp }}; color: {{ textColor }};">
-            {{ q.data.text }}
+            {{ q.data.text | safe }}
           </p>
 
           {% if q.data.author %}
             <div class="mt-8 max-sm:mt-6">
               <span class="quote-author text-[11px] font-semibold tracking-[0.2em] uppercase" style="color: {{ mutedColor }};">
-                {{ q.data.author }}
+                {{ q.data.author | safe }}
               </span>
             </div>
           {% endif %}
@@ -115,15 +115,15 @@
                  x-transition:leave-end="opacity-0"
                  class="absolute inset-0 flex flex-col items-center justify-center">
 
-              <p class="font-light italic leading-[1.9]"
-                 style="font-size: {{ quoteClamp }}; color: {{ textColor }};">
-                {{ q.data.text }}
-              </p>
+              <div class="font-light italic leading-[1.9] p-qoute"
+                 style="font-size: {{ quoteClamp }}">
+                {{ q.data.text | safe }}
+              </div>
 
               {% if q.data.author %}
                 <div class="mt-8 max-sm:mt-6">
                   <span class="quote-author text-[11px] font-semibold tracking-[0.2em] uppercase" style="color: {{ mutedColor }};">
-                    {{ q.data.author }}
+                    {{ q.data.author | safe }}
                   </span>
                 </div>
               {% endif %}

@@ -37,7 +37,7 @@
 <section class="py-6 md:py-10" x-data="collectionFilter({
   collectionId: '',
   rangeHandle: '{{ _rangeHandle }}',
-  widgetKey: 'shop-products',
+  section: 'shop-products',
   collections: [{% for col in collections %}{ id: {{ col._id | dump | safe }}, slug: {{ col.slug | dump | safe }}, title: {{ col.title | dump | safe }}, description: {{ (col.description | default('')) | dump | safe }}, image: {{ (col.image.fileUrl if col.image else '') | dump | safe }} }{% if not loop.last %},{% endif %}{% endfor %}]
 })">
   <div class="container mx-auto px-4">
@@ -244,9 +244,8 @@
             </svg>
           </div>
 
-          {# Products content (swapped via widgetKey AJAX) #}
-          <div id="products-grid-wrapper">
-            <div class="py-20"></div>
+          {# Products content (managed by qumra.filters + data-qumra-section) #}
+          <div id="products-grid-wrapper" data-qumra-section="shop-products">
           </div>
 
         </div>

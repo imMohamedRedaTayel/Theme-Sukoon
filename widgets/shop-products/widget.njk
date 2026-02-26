@@ -1,8 +1,6 @@
-{# Shop Products Widget — rendered via widgetKey for AJAX swap #}
-{# On initial page load this renders as a hidden container;
-   JS moves its content into #products-grid-wrapper on init.
-   On widgetKey AJAX requests, the response HTML is injected directly. #}
-<div id="shop-products-initial" style="display:none">
+{# Shop Products Widget — rendered via data-qumra-section #}
+{# Hidden by default; visible only when inside [data-qumra-section] (AJAX render) #}
+<div class="shop-products-content">
 {% set columns_desktop = widget.data.columns_desktop | default('3') %}
 {% set _cs_rating = widget.data.card_show_rating if widget.data.card_show_rating is defined else true %}
 {% set _cs_options = widget.data.card_show_options if widget.data.card_show_options is defined else true %}
@@ -98,4 +96,4 @@
     </a>
   </div>
 {% endif %}
-</div>{# /shop-products-initial #}
+</div>{# /.shop-products-content #}

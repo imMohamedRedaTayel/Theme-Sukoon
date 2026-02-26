@@ -11,7 +11,7 @@
       "label": { "ar": "النص التوضيحي", "en": "Subtitle" },
       "default": ""
     },
-    "layout": {
+    "display_layout": {
       "type": "select",
       "label": { "ar": "التخطيط", "en": "Layout" },
       "default": "centered",
@@ -65,9 +65,9 @@
           "default": "ما هي سياسة الإرجاع؟"
         },
         "answer": {
-          "type": "rich-text",
+          "type": "textarea",
           "label": { "ar": "الإجابة", "en": "Answer" },
-          "default": "يمكنك إرجاع المنتج خلال 14 يوم من تاريخ الاستلام."
+          "default": "يمكنك إرجاع أي منتج خلال 14 يوم من تاريخ الاستلام بشرط أن يكون بحالته الأصلية مع العلامات والتغليف."
         }
       }
     }

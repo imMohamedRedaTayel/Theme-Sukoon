@@ -29,7 +29,7 @@
     },
     "custom_colors": {
       "type": "boolean",
-      "label": { "ar": "ألوان مخصصة (أغلقه للتلقائي)", "en": "Custom Colors (off = auto)" },
+      "label": { "ar": "ألوان مخصصة (أغلقه للرجوع للتلقائي)", "en": "Custom Colors (turn off to reset to auto)" },
       "default": false
     },
     "title_color": {

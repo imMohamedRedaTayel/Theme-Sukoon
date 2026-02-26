@@ -650,17 +650,58 @@
                     return c;
                 },
 
+                // --- Section mode helpers (qumra.filters API) ---
+                _sectionTimer: null,
+
+                _sectionOp(filterFn) {
+                    var self = this;
+                    self.loading = true;
+                    self.filtersOpen = false;
+                    // Safety timeout — loading off after 6s even if MutationObserver misses
+                    clearTimeout(self._sectionTimer);
+                    self._sectionTimer = setTimeout(function () {
+                        self.loading = false;
+                        self._syncSidebarCount();
+                    }, 6000);
+                    try {
+                        filterFn();
+                    } catch (e) {
+                        console.error('Filter error:', e);
+                        self.loading = false;
+                        clearTimeout(self._sectionTimer);
+                    }
+                },
+
+                _syncSidebarCount() {
+                    var wrapper = document.querySelector('#products-grid-wrapper');
+                    var newCount = wrapper && wrapper.querySelector('#products-count-data');
+                    var sidebarCount = document.querySelector('#products-count');
+                    if (newCount && sidebarCount) {
+                        sidebarCount.innerHTML = newCount.innerHTML;
+                    }
+                },
+
+                // --- Filter actions ---
+
                 sortBy(value) {
-                    var url = new URL(window.location);
                     var mapped = _sortMap[value] || value;
+                    this.currentSort = value;
+                    if (cfg.section && !this.searchQuery) {
+                        this._sectionOp(function () { return qumra.filters.sort(mapped || ''); });
+                        return;
+                    }
+                    var url = new URL(window.location);
                     if (mapped) url.searchParams.set('sort', mapped);
                     else url.searchParams.delete('sort');
                     url.searchParams.delete('page');
-                    this.currentSort = value;
                     this._fetch(url);
                 },
 
                 toggleFilter(handle, value) {
+                    if (cfg.section && !this.searchQuery) {
+                        this._sectionOp(function () { return qumra.filters.toggle(handle, value); });
+                        return;
+                    }
                     var url = new URL(window.location);
                     var key = 'filters[' + handle + '][]';
                     var existing = url.searchParams.getAll(key);
@@ -681,17 +722,29 @@
                 },
 
                 applyPrice() {
-                    var url = new URL(window.location);
                     var rh = this.rangeHandle;
-                    if (this.priceMin) url.searchParams.set('filters[' + rh + '][min]', this.priceMin);
+                    var min = this.priceMin;
+                    var max = this.priceMax;
+                    if (cfg.section && !this.searchQuery) {
+                        this._sectionOp(function () { return qumra.filters.range(rh, { min: min, max: max }); });
+                        return;
+                    }
+                    var url = new URL(window.location);
+                    if (min) url.searchParams.set('filters[' + rh + '][min]', min);
                     else url.searchParams.delete('filters[' + rh + '][min]');
-                    if (this.priceMax) url.searchParams.set('filters[' + rh + '][max]', this.priceMax);
+                    if (max) url.searchParams.set('filters[' + rh + '][max]', max);
                     else url.searchParams.delete('filters[' + rh + '][max]');
                     url.searchParams.delete('page');
                     this._fetch(url);
                 },
 
                 clearFilters() {
+                    this.priceMin = '';
+                    this.priceMax = '';
+                    if (cfg.section && !this.searchQuery) {
+                        this._sectionOp(function () { return qumra.filters.clear(); });
+                        return;
+                    }
                     var url = new URL(window.location);
                     url.searchParams.delete('page');
                     var keysToRemove = [];
@@ -699,17 +752,18 @@
                     var unique = [];
                     keysToRemove.forEach(function (k) { if (unique.indexOf(k) === -1) unique.push(k); });
                     unique.forEach(function (k) { url.searchParams.delete(k); });
-                    this.priceMin = '';
-                    this.priceMax = '';
                     this._fetch(url);
                 },
 
                 setCollection(id, slug) {
+                    if (cfg.section) {
+                        window.location.href = slug ? '/shop/' + slug : '/shop';
+                        return;
+                    }
                     this.collectionId = id || '';
                     this._collectionSlug = slug || '';
                     var url = new URL(window.location);
                     url.pathname = slug ? '/shop/' + slug : '/shop';
-                    // Clear filters, sort, page
                     var keysToRemove = [];
                     url.searchParams.forEach(function (v, k) { if (k.startsWith('filters[') || k === 'page') keysToRemove.push(k); });
                     var unique = [];
@@ -725,18 +779,30 @@
                 setSearchQuery(q) {
                     this.searchQuery = q || '';
                     var url = new URL(window.location);
-                    if (q) url.searchParams.set('q', q);
-                    else url.searchParams.delete('q');
+                    if (q) {
+                        url.searchParams.set('q', q);
+                    } else {
+                        url.searchParams.delete('q');
+                    }
                     url.searchParams.delete('page');
                     this._fetch(url);
                 },
 
                 goToPage(page) {
+                    if (cfg.section && !this.searchQuery) {
+                        var url = new URL(window.location);
+                        if (page > 1) url.searchParams.set('page', page);
+                        else url.searchParams.delete('page');
+                        window.location.href = url.toString();
+                        return;
+                    }
                     var url = new URL(window.location);
                     if (page > 1) url.searchParams.set('page', page);
                     else url.searchParams.delete('page');
                     this._fetch(url);
                 },
+
+                // --- JSON API fetch (for collection-page / category-detail) ---
 
                 async _fetch(url) {
                     if (this._abortCtrl) this._abortCtrl.abort();
@@ -745,60 +811,21 @@
                     this.filtersOpen = false;
 
                     try {
-                        if (cfg.widgetKey) {
-                            // widgetKey approach: server returns raw HTML of the widget
-                            var fetchUrl = new URL(url);
-                            fetchUrl.searchParams.set('widgetKey', cfg.widgetKey);
-                            if (this.collectionId) {
-                                fetchUrl.searchParams.set('collectionId', this.collectionId);
-                            }
-                            if (this.searchQuery && !fetchUrl.searchParams.has('q')) {
-                                fetchUrl.searchParams.set('q', this.searchQuery);
-                            }
-
-                            var res = await fetch(fetchUrl.toString(), { signal: this._abortCtrl.signal });
-                            if (!res.ok) throw new Error(res.status);
-                            var html = await res.text();
-
-                            var wrapper = document.querySelector('#products-grid-wrapper');
-                            if (wrapper && html) {
-                                // Parse in temp element to unwrap SSR container if present
-                                var temp = document.createElement('div');
-                                temp.innerHTML = html;
-                                var ssrWrap = temp.querySelector('#shop-products-initial');
-                                wrapper.innerHTML = ssrWrap ? ssrWrap.innerHTML : html;
-
-                                // Init Alpine on new elements
-                                wrapper.querySelectorAll('[x-data]').forEach(function (el) {
-                                    Alpine.initTree(el);
-                                });
-
-                                // Update sidebar count from response
-                                var newCount = wrapper.querySelector('#products-count-data');
-                                var sidebarCount = document.querySelector('#products-count');
-                                if (newCount && sidebarCount) {
-                                    sidebarCount.innerHTML = newCount.innerHTML;
-                                }
-                            }
-                        } else {
-                            // JSON API approach (collection-page etc.)
-                            var apiUrl = new URL('/ajax/search/products', window.location.origin);
-                            url.searchParams.forEach(function (v, k) {
-                                apiUrl.searchParams.append(k, v);
-                            });
-                            if (!apiUrl.searchParams.has('q') && this.searchQuery) {
-                                apiUrl.searchParams.set('q', this.searchQuery);
-                            }
-                            if (this.collectionId && !apiUrl.searchParams.has('collectionId')) {
-                                apiUrl.searchParams.set('collectionId', this.collectionId);
-                            }
-                            var res = await fetch(apiUrl.toString(), { signal: this._abortCtrl.signal });
-                            if (!res.ok) throw new Error(res.status);
-                            var data = await res.json();
-                            this._renderResults(data);
+                        var apiUrl = new URL('/ajax/search/products', window.location.origin);
+                        url.searchParams.forEach(function (v, k) {
+                            apiUrl.searchParams.append(k, v);
+                        });
+                        if (!apiUrl.searchParams.has('q') && this.searchQuery) {
+                            apiUrl.searchParams.set('q', this.searchQuery);
                         }
+                        if (this.collectionId && !apiUrl.searchParams.has('collectionId')) {
+                            apiUrl.searchParams.set('collectionId', this.collectionId);
+                        }
+                        var res = await fetch(apiUrl.toString(), { signal: this._abortCtrl.signal });
+                        if (!res.ok) throw new Error(res.status);
+                        var data = await res.json();
+                        this._renderResults(data);
 
-                        // Update browser URL (clean, without widgetKey)
                         if (url.toString() === window.location.href) {
                             history.replaceState(null, '', url.toString());
                         } else {
@@ -1069,34 +1096,54 @@
                         self.searchQuery = params.get('q');
                     }
 
-                    // Remove hidden SSR shell (shop-products renders in wrong place on full page load)
-                    var ssrEl = document.querySelector('#shop-products-initial');
-                    if (ssrEl) ssrEl.remove();
-
-                    if (cfg.widgetKey || cfg.initialFetch) {
+                    if (cfg.section) {
+                        // Initialize section with qumra filters API
+                        if (typeof qumra !== 'undefined' && qumra.filters && qumra.filters.section) {
+                            qumra.filters.section(cfg.section);
+                        }
+                        // Watch for section content changes to sync sidebar count + turn off loading
+                        var wrapper = document.querySelector('#products-grid-wrapper');
+                        if (wrapper) {
+                            var countTimer;
+                            new MutationObserver(function () {
+                                clearTimeout(countTimer);
+                                clearTimeout(self._sectionTimer);
+                                countTimer = setTimeout(function () {
+                                    self._syncSidebarCount();
+                                    self.loading = false;
+                                }, 100);
+                            }).observe(wrapper, { childList: true });
+                        }
+                        // Apply initial search query from URL (?q=...)
+                        if (self.searchQuery) {
+                            self._fetch(new URL(window.location));
+                        }
+                    } else if (cfg.initialFetch) {
                         self._fetch(new URL(window.location));
                     }
 
-                    window.addEventListener('popstate', function () {
-                        var p = new URLSearchParams(window.location.search);
-                        var sort = p.get('sort') || '';
-                        self.currentSort = _reverseSortMap[sort] || sort;
-                        self.priceMin = p.get('filters[' + self.rangeHandle + '][min]') || '';
-                        self.priceMax = p.get('filters[' + self.rangeHandle + '][max]') || '';
-                        self.searchQuery = p.get('q') || '';
+                    // Popstate: sync UI state on browser back/forward
+                    if (!cfg.section) {
+                        window.addEventListener('popstate', function () {
+                            var p = new URLSearchParams(window.location.search);
+                            var sort = p.get('sort') || '';
+                            self.currentSort = _reverseSortMap[sort] || sort;
+                            self.priceMin = p.get('filters[' + self.rangeHandle + '][min]') || '';
+                            self.priceMax = p.get('filters[' + self.rangeHandle + '][max]') || '';
+                            self.searchQuery = p.get('q') || '';
 
-                        // Re-read collection from path
-                        var pc = self._parseCollectionFromPath();
-                        if (pc) {
-                            self.collectionId = pc.id;
-                            self._collectionSlug = pc.slug;
-                        } else {
-                            self.collectionId = '';
-                            self._collectionSlug = '';
-                        }
+                            var pc = self._parseCollectionFromPath();
+                            if (pc) {
+                                self.collectionId = pc.id;
+                                self._collectionSlug = pc.slug;
+                            } else {
+                                self.collectionId = '';
+                                self._collectionSlug = '';
+                            }
 
-                        self._fetch(new URL(window.location));
-                    });
+                            self._fetch(new URL(window.location));
+                        });
+                    }
                 }
             };
         });

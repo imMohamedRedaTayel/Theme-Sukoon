@@ -23,7 +23,7 @@
       },
       "default": true
     },
-    "layout": {
+    "display_layout": {
       "type": "select",
       "label": {
         "ar": "التخطيط",

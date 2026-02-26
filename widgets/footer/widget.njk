@@ -10,7 +10,9 @@
 {% set socialInstagram = widget.data.footer_social_instagram %}
 {% set socialTiktok = widget.data.footer_social_tiktok %}
 {% set socialSnapchat = widget.data.footer_social_snapchat %}
-{% set hasSocial = socialX or socialInstagram or socialTiktok or socialSnapchat %}
+{% set socialFacebook = widget.data.footer_social_facebook %}
+{% set socialYoutube = widget.data.footer_social_youtube %}
+{% set hasSocial = socialX or socialInstagram or socialTiktok or socialSnapchat or socialFacebook or socialYoutube %}
 
 <footer style="background: var(--color-footer);" class="pt-16 pb-8 max-sm:pt-12 max-sm:pb-6">
   <div class="px-12 max-lg:px-6 max-sm:px-4">
@@ -73,6 +75,24 @@
                  onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-footer-text-muted)'">
                 <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12.206.793c.99 0 4.347.276 5.93 3.821.529 1.193.403 3.219.299 4.847l-.003.06c-.012.18-.022.345-.03.51.075.045.203.09.401.09.3-.016.659-.12.922-.214.14-.05.273-.096.395-.13a.93.93 0 01.268-.04c.326 0 .598.164.724.439.167.366-.024.75-.192.99-.06.088-.227.28-.439.413-.232.143-.588.283-1.073.283-.2 0-.42-.026-.65-.079a1.42 1.42 0 00-.268-.03c-.078 0-.147.01-.205.03-.138.047-.257.164-.377.403-.188.37-.36.755-.637 1.064-.372.416-.84.73-1.412.948-.21.08-.437.152-.674.215.012.047.044.103.103.173.128.148.35.283.475.355.064.04.135.084.19.12.315.2.587.43.657.715.038.148.023.297-.04.438-.108.237-.32.406-.535.504-.36.164-.79.235-1.28.235-.33 0-.654-.04-.913-.082a3.98 3.98 0 00-.634-.06c-.078 0-.173.01-.27.03-.2.04-.41.157-.627.302-.42.282-.888.622-1.619.622s-1.2-.34-1.619-.622a2.89 2.89 0 00-.627-.302c-.098-.02-.19-.03-.27-.03-.21 0-.44.02-.635.06-.258.04-.582.082-.913.082-.49 0-.92-.07-1.28-.235a1.04 1.04 0 01-.534-.504.65.65 0 01-.04-.438c.07-.284.342-.515.657-.715.055-.036.126-.08.19-.12.125-.072.347-.207.475-.355.06-.07.09-.126.103-.173a6.04 6.04 0 01-.674-.215c-.572-.218-1.04-.532-1.412-.948-.277-.309-.449-.694-.637-1.064-.12-.24-.24-.356-.377-.403a.575.575 0 00-.205-.03 1.42 1.42 0 00-.268.03c-.23.053-.45.079-.65.079-.485 0-.84-.14-1.073-.283a1.87 1.87 0 01-.44-.414c-.166-.24-.358-.623-.191-.989.127-.275.4-.44.724-.44a.93.93 0 01.268.04c.122.035.255.08.395.131.263.094.622.23.922.214.199 0 .326-.045.401-.09a6.37 6.37 0 01-.03-.51l-.003-.06c-.104-1.628-.23-3.654.3-4.847C5.447 1.069 8.803.793 9.794.793h.413z"/>
+                </svg>
+              </a>
+            {% endif %}
+            {% if socialFacebook %}
+              <a href="{{ socialFacebook }}" target="_blank" rel="noopener" aria-label="Facebook"
+                 class="transition-colors duration-200" style="color: var(--color-footer-text-muted);"
+                 onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-footer-text-muted)'">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+              </a>
+            {% endif %}
+            {% if socialYoutube %}
+              <a href="{{ socialYoutube }}" target="_blank" rel="noopener" aria-label="YouTube"
+                 class="transition-colors duration-200" style="color: var(--color-footer-text-muted);"
+                 onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-footer-text-muted)'">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                 </svg>
               </a>
             {% endif %}

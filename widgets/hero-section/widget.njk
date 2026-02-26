@@ -202,13 +202,13 @@
 <section id="{{ widget.id }}" class="relative min-h-[90svh] flex items-center overflow-hidden" style="background: linear-gradient(160deg, var(--color-section-a) 0%, var(--color-section-b) 100%);">
 
   {# Decorative blob #}
-  <div class="absolute top-1/2 -translate-y-1/2 {% if layout == 'image-left' %}start-0{% else %}end-0{% endif %} w-1/2 aspect-square rounded-full opacity-[0.03] max-lg:hidden" style="background: var(--color-accent); filter: blur(80px);"></div>
+  <div class="absolute top-1/2 -translate-y-1/2 {% if layout == 'image-right' %}start-0{% else %}end-0{% endif %} w-1/2 aspect-square rounded-full opacity-[0.03] max-lg:hidden" style="background: var(--color-accent); filter: blur(80px);"></div>
 
   <div class="container mx-auto px-12 max-lg:px-6 max-sm:px-4 py-24 max-lg:py-14 max-sm:py-10">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 max-lg:gap-12 items-center">
 
       {# ——— Text Side ——— #}
-      <div class="{% if layout == 'image-left' %}lg:order-2{% endif %} max-lg:text-center">
+      <div class="{% if layout == 'image-right' %}lg:order-2{% endif %} max-lg:text-center">
 
         {% if subtitle %}
           <div class="hero-fade-up hero-fade-up-d1 mb-5">
@@ -247,7 +247,7 @@
 
       {# ——— Image Side ——— #}
       {% if image %}
-        <div class="{% if layout == 'image-left' %}lg:order-1{% endif %}">
+        <div class="{% if layout == 'image-right' %}lg:order-1{% endif %}">
           <div class="relative hero-fade-up hero-fade-up-d2">
 
             {# Main image #}
@@ -263,12 +263,12 @@
             </div>
 
             {# Floating accent card — top #}
-            <div class="hero-img-float absolute -top-5 {% if layout == 'image-left' %}-start-5{% else %}-end-5{% endif %} max-sm:hidden">
+            <div class="hero-img-float absolute -top-5 {% if layout == 'image-right' %}-start-5{% else %}-end-5{% endif %} max-sm:hidden">
               <div class="w-20 h-20 rounded-2xl rotate-12 opacity-50" style="background: var(--color-accent-light); border: 1px solid var(--color-border);"></div>
             </div>
 
             {# Floating accent card — bottom #}
-            <div class="absolute -bottom-4 {% if layout == 'image-left' %}-end-4{% else %}-start-4{% endif %} max-sm:hidden" style="animation: heroFloat 5s ease-in-out infinite 1s;">
+            <div class="absolute -bottom-4 {% if layout == 'image-right' %}-end-4{% else %}-start-4{% endif %} max-sm:hidden" style="animation: heroFloat 5s ease-in-out infinite 1s;">
               <div class="w-14 h-14 rounded-xl -rotate-6 opacity-40" style="background: var(--color-bg-secondary); border: 1px solid var(--color-border);"></div>
             </div>
           </div>

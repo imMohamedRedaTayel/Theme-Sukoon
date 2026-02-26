@@ -26,7 +26,7 @@
       "label": { "ar": "رسالة النجاح", "en": "Success Message" },
       "default": "تم الاشتراك بنجاح!"
     },
-    "layout": {
+    "display_layout": {
       "type": "select",
       "label": { "ar": "التخطيط", "en": "Layout" },
       "default": "card",

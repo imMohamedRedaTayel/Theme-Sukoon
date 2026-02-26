@@ -98,6 +98,14 @@
       "label": "Padding",
       "default": ""
     },
+    "custom_colors": {
+      "type": "boolean",
+      "label": {
+        "ar": "ألوان مخصصة (أغلقه للرجوع للتلقائي)",
+        "en": "Custom Colors (turn off to reset to auto)"
+      },
+      "default": false
+    },
     "button_bg_color": {
       "type": "color",
       "label": { "ar": "لون خلفية الزر", "en": "Button Background" },

@@ -17,6 +17,35 @@
     {# Style Css #}
     <link rel="stylesheet" href="{{ 'style.css' | assets }}"/>
 
+    {# Dynamic theme overrides from builder settings #}
+    <style>
+      :root {
+        {% if settings.custom_colors %}
+        /* Colors — from builder */
+        --color-accent: {{ settings.primaryColor | default('#00BCD4') }};
+        --color-primary: {{ settings.primaryColor | default('#00BCD4') }};
+        --color-accent-hover: {{ settings.primaryColorDark | default('#00838F') }};
+        --color-primary-dark: {{ settings.primaryColorDark | default('#00838F') }};
+        --color-accent-light: {{ settings.primaryColorLight | default('#B2EBF2') }};
+        --color-border-focus: {{ settings.primaryColor | default('#00BCD4') }};
+        --color-warning: {{ settings.secondaryColor | default('#C9A96E') }};
+        --color-bg-primary: {{ settings.backgroundColor | default('#F8FAFB') }};
+        --color-surface: {{ settings.surfaceColor | default('#FFFFFF') }};
+        --color-section-a: {{ settings.surfaceColor | default('#FFFFFF') }};
+        --color-header: {{ settings.surfaceColor | default('#FFFFFF') }};
+        --color-text-primary: {{ settings.textColor | default('#1A2C32') }};
+        --color-header-text: {{ settings.textColor | default('#1A2C32') }};
+        --color-text-secondary: {{ settings.textSecondaryColor | default('#546E7A') }};
+        --color-border: {{ settings.borderColor | default('#D4DFE2') }};
+        {% endif %}
+        /* Fonts — always from builder */
+        --font-heading-ar: '{{ fontAr }}', system-ui, -apple-system, sans-serif;
+        --font-heading-en: '{{ fontEn }}', system-ui, -apple-system, sans-serif;
+        --font-body-ar: '{{ fontAr }}', system-ui, -apple-system, sans-serif;
+        --font-body-en: '{{ fontEn }}', system-ui, -apple-system, sans-serif;
+      }
+    </style>
+
     {# Tailwind CSS — CDN first, then config #}
     <script src="https://cdn.tailwindcss.com"></script>
 

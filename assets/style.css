@@ -1,3 +1,8 @@
+/* ===== SECTION WIDGET VISIBILITY ===== */
+/* Hide standalone SSR render; show only when inside data-qumra-section (AJAX) */
+.shop-products-content { display: none; }
+[data-qumra-section="shop-products"] .shop-products-content { display: block; }
+
 /* ===== SUKOON COLOR SYSTEM ===== */
 :root {
     /* Primary Palette — cool neutral to complement cyan */
@@ -900,4 +905,10 @@ label,
     }
     html.reveal-init .reveal { opacity: 1; transform: none; }
     .img-fade { opacity: 1; }
+  }
+
+
+
+  .p-qoute * {
+    color: white ;
   }

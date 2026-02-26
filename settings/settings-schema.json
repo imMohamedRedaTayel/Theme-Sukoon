@@ -5,6 +5,14 @@
       "en": "Colors"
     },
     "settings": {
+      "custom_colors": {
+        "type": "boolean",
+        "label": {
+          "ar": "ألوان مخصصة (أغلقه للرجوع للتلقائي)",
+          "en": "Custom Colors (turn off to reset to auto)"
+        },
+        "default": false
+      },
       "primaryColor": {
         "type": "color",
         "label": {

@@ -70,6 +70,20 @@
         "ar": "رابط سناب شات",
         "en": "Snapchat URL"
       }
+    },
+    "footer_social_facebook": {
+      "type": "url",
+      "label": {
+        "ar": "رابط فيسبوك",
+        "en": "Facebook URL"
+      }
+    },
+    "footer_social_youtube": {
+      "type": "url",
+      "label": {
+        "ar": "رابط يوتيوب",
+        "en": "YouTube URL"
+      }
     }
   }
 }
