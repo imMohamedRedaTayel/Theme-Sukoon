@@ -6,7 +6,7 @@
 {% set show_search = widget.data.show_search if widget.data.show_search is defined else true %}
 {% set show_sort = widget.data.show_sort if widget.data.show_sort is defined else true %}
 {% set show_filters = widget.data.show_filters if widget.data.show_filters is defined else true %}
-{% set filters = context.filters | default([]) %}
+{% set filters = context.shop.filters.available if context.shop and context.shop.filters else context.filters | default([]) %}
 {% set hasFilters = show_filters and filters | length > 0 %}
 {% set hasSidebar = true %}
 
@@ -34,11 +34,28 @@
   {% endif %}
 {% endfor %}
 
+
 <section class="py-6 md:py-10" x-data="collectionFilter({
   collectionId: '',
   rangeHandle: '{{ _rangeHandle }}',
   section: 'shop-products',
-  collections: [{% for col in collections %}{ id: {{ col._id | dump | safe }}, slug: {{ col.slug | dump | safe }}, title: {{ col.title | dump | safe }}, description: {{ (col.description | default('')) | dump | safe }}, image: {{ (col.image.fileUrl if col.image else '') | dump | safe }} }{% if not loop.last %},{% endif %}{% endfor %}]
+  collections: [{% for col in collections %}{ id: {{ col._id | dump | safe }}, slug: {{ col.slug | dump | safe }}, title: {{ col.title | dump | safe }}, description: {{ (col.description | default('')) | dump | safe }}, image: {{ (col.image.fileUrl if col.image else '') | dump | safe }} }{% if not loop.last %},{% endif %}{% endfor %}],
+  cardSettings: {
+    gridClass: 'md:grid-cols-2 lg:grid-cols-3'
+  },
+  translations: {
+    addToCart: '{{t("pages.product.add_to_cart") | default("Add to cart")}}',
+    buyNow: '{{t("pages.product.buy_now") | default("Buy Now")}}',
+    chooseOptions: '{{t("pages.product.choose_options") | default("Choose options")}}',
+    outOfStock: '{{t("pages.product.out_of_stock") | default("Out of stock")}}',
+    added: '{{t("pages.product.added") | default("Added")}}',
+    noProducts: '{{t("collection.no_products") | default("No products")}}',
+    noResults: '{{t("common.no_results") | default("No results")}}',
+    resultsFor: '{{t("pages.search.results_for") | default("Results for")}}',
+    tryDifferent: '{{t("pages.search.try_different") | default("Try different keywords")}}',
+    home: '{{t("common.home") | default("Home")}}',
+    products: '{{t("common.products") | default("Products")}}'
+  }
 })">
   <div class="container mx-auto px-4">
 

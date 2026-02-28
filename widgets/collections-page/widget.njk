@@ -28,7 +28,7 @@
 
       {# Featured — first collection large #}
       {% set featured = collections[0] %}
-      <a href="/collections/{{ featured.slug }}" class="group block mb-8 reveal">
+      <a href="/shop/{{ featured.slug }}" class="group block mb-8 reveal">
         <div class="relative overflow-hidden rounded-3xl max-sm:rounded-2xl aspect-[21/9] max-sm:aspect-[16/9] bg-gray-100">
           {% if featured.image and featured.image.fileUrl %}
             <img
@@ -62,9 +62,9 @@
                   {{ featured.title }}
                 </h2>
                 {% if featured.description %}
-                  <p class="text-sm text-white/80 mt-2 max-w-lg line-clamp-2 max-sm:hidden">
+                  <div class="text-sm text-white/80 mt-2 max-w-lg line-clamp-2 max-sm:hidden">
                     {{ featured.description | safe }}
-                  </p>
+                  </div>
                 {% endif %}
               </div>
               <div class="shrink-0 w-10 h-10 max-sm:w-8 max-sm:h-8 rounded-full bg-white/15 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
@@ -82,7 +82,7 @@
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 max-sm:gap-3">
           {% for collection in collections %}
             {% if loop.index0 > 0 %}
-              <a href="/collections/{{ collection.slug }}" class="group block reveal">
+              <a href="/shop/{{ collection.slug }}" class="group block reveal">
                 <div class="relative overflow-hidden rounded-2xl aspect-[3/4] bg-gray-100">
                   {% if collection.image and collection.image.fileUrl %}
                     <img

@@ -73,21 +73,20 @@
     {% endif %}
 
     {# Price #}
-    {% if p.pricing.price > 0 %}
-      <div class="flex items-baseline gap-3">
-        <span class="text-[22px] font-bold text-primary" x-text="currentPrice">{{ p.pricing.price | money }}</span>
-        <template x-if="currentComparePrice">
-          <span class="text-[14px] line-through text-tertiary" x-text="currentComparePrice">
-            {% if hasDiscount %}{{ p.pricing.compareAtPrice | money }}{% endif %}
-          </span>
-        </template>
-        <template x-if="discountPercent > 0">
-          <span class="px-2 py-0.5 rounded-full text-[11px] font-medium bg-red-500 text-white" x-text="'-' + discountPercent + '%'">
-            {% if hasDiscount %}-{{ discount }}%{% endif %}
-          </span>
-        </template>
+    <div class="flex flex-col gap-1">
+      <div class="flex items-baseline gap-3 flex-wrap">
+        <span class="text-[22px] font-bold text-primary" x-text="displayPrice()">{{ p.pricing.price | money }}</span>
+        <span class="text-[14px] line-through text-tertiary"
+              x-show="hasDiscount()" x-text="displayComparePrice()">
+          {% if hasDiscount %}{{ p.pricing.compareAtPrice | money }}{% endif %}
+        </span>
+        <span class="px-2 py-0.5 rounded-full text-[11px] font-medium bg-red-500 text-white"
+              x-show="hasDiscount()" x-text="'-' + discountPercent + '%'">
+          {% if hasDiscount %}-{{ discount }}%{% endif %}
+        </span>
       </div>
-    {% endif %}
+      <span class="text-[12px] text-secondary" x-show="qty > 1" x-text="displayUnitPrice() + ' × ' + qty"></span>
+    </div>
 
     <hr class="border-0 h-px" style="background: var(--color-border);"/>
 
@@ -215,10 +214,24 @@
       selectedOptions: {},
       selectedLabels: {},
       currentVariantId: null,
-      currentPrice: '{{ p.pricing.price | money }}',
-      currentComparePrice: {% if hasDiscount %}'{{ p.pricing.compareAtPrice | money }}'{% else %}null{% endif %},
+      unitPrice: {{ p.pricing.price | default(0) }},
+      unitComparePrice: {{ p.pricing.compareAtPrice | default(0) }},
       discountPercent: {% if hasDiscount %}{{ discount }}{% else %}0{% endif %},
       isOutOfStock: {{ 'true' if not canPurchase else 'false' }},
+
+      displayPrice() {
+        return window.formatMoney ? window.formatMoney(this.unitPrice * this.qty) : '';
+      },
+      displayUnitPrice() {
+        return window.formatMoney ? window.formatMoney(this.unitPrice) : '';
+      },
+      displayComparePrice() {
+        if (!this.unitComparePrice || this.unitComparePrice <= this.unitPrice) return '';
+        return window.formatMoney ? window.formatMoney(this.unitComparePrice * this.qty) : '';
+      },
+      hasDiscount() {
+        return this.unitComparePrice && this.unitComparePrice > this.unitPrice;
+      },
 
       variants: [
         {% for variant in p.variants %}
@@ -268,7 +281,7 @@
 
         if (matched) {
           this.currentVariantId = matched.id;
-          this.currentPrice = matched.priceFormatted;
+          this.unitPrice = matched.price;
 
           if (matched.trackQuantity && !matched.allowBackorder) {
             this.isOutOfStock = matched.quantity <= 0;
@@ -277,10 +290,10 @@
           }
 
           if (matched.compareAtPrice && matched.compareAtPrice > matched.price) {
-            this.currentComparePrice = matched.compareAtPriceFormatted;
+            this.unitComparePrice = matched.compareAtPrice;
             this.discountPercent = Math.round(((matched.compareAtPrice - matched.price) / matched.compareAtPrice) * 100);
           } else {
-            this.currentComparePrice = null;
+            this.unitComparePrice = 0;
             this.discountPercent = 0;
           }
         }

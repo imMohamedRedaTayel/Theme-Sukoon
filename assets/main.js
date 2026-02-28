@@ -253,10 +253,18 @@
             if (items.length > 0) {
                 var itemIds = items.map(function (i) { return i._id; });
 
-                // Update item totals
+                // Update item totals + compare prices
                 items.forEach(function (item) {
                     document.querySelectorAll('[data-item-total="' + item._id + '"]').forEach(function (el) {
                         el.textContent = Utils.formatMoney(item.totalPrice);
+                    });
+                    document.querySelectorAll('[data-item-compare="' + item._id + '"]').forEach(function (el) {
+                        if (item.totalCompareAtPrice && item.compareAtPrice > item.price) {
+                            el.textContent = Utils.formatMoney(item.totalCompareAtPrice);
+                            el.style.display = '';
+                        } else {
+                            el.style.display = 'none';
+                        }
                     });
                 });
 
@@ -294,15 +302,30 @@
                     container.style.display = '';
                 }
 
-                // Update footer total
+                // Update footer total + savings
                 if (footer) {
                     footer.style.display = '';
                     var totalEl = footer.querySelector('[data-cart-total]');
                     if (totalEl) totalEl.textContent = Utils.formatMoney(data.totalPrice);
+
+                    var savingsRow = footer.querySelector('[data-cart-savings-row]');
+                    var savingsEl = footer.querySelector('[data-cart-savings]');
+                    if (savingsRow && savingsEl) {
+                        if (data.totalSavings && data.totalSavings > 0) {
+                            savingsEl.textContent = '-' + Utils.formatMoney(data.totalSavings);
+                            savingsRow.style.display = '';
+                        } else {
+                            savingsRow.style.display = 'none';
+                        }
+                    }
                 }
 
-                // Show count bar
-                if (countBar) countBar.style.display = '';
+                // Update count bar
+                if (countBar) {
+                    countBar.style.display = '';
+                    var countEl = countBar.querySelector('[data-cart-count]');
+                    if (countEl) countEl.textContent = data.totalQuantity || 0;
+                }
 
                 // Hide empty state
                 if (empty) empty.style.display = 'none';
@@ -321,6 +344,8 @@
             var title = (item.productData && item.productData.title) || '';
             var imageUrl = (item.productData && item.productData.image && item.productData.image.fileUrl) || '';
             var totalPrice = Utils.formatMoney(item.totalPrice);
+            var hasCompare = item.compareAtPrice && item.compareAtPrice > item.price;
+            var totalComparePrice = hasCompare ? Utils.formatMoney(item.totalCompareAtPrice) : '';
 
             var imageHtml = imageUrl
                 ? '<div class="w-20 h-20 rounded-2xl overflow-hidden bg-gray-50 border border-gray-100">' +
@@ -378,6 +403,7 @@
                 '</div>' +
                 '<div class="text-end">' +
                 '<span class="text-sm font-bold text-gray-900 transition-all" data-item-total="' + id + '" :class="{ \'animate-pulse text-primary\': updating === \'' + id + '\' }">' + totalPrice + '</span>' +
+                (hasCompare ? '<span class="block text-[10px] text-gray-400 line-through" data-item-compare="' + id + '">' + totalComparePrice + '</span>' : '') +
                 '</div>' +
                 '</div>' +
                 '</div>' +
@@ -531,7 +557,7 @@
         });
 
         Alpine.store('cart', {
-            totalQuantity: 0,
+            totalQuantity: (window.__QUMRA_CONFIG__ && window.__QUMRA_CONFIG__.cartTotalQuantity) || 0,
             totalPrice: 0,
             items: [],
             update(data) {
@@ -609,17 +635,29 @@
         // --- Collection/Search Filter Component (AJAX) ---
         Alpine.data('collectionFilter', (cfg) => {
             cfg = cfg || {};
-            var _sortMap = { newest: 'created-desc', price_asc: 'price-asc', price_desc: 'price-desc' };
-            var _reverseSortMap = { 'created-desc': 'newest', 'price-asc': 'price_asc', 'price-desc': 'price_desc' };
+            var _sortMap = { newest: 'created-desc', price_asc: 'price-asc', price_desc: 'price-desc', highest_rated: 'rating-desc' };
+            var _reverseSortMap = { 'created-desc': 'newest', 'price-asc': 'price_asc', 'price-desc': 'price_desc', 'rating-desc': 'highest_rated' };
             var _rh = cfg.rangeHandle || 'price';
             var _p = new URLSearchParams(window.location.search);
             var _s = _p.get('sort') || '';
             var _initSort = _reverseSortMap[_s] || _s;
             var _initPriceMin = _p.get('filters[' + _rh + '][min]') || '';
             var _initPriceMax = _p.get('filters[' + _rh + '][max]') || '';
+
+            // Build initial active filters from URL
+            var _initActive = {};
+            _p.forEach(function (v, k) {
+                var m = k.match(/^filters\[([^\]]+)\]\[\]$/);
+                if (m) {
+                    if (!_initActive[m[1]]) _initActive[m[1]] = [];
+                    _initActive[m[1]].push(v);
+                }
+            });
+
             return {
                 searchQuery: cfg.query || '',
                 collectionId: cfg.collectionId || '',
+                collections: cfg.collections || [],
                 cardSettings: cfg.cardSettings || {},
                 translations: cfg.translations || {},
                 rangeHandle: _rh,
@@ -631,22 +669,25 @@
                 sortOpen: false,
                 _abortCtrl: null,
                 _priceTimer: null,
+                _activeFilters: _initActive,
 
                 get currentCollection() {
-                    if (!this.collectionId || !cfg.collections) return null;
-                    for (var i = 0; i < cfg.collections.length; i++) {
-                        if (cfg.collections[i].id === this.collectionId) return cfg.collections[i];
+                    if (!this.collectionId || !this.collections) return null;
+                    for (var i = 0; i < this.collections.length; i++) {
+                        if (this.collections[i].id === this.collectionId) return this.collections[i];
                     }
                     return null;
                 },
 
                 isActive(handle, value) {
-                    return new URLSearchParams(window.location.search).getAll('filters[' + handle + '][]').includes(value);
+                    return this._activeFilters[handle] && this._activeFilters[handle].indexOf(value) >= 0;
                 },
 
                 get activeCount() {
                     var c = 0;
-                    new URLSearchParams(window.location.search).forEach(function (v, k) { if (k.startsWith('filters[')) c++; });
+                    var f = this._activeFilters;
+                    for (var k in f) { if (f[k] && f[k].length) c += f[k].length; }
+                    if (this.priceMin || this.priceMax) c++;
                     return c;
                 },
 
@@ -657,6 +698,7 @@
                     var self = this;
                     self.loading = true;
                     self.filtersOpen = false;
+                    self.sortOpen = false;
                     // Safety timeout — loading off after 6s even if MutationObserver misses
                     clearTimeout(self._sectionTimer);
                     self._sectionTimer = setTimeout(function () {
@@ -698,6 +740,14 @@
                 },
 
                 toggleFilter(handle, value) {
+                    // Update reactive state
+                    if (!this._activeFilters[handle]) this._activeFilters[handle] = [];
+                    var idx = this._activeFilters[handle].indexOf(value);
+                    if (idx >= 0) this._activeFilters[handle].splice(idx, 1);
+                    else this._activeFilters[handle].push(value);
+                    // Force Alpine reactivity
+                    this._activeFilters = Object.assign({}, this._activeFilters);
+
                     if (cfg.section && !this.searchQuery) {
                         this._sectionOp(function () { return qumra.filters.toggle(handle, value); });
                         return;
@@ -706,8 +756,8 @@
                     var key = 'filters[' + handle + '][]';
                     var existing = url.searchParams.getAll(key);
                     url.searchParams.delete(key);
-                    var idx = existing.indexOf(value);
-                    if (idx >= 0) existing.splice(idx, 1);
+                    var existIdx = existing.indexOf(value);
+                    if (existIdx >= 0) existing.splice(existIdx, 1);
                     else existing.push(value);
                     existing.forEach(function (v) { url.searchParams.append(key, v); });
                     url.searchParams.delete('page');
@@ -741,6 +791,7 @@
                 clearFilters() {
                     this.priceMin = '';
                     this.priceMax = '';
+                    this._activeFilters = {};
                     if (cfg.section && !this.searchQuery) {
                         this._sectionOp(function () { return qumra.filters.clear(); });
                         return;
@@ -772,6 +823,7 @@
                     this.priceMin = '';
                     this.priceMax = '';
                     this.currentSort = '';
+                    this._activeFilters = {};
                     url.searchParams.delete('sort');
                     this._fetch(url);
                 },
@@ -809,6 +861,7 @@
                     this._abortCtrl = new AbortController();
                     this.loading = true;
                     this.filtersOpen = false;
+                    this.sortOpen = false;
 
                     try {
                         var apiUrl = new URL('/ajax/search/products', window.location.origin);
@@ -939,47 +992,49 @@
 
                     // Image
                     h += '<div class="relative mb-3">';
-                    h += '<a href="/products/' + product.slug + '" class="block overflow-hidden rounded-2xl">';
-                    h += '<div class="aspect-[3/4] bg-gray-50">';
+                    h += '<a href="/product/' + product.slug + '" class="block overflow-hidden rounded-2xl">';
+                    h += '<div class="aspect-[3/4] bg-secondary">';
                     if (imageUrl) {
                         h += '<img src="' + imageUrl + '" alt="' + titleAttr + '" class="w-full h-full object-cover transition-opacity duration-700 ease-out img-fade" loading="lazy" onload="this.classList.add(\'is-loaded\')">';
                     } else {
-                        h += '<div class="w-full h-full flex items-center justify-center"><svg class="w-12 h-12 text-gray-200" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round"/></svg></div>';
+                        h += '<div class="w-full h-full flex items-center justify-center"><svg class="w-12 h-12 text-tertiary" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round"/></svg></div>';
                     }
                     h += '</div></a>';
 
-                    // Badge
-                    if (cs.showBadge && hasDiscount) {
+                    // Discount Badge
+                    if (hasDiscount) {
                         var disc = Math.round(((compareAtPrice - price) / compareAtPrice) * 100);
                         h += '<span class="absolute top-2.5 start-2.5 px-2 py-1 rounded-lg text-[11px] font-semibold bg-red-500 text-white">-' + disc + '%</span>';
                     }
 
-                    // Wishlist
-                    h += '<button @click.prevent="toggleWishlist()" :disabled="wishlistLoading" class="absolute top-2.5 end-2.5 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm opacity-0 group-hover:opacity-100 transition-all duration-300" :class="inWishlist ? \'text-red-500 !opacity-100\' : \'text-gray-400 hover:text-red-400\'">';
-                    h += '<svg class="w-4 h-4" :fill="inWishlist ? \'currentColor\' : \'none\'" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>';
+                    // Quick View Button
+                    h += '<div class="absolute top-2.5 end-2.5 flex flex-col gap-1.5">';
+                    h += '<button @click.prevent="$dispatch(\'quick-view\', { slug: \'' + product.slug + '\' })" class="w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm opacity-0 group-hover:opacity-100 transition-all duration-300 text-secondary hover:text-accent">';
+                    h += '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>';
                     h += '</button>';
+                    h += '</div>';
 
                     h += '</div>';
 
                     // Content
-                    h += '<div class="flex flex-col flex-1 gap-1.5 px-0.5 bg-transparent">';
-                    h += '<a href="/products/' + product.slug + '" class="text-[14px] font-medium leading-snug line-clamp-2 text-gray-800 hover:text-primary transition-colors duration-200">' + title + '</a>';
+                    h += '<div class="flex flex-col flex-1 gap-1.5 px-0.5">';
+                    h += '<a href="/product/' + product.slug + '" class="text-[14px] font-medium leading-snug line-clamp-2 text-primary hover:text-accent transition-colors duration-200">' + title + '</a>';
 
                     // Rating
-                    if (cs.showRating && product.averageRating > 0) {
+                    if (product.averageRating > 0) {
                         h += '<div class="flex items-center gap-1"><div class="flex items-center gap-0.5">';
                         for (var i = 0; i < 5; i++) {
-                            h += '<svg class="w-3 h-3 ' + (i < product.averageRating ? 'text-amber-400' : 'text-gray-200') + '" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>';
+                            h += '<svg class="w-3 h-3 ' + (i < product.averageRating ? 'text-amber-400' : 'text-tertiary opacity-40') + '" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>';
                         }
                         h += '</div>';
                         if (product.totalReviews || product.reviewsCount) {
-                            h += '<span class="text-[11px] text-gray-400">(' + (product.totalReviews || product.reviewsCount || 0) + ')</span>';
+                            h += '<span class="text-[11px] text-tertiary">(' + (product.totalReviews || product.reviewsCount || 0) + ')</span>';
                         }
                         h += '</div>';
                     }
 
-                    // Option swatches (color circles or text tags)
-                    if (cs.showOptions && product.options) {
+                    // Option swatches
+                    if (product.options) {
                         product.options.forEach(function (opt) {
                             if (opt.values && opt.values.length) {
                                 h += '<div class="flex items-center gap-1.5 flex-wrap mt-0.5">';
@@ -987,19 +1042,19 @@
                                     var maxColors = Math.min(opt.values.length, 5);
                                     for (var ci = 0; ci < maxColors; ci++) {
                                         var v = opt.values[ci];
-                                        h += '<span class="w-3.5 h-3.5 rounded-full border border-gray-200 shrink-0" style="background-color: ' + (v.value || '#ccc') + ';" title="' + (v.label || '') + '"></span>';
+                                        h += '<span class="w-3.5 h-3.5 rounded-full border shrink-0" style="background-color: ' + (v.value || '#ccc') + ';" title="' + (v.label || '') + '"></span>';
                                     }
                                     if (opt.values.length > 5) {
-                                        h += '<span class="text-[10px] text-gray-400">+' + (opt.values.length - 5) + '</span>';
+                                        h += '<span class="text-[10px] text-tertiary">+' + (opt.values.length - 5) + '</span>';
                                     }
                                 } else {
                                     var maxTexts = Math.min(opt.values.length, 4);
                                     for (var ti = 0; ti < maxTexts; ti++) {
                                         var tv = opt.values[ti];
-                                        h += '<span class="px-2 py-0.5 rounded-md bg-gray-100 text-[10px] text-gray-500 leading-tight">' + (tv.label || tv.value || '') + '</span>';
+                                        h += '<span class="px-2 py-0.5 rounded-md bg-tertiary text-[10px] text-secondary leading-tight">' + (tv.label || tv.value || '') + '</span>';
                                     }
                                     if (opt.values.length > 4) {
-                                        h += '<span class="text-[10px] text-gray-400">+' + (opt.values.length - 4) + '</span>';
+                                        h += '<span class="text-[10px] text-tertiary">+' + (opt.values.length - 4) + '</span>';
                                     }
                                 }
                                 h += '</div>';
@@ -1010,31 +1065,37 @@
                     // Price
                     h += '<div class="flex items-baseline gap-2 mt-auto pt-1">';
                     if (price > 0) {
-                        h += '<span class="text-[15px] font-bold text-gray-900">' + Utils.formatMoney(price) + '</span>';
+                        h += '<span class="text-[15px] font-bold text-primary">' + Utils.formatMoney(price) + '</span>';
                     }
-                    if (cs.showComparePrice && hasDiscount) {
-                        h += '<span class="text-[12px] line-through text-gray-400">' + Utils.formatMoney(compareAtPrice) + '</span>';
+                    if (hasDiscount) {
+                        h += '<span class="text-[12px] line-through text-tertiary">' + Utils.formatMoney(compareAtPrice) + '</span>';
                     }
                     h += '</div>';
 
-                    // Button
-                    if (cs.showButton) {
-                        if (canPurchase) {
-                            if (product.variantsCount > 0) {
-                                h += '<a href="/products/' + product.slug + '" class="flex items-center justify-center gap-2 w-full py-3 mt-2 rounded-2xl text-sm font-semibold border text-secondary hover:border-accent hover:bg-accent hover:text-white transition-all duration-200">';
-                                h += (tr.chooseOptions || '');
-                                h += '<svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>';
-                                h += '</a>';
-                            } else {
-                                h += '<button @click="addToCart()" :disabled="cartLoading || cartSuccess" class="flex items-center justify-center gap-2 w-full py-3 mt-2 rounded-2xl text-sm font-semibold transition-all duration-300" :class="cartSuccess ? \'bg-green-500 text-white\' : \'bg-accent text-white hover:bg-accent-hover\'">';
-                                h += '<span x-show="cartLoading" class="flex items-center justify-center gap-2"><svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg></span>';
-                                h += '<span x-show="cartSuccess && !cartLoading" x-cloak class="flex items-center justify-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>' + (tr.added || '') + '</span>';
-                                h += '<span x-show="!cartLoading && !cartSuccess" class="flex items-center justify-center gap-2">' + (tr.addToCart || '') + '<svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></span>';
-                                h += '</button>';
-                            }
+                    // Add to Cart / Choose Options
+                    if (canPurchase) {
+                        if (product.variantsCount > 0) {
+                            h += '<a href="/product/' + product.slug + '" class="flex items-center justify-center gap-2 w-full py-3 mt-2 rounded-2xl text-sm font-semibold border text-secondary hover:border-accent hover:bg-accent hover:text-white transition-all duration-200">';
+                            h += (tr.chooseOptions || '');
+                            h += '<svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>';
+                            h += '</a>';
                         } else {
-                            h += '<div class="flex items-center justify-center w-full py-3 mt-2 rounded-2xl text-xs font-medium text-tertiary bg-tertiary">' + (tr.outOfStock || '') + '</div>';
+                            h += '<div class="flex gap-2 mt-2">';
+                            // Add to Cart
+                            h += '<button @click="addToCart()" :disabled="cartLoading || cartSuccess" class="flex items-center justify-center gap-1.5 flex-1 py-3 rounded-2xl text-[13px] font-semibold transition-all duration-300" :class="cartSuccess ? \'bg-green-500 text-white\' : \'bg-accent text-white hover:opacity-90\'">';
+                            h += '<span x-show="cartLoading" class="flex items-center justify-center"><svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg></span>';
+                            h += '<span x-show="cartSuccess && !cartLoading" x-cloak class="flex items-center justify-center gap-1.5"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>' + (tr.added || '') + '</span>';
+                            h += '<span x-show="!cartLoading && !cartSuccess" class="flex items-center justify-center gap-1.5"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>' + (tr.addToCart || '') + '</span>';
+                            h += '</button>';
+                            // Buy Now
+                            h += '<button @click="buyNow()" :disabled="cartLoading" class="flex items-center justify-center gap-1.5 py-3 px-4 rounded-2xl text-[13px] font-semibold border-2 border-accent text-accent hover:bg-accent hover:text-white transition-all duration-300 disabled:opacity-50">';
+                            h += '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg>';
+                            h += '<span class="hidden sm:inline">' + (tr.buyNow || '') + '</span>';
+                            h += '</button>';
+                            h += '</div>';
                         }
+                    } else {
+                        h += '<div class="flex items-center justify-center w-full py-3 mt-2 rounded-2xl text-xs font-medium text-tertiary bg-tertiary">' + (tr.outOfStock || '') + '</div>';
                     }
 
                     h += '</div></div>';
@@ -1113,6 +1174,16 @@
                                     self.loading = false;
                                 }, 100);
                             }).observe(wrapper, { childList: true });
+
+                            // Fallback: if wrapper is still empty after Qumra section init, load via AJAX
+                            setTimeout(function () {
+                                if (!wrapper.children.length || !wrapper.textContent.trim()) {
+                                    self._fetch(new URL(window.location));
+                                } else {
+                                    // Content rendered by Qumra — sync sidebar count
+                                    self._syncSidebarCount();
+                                }
+                            }, 500);
                         }
                         // Apply initial search query from URL (?q=...)
                         if (self.searchQuery) {
@@ -1131,6 +1202,17 @@
                             self.priceMin = p.get('filters[' + self.rangeHandle + '][min]') || '';
                             self.priceMax = p.get('filters[' + self.rangeHandle + '][max]') || '';
                             self.searchQuery = p.get('q') || '';
+
+                            // Sync active filters from URL
+                            var newActive = {};
+                            p.forEach(function (v, k) {
+                                var m = k.match(/^filters\[([^\]]+)\]\[\]$/);
+                                if (m) {
+                                    if (!newActive[m[1]]) newActive[m[1]] = [];
+                                    newActive[m[1]].push(v);
+                                }
+                            });
+                            self._activeFilters = newActive;
 
                             var pc = self._parseCollectionFromPath();
                             if (pc) {
@@ -1169,6 +1251,17 @@
                 } catch (e) {
                     // Error already handled in CartManager
                 } finally {
+                    this.cartLoading = false;
+                }
+            },
+
+            async buyNow() {
+                if (this.cartLoading) return;
+                this.cartLoading = true;
+                try {
+                    await Qumra.cart.add(this.productId);
+                    window.location.href = '/cart';
+                } catch (e) {
                     this.cartLoading = false;
                 }
             },

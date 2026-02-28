@@ -1,4 +1,15 @@
 {
   "layout": "layout",
-  "widgets": []
+  "widgets": [
+    {
+      "name": "مقالات المدونة",
+      "widget": "blog-page",
+      "settings": {
+        "layout": "grid",
+        "columns": "3",
+        "show_date": true,
+        "show_excerpt": true
+      }
+    }
+  ]
 }

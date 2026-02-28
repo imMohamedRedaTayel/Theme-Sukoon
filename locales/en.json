@@ -186,7 +186,10 @@
     "search": {
       "title": "Search",
       "placeholder": "Search for products...",
-      "no_results": "No results for",
+      "suggestions": "Search Suggestions",
+      "products": "Products",
+      "view_all": "View All",
+      "no_results": "No results found",
       "try_different": "Try different search terms",
       "results_for": "Search results for",
       "results": "{{count}} results",
@@ -221,6 +224,29 @@
       "edit_period_ended": "The period to edit the review has ended",
       "delete_period_ended": "The period to delete the review has ended",
       "days_since_added": "days since it was added"
+    },
+    "404": {
+      "title": "Page Not Found",
+      "message": "Sorry, the page you're looking for doesn't exist or has been moved.",
+      "back_home": "Back to Home",
+      "browse_shop": "Browse Shop"
+    },
+    "blog": {
+      "title": "Blog",
+      "subtitle": "Discover the latest articles and tips",
+      "articles_count": "articles",
+      "read_blog": "Browse articles",
+      "read_more": "Read more",
+      "no_blogs": "No blogs yet",
+      "no_blogs_desc": "Blogs will appear here soon",
+      "no_articles": "No articles yet",
+      "no_articles_desc": "Articles will appear here soon",
+      "back_to_blogs": "Back to blogs",
+      "back_to_articles": "Back to articles",
+      "views": "views",
+      "share_article": "Share this article",
+      "related_articles": "Related Articles",
+      "copied": "Copied"
     }
   },
   "collection": {
@@ -231,6 +257,20 @@
   "cart": {
     "empty": "Your cart is empty",
     "empty_message": "You haven't added any products yet. Browse our products and discover what suits you!",
+    "empty_title": "Your cart is empty",
+    "empty_subtitle": "Discover something you love",
+    "browse": "Explore collections",
     "continue_shopping": "Continue Shopping"
+  },
+  "search": {
+    "filter": "Filter",
+    "sort_by": "Sort by",
+    "newest": "Newest",
+    "price_low_high": "Price: Low to High",
+    "price_high_low": "Price: High to Low",
+    "highest_rated": "Highest Rated"
+  },
+  "product": {
+    "sale": "Sale"
   }
 }

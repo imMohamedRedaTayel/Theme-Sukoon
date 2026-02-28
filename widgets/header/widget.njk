@@ -17,15 +17,15 @@
     <div class="flex items-center justify-between h-16 max-sm:h-14">
 
       <!-- Logo -->
-      <a href="/" class="flex-shrink-0">
+      <a href="/" class="flex-shrink-0 min-w-0 max-w-[45%] sm:max-w-[200px]">
         {% if widget.data.header_logo and widget.data.header_logo.fileUrl %}
           <img
             src="{{ widget.data.header_logo.fileUrl }}"
             alt="{{ store.name | default('Sukoon') }}"
-            class="h-9 max-sm:h-8 w-auto object-contain"
+            class="h-9 max-sm:h-8 w-auto max-w-full object-contain"
           />
         {% else %}
-          <span class="text-lg font-semibold tracking-tight" style="color: var(--color-text-primary);">{{ store.name | default('Sukoon') }}</span>
+          <span class="block text-lg font-semibold tracking-tight truncate" style="color: var(--color-text-primary);">{{ store.name | default('Sukoon') }}</span>
         {% endif %}
       </a>
 
@@ -134,19 +134,19 @@
           style="color: var(--color-text-tertiary);"
           onmouseenter="this.style.color='var(--color-text-primary)'"
           onmouseleave="this.style.color='var(--color-text-tertiary)'"
+          x-data
         >
           <svg class="w-[18px] h-[18px]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
             <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M3 6h18" stroke-linecap="round"/>
             <path d="M16 10a4 4 0 01-8 0" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          {% if cart.totalQuantity > 0 %}
-            <span
-              class="absolute top-0.5 end-0.5 w-[15px] h-[15px] rounded-full text-[9px] font-bold flex items-center justify-center text-white bg-accent "
-            >
-              {{ cart.totalQuantity }}
-            </span>
-          {% endif %}
+          <span
+            x-show="$store.cart.totalQuantity > 0"
+            x-text="$store.cart.totalQuantity"
+            x-cloak
+            class="absolute top-0.5 end-0.5 w-[15px] h-[15px] rounded-full text-[9px] font-bold flex items-center justify-center text-white bg-accent"
+          ></span>
         </button>
         {% endif %}
 

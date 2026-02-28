@@ -1,0 +1,100 @@
+{# ===== SUKOON Blogs Page — /blogs ===== #}
+{% set blogs = context.blogs | default([]) %}
+{% set title = widget.data.title | default(t('pages.blog.title')) | default('المدونة') %}
+{% set subtitle = widget.data.subtitle | default(t('pages.blog.subtitle')) | default('') %}
+{% set cols = widget.data.columns | default('3') %}
+
+{# Column grid classes #}
+{% if cols == '2' %}
+  {% set gridClass = 'grid-cols-1 sm:grid-cols-2' %}
+{% elif cols == '4' %}
+  {% set gridClass = 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4' %}
+{% else %}
+  {% set gridClass = 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' %}
+{% endif %}
+
+<section id="{{ widget.id }}" class="py-10 md:py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+
+    {# ── Breadcrumbs ── #}
+    <nav class="flex items-center gap-2 text-[13px] text-tertiary mb-8">
+      <a href="/" class="hover:text-primary transition-colors">{{ t('common.home') }}</a>
+      <svg class="w-3 h-3 opacity-40 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      <span class="text-text-primary font-medium">{{ title | safe }}</span>
+    </nav>
+
+    {# ── Header ── #}
+    <div class="text-center mb-12 reveal">
+      <h1 class="text-3xl md:text-4xl font-bold text-text-primary mb-3">{{ title | safe }}</h1>
+      {% if subtitle %}
+        <div class="text-tertiary text-base max-w-lg mx-auto leading-relaxed">{{ subtitle }}</div>
+      {% endif %}
+    </div>
+
+    {# ── Blogs Grid ── #}
+    {% if blogs | length %}
+      <div class="grid {{ gridClass }} gap-6">
+        {% for blog in blogs %}
+          <a href="/blogs/{{ blog.handle | default(blog.slug) }}"
+             class="group bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-500 reveal"
+             style="transition-delay: {{ loop.index0 * 80 }}ms;">
+
+            {# Image #}
+            {% if blog.image and blog.image.fileUrl %}
+              <div class="aspect-[16/10] overflow-hidden bg-gray-50">
+                <img src="{{ blog.image.fileUrl }}"
+                     alt="{{ blog.title }}"
+                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                     loading="lazy">
+              </div>
+            {% else %}
+              <div class="aspect-[16/10] bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
+                <svg class="w-12 h-12 text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+                </svg>
+              </div>
+            {% endif %}
+
+            {# Content #}
+            <div class="p-5">
+              <h2 class="text-lg font-bold text-text-primary mb-2 group-hover:text-primary transition-colors">
+                {{ blog.title }}
+              </h2>
+              {% if blog.description %}
+                <p class="text-sm text-tertiary leading-relaxed line-clamp-2 mb-3">
+                  {{ blog.description | striptags | truncate(120, true, '...') }}
+                </p>
+              {% endif %}
+              <div class="flex items-center justify-between">
+                {% if blog.articlesCount is defined %}
+                  <span class="text-xs text-tertiary">
+                    {{ blog.articlesCount | default(0) }} {{ t('pages.blog.articles_count') | default('مقال') }}
+                  </span>
+                {% endif %}
+                <span class="inline-flex items-center gap-1 text-xs font-semibold text-primary group-hover:gap-2 transition-all ms-auto">
+                  {{ t('pages.blog.read_blog') | default('تصفح المقالات') }}
+                  <svg class="w-3.5 h-3.5 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+
+    {% else %}
+      {# ── Empty State ── #}
+      <div class="text-center py-20 flex items-center justify-center flex-col">
+        <div class="w-20 h-20 mx-auto mb-5 rounded-full bg-gray-50 flex items-center justify-center">
+          <svg class="w-10 h-10 text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+          </svg>
+        </div>
+        <p class="text-base font-semibold text-text-primary mb-1">{{ t('pages.blog.no_blogs') | default('لا توجد مدونات بعد') }}</p>
+        <p class="text-sm text-tertiary">{{ t('pages.blog.no_blogs_desc') | default('ستظهر المدونات هنا قريباً') }}</p>
+      </div>
+    {% endif %}
+
+  </div>
+</section>

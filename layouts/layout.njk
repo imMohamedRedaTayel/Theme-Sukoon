@@ -212,6 +212,7 @@
         language: '{{ localization.language | default("ar") }}',
         exchangeRate: {{ localization.market.exchangeRate | default(1) }},
         moneyFormatSample: '{{ 1000 | money }}',
+        cartTotalQuantity: {{ cart.totalQuantity | default(0) }},
         wishlistIds: [{% for p in wishlist.products %}'{{ p._id }}'{% if not loop.last %},{% endif %}{% endfor %}],
         messages: {
           addedToCart: '{{t("pages.product.added_to_cart")}}',

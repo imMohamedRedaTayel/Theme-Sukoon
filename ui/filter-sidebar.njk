@@ -22,7 +22,8 @@
           { value: '', label: t('pages.collection.all_products') | default('All Products') },
           { value: 'newest', label: t('pages.search.newest') | default('Newest') },
           { value: 'price_asc', label: t('pages.search.price_low_high') | default('Price: Low to High') },
-          { value: 'price_desc', label: t('pages.search.price_high_low') | default('Price: High to Low') }
+          { value: 'price_desc', label: t('pages.search.price_high_low') | default('Price: High to Low') },
+          { value: 'highest_rated', label: t('search.highest_rated') | default('Highest Rated') }
         ] %}
         {% for opt in sortItems %}
           <button @click="sortBy('{{ opt.value }}')"
@@ -65,7 +66,7 @@
                       x-text="(+(priceMax) || {{ filter.range.max }}).toLocaleString()"></span>
               </div>
               {# Slider #}
-              <div class="price-slider">
+              <div class="price-slider" dir="ltr">
                 <div class="slider-track"></div>
                 <div class="slider-range"
                      :style="`left: ${((+(priceMin) || {{ filter.range.min }}) - {{ filter.range.min }}) / ({{ filter.range.max }} - {{ filter.range.min }}) * 100}%; right: ${100 - ((+(priceMax) || {{ filter.range.max }}) - {{ filter.range.min }}) / ({{ filter.range.max }} - {{ filter.range.min }}) * 100}%`"></div>
@@ -84,33 +85,47 @@
           </div>
         </div>
 
-      {# Select / Checkbox Filter #}
-      {% elif filter.inputType == 'select' %}
+      {# Select / Checkbox / Color / Text Filter #}
+      {% elif filter.inputType == 'select' or filter.inputType == 'checkbox' or filter.inputType == 'color' or filter.inputType == 'text' %}
+        {% set filterItems = filter.items | default(filter.values) | default([]) %}
         <div x-data="{ open: true }">
           <button @click="open = !open"
                   class="w-full flex items-center justify-between px-5 py-4 text-[13px] font-bold text-gray-900 bg-white hover:bg-gray-50/50 transition-colors">
-            <span>{{ filter.name[localization.language] | default(filter.name.ar) }}</span>
+            <span>{{ filter.name[localization.language] | default(filter.name.ar) | default(filter.name) }}</span>
             <svg class="w-3.5 h-3.5 text-gray-300 transition-transform duration-200" :class="open && 'rotate-180'" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
             </svg>
           </button>
           <div x-show="open" x-collapse class="border-t border-gray-50">
-            <div class="p-2 max-h-52 overflow-y-auto custom-scrollbar space-y-0.5">
-              {% for item in filter.items %}
-                <button @click="toggleFilter('{{ filter.handle }}', '{{ item.value }}')"
-                        class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-[13px] transition-all duration-150"
-                        :class="isActive('{{ filter.handle }}', '{{ item.value }}') ? 'bg-gray-900 text-white font-medium shadow-sm' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'">
-                  {# Custom checkbox #}
-                  <span class="w-4 h-4 rounded border shrink-0 flex items-center justify-center transition-colors"
-                        :class="isActive('{{ filter.handle }}', '{{ item.value }}') ? 'bg-white border-white/30' : 'border-gray-300'">
-                    <svg x-show="isActive('{{ filter.handle }}', '{{ item.value }}')" class="w-2.5 h-2.5 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
-                    </svg>
-                  </span>
-                  <span>{{ item.label[localization.language] | default(item.label.ar) | default(item.value) }}</span>
-                </button>
-              {% endfor %}
-            </div>
+            {% if filter.inputType == 'color' %}
+              <div class="p-4 flex flex-wrap gap-2.5">
+                {% for item in filterItems %}
+                  <button @click="toggleFilter('{{ filter.handle }}', '{{ item.value }}')"
+                          class="w-8 h-8 rounded-full border-2 transition-all"
+                          :class="isActive('{{ filter.handle }}', '{{ item.value }}') ? 'border-gray-900 scale-110 ring-2 ring-gray-200' : 'border-gray-200'"
+                          style="background-color: {{ item.value | default('#ccc') }};"
+                          title="{{ item.label[localization.language] | default(item.label.ar) | default(item.label) | default(item.value) }}">
+                  </button>
+                {% endfor %}
+              </div>
+            {% else %}
+              <div class="p-2 max-h-52 overflow-y-auto custom-scrollbar space-y-0.5">
+                {% for item in filterItems %}
+                  <button @click="toggleFilter('{{ filter.handle }}', '{{ item.value }}')"
+                          class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-[13px] transition-all duration-150"
+                          :class="isActive('{{ filter.handle }}', '{{ item.value }}') ? 'bg-gray-900 text-white font-medium shadow-sm' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'">
+                    {# Custom checkbox #}
+                    <span class="w-4 h-4 rounded border shrink-0 flex items-center justify-center transition-colors"
+                          :class="isActive('{{ filter.handle }}', '{{ item.value }}') ? 'bg-white border-white/30' : 'border-gray-300'">
+                      <svg x-show="isActive('{{ filter.handle }}', '{{ item.value }}')" class="w-2.5 h-2.5 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                      </svg>
+                    </span>
+                    <span>{{ item.label[localization.language] | default(item.label.ar) | default(item.label) | default(item.value) }}</span>
+                  </button>
+                {% endfor %}
+              </div>
+            {% endif %}
           </div>
         </div>
       {% endif %}

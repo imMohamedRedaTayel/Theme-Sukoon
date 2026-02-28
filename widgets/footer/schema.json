@@ -1,5 +1,5 @@
 {
-  "name": "footer",
+  "name": "الفوتر الرئيسي",
   "settings": {
     "footer_logo": {
       "type": "media",
@@ -70,6 +70,54 @@
         "ar": "رابط سناب شات",
         "en": "Snapchat URL"
       }
+    },
+    "custom_colors": {
+      "type": "boolean",
+      "label": {
+        "ar": "ألوان مخصصة (أغلقه للرجوع للتلقائي)",
+        "en": "Custom Colors (turn off to reset to auto)"
+      },
+      "default": false
+    },
+    "footer_bg_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون الخلفية",
+        "en": "Background Color"
+      },
+      "default": "#1A2C32"
+    },
+    "footer_text_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون النص",
+        "en": "Text Color"
+      },
+      "default": "#9FB5BD"
+    },
+    "footer_heading_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون العناوين",
+        "en": "Heading Color"
+      },
+      "default": "#E0EFF2"
+    },
+    "footer_muted_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون النص الباهت",
+        "en": "Muted Text Color"
+      },
+      "default": "#607D8B"
+    },
+    "footer_border_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون الحدود",
+        "en": "Border Color"
+      },
+      "default": "#2A3E46"
     },
     "footer_social_facebook": {
       "type": "url",

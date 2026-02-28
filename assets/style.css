@@ -553,10 +553,11 @@ label,
   }
   
   .removing {
-    transform: translateX(-100%);
     opacity: 0;
     transition: all 0.4s ease;
   }
+  html[dir="ltr"] .removing { transform: translateX(-100%); }
+  html[dir="rtl"] .removing { transform: translateX(100%); }
 
   /* ===== Line Clamp ===== */
   .line-clamp-1 {

@@ -1,0 +1,66 @@
+{# ===== SUKOON 404 Page ===== #}
+{% set title = widget.data.title | default(t('pages.404.title')) | default('الصفحة غير موجودة') %}
+{% set message = widget.data.message | default(t('pages.404.message')) | default('عذراً، الصفحة التي تبحث عنها غير موجودة أو تم نقلها.') %}
+
+<section id="{{ widget.id }}" class="py-16 md:py-24 lg:py-32">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="max-w-2xl mx-auto text-center">
+
+      {# ── Decorative 404 Number ── #}
+      <div class="mb-6 select-none reveal" aria-hidden="true">
+        <span class="text-[120px] sm:text-[160px] md:text-[200px] font-black leading-none"
+              style="background: linear-gradient(135deg, var(--color-accent), var(--color-primary, var(--color-accent)));
+                     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+                     background-clip: text; opacity: 0.15;">
+          404
+        </span>
+      </div>
+
+      {# ── SVG Illustration ── #}
+      <div class="-mt-20 mb-10 flex justify-center reveal" aria-hidden="true" style="transition-delay: 80ms;">
+        <div class="w-28 h-28 rounded-full flex items-center justify-center" style="background: var(--color-accent); opacity: 0.08;">
+          <svg class="w-14 h-14" style="color: var(--color-accent);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/>
+          </svg>
+        </div>
+      </div>
+
+      {# ── Title ── #}
+      <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-text-primary mb-4 reveal" style="transition-delay: 160ms;">
+        {{ title | safe }}
+      </h1>
+
+      {# ── Message ── #}
+      <p class="text-tertiary text-base md:text-lg leading-relaxed mb-10 max-w-lg mx-auto reveal" style="transition-delay: 240ms;">
+        {{ message | safe }}
+      </p>
+
+      {# ── Action Buttons ── #}
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 reveal" style="transition-delay: 320ms;">
+        {# Back to Home #}
+        <a href="{{ widget.data.home_url | default('/') }}"
+           class="inline-flex items-center gap-2 bg-accent text-white
+                  font-semibold text-sm px-8 py-3.5 rounded-full transition-all duration-300
+                  hover:opacity-85 w-full sm:w-auto justify-center">
+          <svg class="w-4.5 h-4.5 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+          </svg>
+          {{ t('pages.404.back_home') | default('العودة للرئيسية') }}
+        </a>
+
+        {# Browse Shop #}
+        <a href="/shop"
+           class="inline-flex items-center gap-2 text-text-primary
+                  font-semibold text-sm px-8 py-3.5 rounded-full border transition-all duration-300
+                  hover:opacity-85 w-full sm:w-auto justify-center"
+           style="border-color: var(--color-border); background: var(--color-bg-primary, #fff);">
+          <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+          </svg>
+          {{ t('pages.404.browse_shop') | default('تصفح المتجر') }}
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>

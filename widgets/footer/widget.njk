@@ -1,5 +1,22 @@
 {# ===== SUKOON FOOTER ===== #}
 
+{% set useCustom = widget.data.custom_colors | default(false) %}
+
+{# Colors: custom_colors ON → use picker values, OFF → CSS variables #}
+{% if useCustom %}
+  {% set cBg = widget.data.footer_bg_color | default('#1A2C32') %}
+  {% set cText = widget.data.footer_text_color | default('#9FB5BD') %}
+  {% set cHeading = widget.data.footer_heading_color | default('#E0EFF2') %}
+  {% set cMuted = widget.data.footer_muted_color | default('#607D8B') %}
+  {% set cBorder = widget.data.footer_border_color | default('#2A3E46') %}
+{% else %}
+  {% set cBg = 'var(--color-footer)' %}
+  {% set cText = 'var(--color-footer-text)' %}
+  {% set cHeading = 'var(--color-footer-heading)' %}
+  {% set cMuted = 'var(--color-footer-text-muted)' %}
+  {% set cBorder = 'var(--color-footer-border)' %}
+{% endif %}
+
 {% set logo = widget.data.footer_logo %}
 {% set description = widget.data.footer_description | safe %}
 {% set menu1Title = widget.data.footer_menu_1_title | safe %}
@@ -14,7 +31,7 @@
 {% set socialYoutube = widget.data.footer_social_youtube %}
 {% set hasSocial = socialX or socialInstagram or socialTiktok or socialSnapchat or socialFacebook or socialYoutube %}
 
-<footer style="background: var(--color-footer);" class="pt-16 pb-8 max-sm:pt-12 max-sm:pb-6">
+<footer style="background: {{ cBg }};" class="pt-16 pb-8 max-sm:pt-12 max-sm:pb-6">
   <div class="px-12 max-lg:px-6 max-sm:px-4">
 
     {# ——— Top Section: Logo + Menus ——— #}
@@ -33,7 +50,7 @@
         {% endif %}
         {% if description %}
           <p class="text-[14px] leading-relaxed" style="color: var(--color-footer-text); max-width: 38ch;">
-            {{ description }}
+            {{ description | safe }}
           </p>
         {% endif %}
 
@@ -105,7 +122,7 @@
         <div class="flex flex-col gap-4">
           {% if menu1Title %}
             <h4 class="text-[13px] font-medium uppercase tracking-[0.08em]" style="color: var(--color-footer-heading);">
-              {{ menu1Title }}
+              {{ menu1Title  }}
             </h4>
           {% endif %}
           <ul class="flex flex-col gap-3">
@@ -113,7 +130,7 @@
               <li>
                 <a href="{{ item.url | default('#') }}" class="text-[14px] transition-colors duration-200" style="color: var(--color-footer-text);"
                    onmouseover="this.style.color='var(--color-footer-heading)'" onmouseout="this.style.color='var(--color-footer-text)'">
-                  {{ item.title }}
+                  {{ item.title | safe }}
                 </a>
               </li>
             {% endfor %}
@@ -126,7 +143,7 @@
         <div class="flex flex-col gap-4">
           {% if menu2Title %}
             <h4 class="text-[13px] font-medium uppercase tracking-[0.08em]" style="color: var(--color-footer-heading);">
-              {{ menu2Title }}
+              {{ menu2Title  | safe }}
             </h4>
           {% endif %}
           <ul class="flex flex-col gap-3">
@@ -134,7 +151,7 @@
               <li>
                 <a href="{{ item.url | default('#') }}" class="text-[14px] transition-colors duration-200" style="color: var(--color-footer-text);"
                    onmouseover="this.style.color='var(--color-footer-heading)'" onmouseout="this.style.color='var(--color-footer-text)'">
-                  {{ item.title }}
+                  {{ item.title | safe }}
                 </a>
               </li>
             {% endfor %}

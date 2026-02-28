@@ -101,6 +101,86 @@
         "en": "Button Text Color"
       },
       "default": "#1A2C32"
+    },
+    "show_features_bar": {
+      "type": "boolean",
+      "label": {
+        "ar": "إظهار شريط المزايا",
+        "en": "Show Features Bar"
+      },
+      "default": true
+    },
+    "feature_1_text": {
+      "type": "string",
+      "label": {
+        "ar": "ميزة 1",
+        "en": "Feature 1"
+      },
+      "default": "شحن مجاني"
+    },
+    "feature_1_icon": {
+      "type": "select",
+      "label": {
+        "ar": "أيقونة 1",
+        "en": "Icon 1"
+      },
+      "default": "shipping",
+      "options": [
+        { "value": "shipping", "label": { "ar": "شحن", "en": "Shipping" } },
+        { "value": "shield", "label": { "ar": "حماية", "en": "Shield" } },
+        { "value": "refresh", "label": { "ar": "إرجاع", "en": "Returns" } },
+        { "value": "headphones", "label": { "ar": "دعم", "en": "Support" } },
+        { "value": "star", "label": { "ar": "نجمة", "en": "Star" } },
+        { "value": "heart", "label": { "ar": "قلب", "en": "Heart" } }
+      ]
+    },
+    "feature_2_text": {
+      "type": "string",
+      "label": {
+        "ar": "ميزة 2",
+        "en": "Feature 2"
+      },
+      "default": "دفع آمن"
+    },
+    "feature_2_icon": {
+      "type": "select",
+      "label": {
+        "ar": "أيقونة 2",
+        "en": "Icon 2"
+      },
+      "default": "shield",
+      "options": [
+        { "value": "shipping", "label": { "ar": "شحن", "en": "Shipping" } },
+        { "value": "shield", "label": { "ar": "حماية", "en": "Shield" } },
+        { "value": "refresh", "label": { "ar": "إرجاع", "en": "Returns" } },
+        { "value": "headphones", "label": { "ar": "دعم", "en": "Support" } },
+        { "value": "star", "label": { "ar": "نجمة", "en": "Star" } },
+        { "value": "heart", "label": { "ar": "قلب", "en": "Heart" } }
+      ]
+    },
+    "feature_3_text": {
+      "type": "string",
+      "label": {
+        "ar": "ميزة 3",
+        "en": "Feature 3"
+      },
+      "default": "إرجاع سهل"
+    },
+    "feature_3_icon": {
+      "type": "select",
+      "label": {
+        "ar": "أيقونة 3",
+        "en": "Icon 3"
+      },
+      "default": "refresh",
+      "options": [
+        { "value": "shipping", "label": { "ar": "شحن", "en": "Shipping" } },
+        { "value": "shield", "label": { "ar": "حماية", "en": "Shield" } },
+        { "value": "refresh", "label": { "ar": "إرجاع", "en": "Returns" } },
+        { "value": "headphones", "label": { "ar": "دعم", "en": "Support" } },
+        { "value": "star", "label": { "ar": "نجمة", "en": "Star" } },
+        { "value": "heart", "label": { "ar": "قلب", "en": "Heart" } }
+      ]
     }
   },
   "presets": [

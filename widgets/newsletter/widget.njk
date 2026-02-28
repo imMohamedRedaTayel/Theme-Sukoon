@@ -82,16 +82,16 @@
         {# Title #}
         {% if widget.data.title %}
           <h2 class="font-bold mb-3 text-center" style="font-size: {{ titleClamp }}; color: {{ titleColor }};">
-            {{ widget.data.title }}
+            {{ widget.data.title | safe }}
           </h2>
         {% endif %}
 
         {# Subtitle #}
         {% if widget.data.subtitle %}
-          <p class="text-[14px] max-sm:text-[13px] leading-relaxed mb-8 max-sm:mb-6 mx-auto"
+          <div class="text-[14px] max-sm:text-[13px] leading-relaxed mb-8 max-sm:mb-6 mx-auto"
              style="max-width: 42ch; color: {{ subtitleColor }};">
-            {{ widget.data.subtitle }}
-          </p>
+            {{ widget.data.subtitle | safe }}
+          </div>
         {% endif %}
 
         {# Form #}
