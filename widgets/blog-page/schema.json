@@ -12,7 +12,7 @@
         { "value": "4", "label": "4" }
       ]
     },
-    "layout": {
+    "display_layout": {
       "type": "select",
       "label": "نمط العرض",
       "default": "grid",

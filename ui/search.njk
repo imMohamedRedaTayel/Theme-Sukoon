@@ -21,7 +21,7 @@
        x-transition:leave-start="opacity-100 translate-y-0"
        x-transition:leave-end="opacity-0 -translate-y-4"
        class="fixed top-0 inset-x-0 z-50 shadow-xl max-h-[85vh] overflow-y-auto" style="background: var(--color-surface);"
-       x-data="{ query: '', products: [], queries: [] }">
+       x-data="{ query: '', products: [], queries: [], searching: false }">
 
     <div class="container mx-auto px-6 max-sm:px-4 py-5">
 
@@ -33,7 +33,7 @@
         <input type="text"
                name="q"
                x-model="query"
-               @input.debounce.300ms="if(query.length >= 2) Qumra.search.suggest(query, (data) => { products = (data.resources && data.resources.products) || data.products || []; queries = (data.resources && data.resources.queries) || []; }); else { products = []; queries = []; }"
+               @input.debounce.300ms="if(query.length >= 2) { searching = true; Qumra.search.suggest(query, (data) => { products = (data.resources && data.resources.products) || data.products || []; queries = (data.resources && data.resources.queries) || []; searching = false; }); } else { products = []; queries = []; searching = false; }"
                class="flex-1 text-lg border-none outline-none placeholder-gray-400 bg-transparent"
                style="color: var(--color-text-primary);"
                placeholder="{{ t('pages.search.placeholder') }}"
@@ -113,8 +113,16 @@
         </div>
       </div>
 
+      {# Loading State #}
+      <div x-show="searching" x-cloak class="py-12 flex items-center justify-center">
+        <svg class="w-7 h-7 animate-spin text-accent" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+        </svg>
+      </div>
+
       {# No Results #}
-      <div x-show="query.length >= 2 && products.length === 0 && queries.length === 0" class="py-12 text-center flex items-center justify-center flex-col">
+      <div x-show="!searching && query.length >= 2 && products.length === 0 && queries.length === 0" class="py-12 text-center flex items-center justify-center flex-col">
         <svg class="w-12 h-12 mx-auto text-gray-200 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
         </svg>

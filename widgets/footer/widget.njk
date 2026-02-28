@@ -6,7 +6,7 @@
 {% if useCustom %}
   {% set cBg = widget.data.footer_bg_color | default('#1A2C32') %}
   {% set cText = widget.data.footer_text_color | default('#9FB5BD') %}
-  {% set cHeading = widget.data.footer_heading_color | default('#E0EFF2') %}
+  {% set cHeading = widget.data.footer_heading_color | default('#FFFFFF') %}
   {% set cMuted = widget.data.footer_muted_color | default('#607D8B') %}
   {% set cBorder = widget.data.footer_border_color | default('#2A3E46') %}
 {% else %}
@@ -18,10 +18,10 @@
 {% endif %}
 
 {% set logo = widget.data.footer_logo %}
-{% set description = widget.data.footer_description | safe %}
-{% set menu1Title = widget.data.footer_menu_1_title | safe %}
+{% set description = widget.data.footer_description %}
+{% set menu1Title = widget.data.footer_menu_1_title %}
 {% set menu1 = widget.data.footer_menu_1 %}
-{% set menu2Title = widget.data.footer_menu_2_title | safe %}
+{% set menu2Title = widget.data.footer_menu_2_title %}
 {% set menu2 = widget.data.footer_menu_2 %}
 {% set socialX = widget.data.footer_social_x %}
 {% set socialInstagram = widget.data.footer_social_instagram %}
@@ -34,22 +34,22 @@
 <footer style="background: {{ cBg }};" class="pt-16 pb-8 max-sm:pt-12 max-sm:pb-6">
   <div class="px-12 max-lg:px-6 max-sm:px-4">
 
-    {# ——— Top Section: Logo + Menus ——— #}
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 max-sm:gap-8 pb-12 max-sm:pb-8" style="border-bottom: 1px solid var(--color-footer-border);">
+    {# ——— Top Section: Brand + Menus ——— #}
+    <div class="flex flex-col lg:flex-row gap-12 max-sm:gap-8 pb-12 max-sm:pb-8" style="border-bottom: 1px solid {{ cBorder }};">
 
       {# Brand Column #}
-      <div class="lg:col-span-2 flex flex-col gap-5">
+      <div class="lg:flex-1 flex flex-col gap-5">
         {% if logo %}
           <a href="/" class="inline-block w-fit">
             <img
               src="{{ logo.fileUrl }}"
               alt="{{ store.name }}"
-              class="h-10 w-auto object-contain "
+              class="h-10 w-auto object-contain"
             />
           </a>
         {% endif %}
         {% if description %}
-          <p class="text-[14px] leading-relaxed" style="color: var(--color-footer-text); max-width: 38ch;">
+          <p class="text-[14px] leading-relaxed max-w-[38ch]" style="color: {{ cText }};">
             {{ description | safe }}
           </p>
         {% endif %}
@@ -59,8 +59,8 @@
           <div class="flex items-center gap-4 mt-1">
             {% if socialInstagram %}
               <a href="{{ socialInstagram }}" target="_blank" rel="noopener" aria-label="Instagram"
-                 class="transition-colors duration-200" style="color: var(--color-footer-text-muted);"
-                 onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-footer-text-muted)'">
+                 class="transition-colors duration-200" style="color: {{ cMuted }};"
+                 onmouseover="this.style.color='{{ cHeading }}'" onmouseout="this.style.color='{{ cMuted }}'">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                   <rect x="2" y="2" width="20" height="20" rx="5" stroke-linecap="round"/>
                   <circle cx="12" cy="12" r="5" stroke-linecap="round"/>
@@ -70,8 +70,8 @@
             {% endif %}
             {% if socialX %}
               <a href="{{ socialX }}" target="_blank" rel="noopener" aria-label="X"
-                 class="transition-colors duration-200" style="color: var(--color-footer-text-muted);"
-                 onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-footer-text-muted)'">
+                 class="transition-colors duration-200" style="color: {{ cMuted }};"
+                 onmouseover="this.style.color='{{ cHeading }}'" onmouseout="this.style.color='{{ cMuted }}'">
                 <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                 </svg>
@@ -79,8 +79,8 @@
             {% endif %}
             {% if socialTiktok %}
               <a href="{{ socialTiktok }}" target="_blank" rel="noopener" aria-label="TikTok"
-                 class="transition-colors duration-200" style="color: var(--color-footer-text-muted);"
-                 onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-footer-text-muted)'">
+                 class="transition-colors duration-200" style="color: {{ cMuted }};"
+                 onmouseover="this.style.color='{{ cHeading }}'" onmouseout="this.style.color='{{ cMuted }}'">
                 <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V8.87a8.16 8.16 0 004.76 1.52v-3.4a4.85 4.85 0 01-1-.3z"/>
                 </svg>
@@ -88,8 +88,8 @@
             {% endif %}
             {% if socialSnapchat %}
               <a href="{{ socialSnapchat }}" target="_blank" rel="noopener" aria-label="Snapchat"
-                 class="transition-colors duration-200" style="color: var(--color-footer-text-muted);"
-                 onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-footer-text-muted)'">
+                 class="transition-colors duration-200" style="color: {{ cMuted }};"
+                 onmouseover="this.style.color='{{ cHeading }}'" onmouseout="this.style.color='{{ cMuted }}'">
                 <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12.206.793c.99 0 4.347.276 5.93 3.821.529 1.193.403 3.219.299 4.847l-.003.06c-.012.18-.022.345-.03.51.075.045.203.09.401.09.3-.016.659-.12.922-.214.14-.05.273-.096.395-.13a.93.93 0 01.268-.04c.326 0 .598.164.724.439.167.366-.024.75-.192.99-.06.088-.227.28-.439.413-.232.143-.588.283-1.073.283-.2 0-.42-.026-.65-.079a1.42 1.42 0 00-.268-.03c-.078 0-.147.01-.205.03-.138.047-.257.164-.377.403-.188.37-.36.755-.637 1.064-.372.416-.84.73-1.412.948-.21.08-.437.152-.674.215.012.047.044.103.103.173.128.148.35.283.475.355.064.04.135.084.19.12.315.2.587.43.657.715.038.148.023.297-.04.438-.108.237-.32.406-.535.504-.36.164-.79.235-1.28.235-.33 0-.654-.04-.913-.082a3.98 3.98 0 00-.634-.06c-.078 0-.173.01-.27.03-.2.04-.41.157-.627.302-.42.282-.888.622-1.619.622s-1.2-.34-1.619-.622a2.89 2.89 0 00-.627-.302c-.098-.02-.19-.03-.27-.03-.21 0-.44.02-.635.06-.258.04-.582.082-.913.082-.49 0-.92-.07-1.28-.235a1.04 1.04 0 01-.534-.504.65.65 0 01-.04-.438c.07-.284.342-.515.657-.715.055-.036.126-.08.19-.12.125-.072.347-.207.475-.355.06-.07.09-.126.103-.173a6.04 6.04 0 01-.674-.215c-.572-.218-1.04-.532-1.412-.948-.277-.309-.449-.694-.637-1.064-.12-.24-.24-.356-.377-.403a.575.575 0 00-.205-.03 1.42 1.42 0 00-.268.03c-.23.053-.45.079-.65.079-.485 0-.84-.14-1.073-.283a1.87 1.87 0 01-.44-.414c-.166-.24-.358-.623-.191-.989.127-.275.4-.44.724-.44a.93.93 0 01.268.04c.122.035.255.08.395.131.263.094.622.23.922.214.199 0 .326-.045.401-.09a6.37 6.37 0 01-.03-.51l-.003-.06c-.104-1.628-.23-3.654.3-4.847C5.447 1.069 8.803.793 9.794.793h.413z"/>
                 </svg>
@@ -97,8 +97,8 @@
             {% endif %}
             {% if socialFacebook %}
               <a href="{{ socialFacebook }}" target="_blank" rel="noopener" aria-label="Facebook"
-                 class="transition-colors duration-200" style="color: var(--color-footer-text-muted);"
-                 onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-footer-text-muted)'">
+                 class="transition-colors duration-200" style="color: {{ cMuted }};"
+                 onmouseover="this.style.color='{{ cHeading }}'" onmouseout="this.style.color='{{ cMuted }}'">
                 <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                 </svg>
@@ -106,8 +106,8 @@
             {% endif %}
             {% if socialYoutube %}
               <a href="{{ socialYoutube }}" target="_blank" rel="noopener" aria-label="YouTube"
-                 class="transition-colors duration-200" style="color: var(--color-footer-text-muted);"
-                 onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-footer-text-muted)'">
+                 class="transition-colors duration-200" style="color: {{ cMuted }};"
+                 onmouseover="this.style.color='{{ cHeading }}'" onmouseout="this.style.color='{{ cMuted }}'">
                 <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                 </svg>
@@ -117,61 +117,59 @@
         {% endif %}
       </div>
 
-      {# Menu 1 #}
-      {% if menu1 %}
-        <div class="flex flex-col gap-4">
-          {% if menu1Title %}
-            <h4 class="text-[13px] font-medium uppercase tracking-[0.08em]" style="color: var(--color-footer-heading);">
-              {{ menu1Title  }}
-            </h4>
+      {# Navigation Menus — always aligned side by side #}
+      {% if menu1 or menu2 %}
+        <div class="flex gap-16 max-lg:gap-12 max-sm:gap-8 max-sm:flex-col flex-shrink-0">
+          {% if menu1 %}
+            <nav class="flex flex-col gap-4 min-w-[140px]">
+              <h4 class="text-[13px] font-semibold uppercase tracking-[0.08em]" style="color: {{ cHeading }};">
+                {{ menu1Title | safe }}
+              </h4>
+              <ul class="flex flex-col gap-3">
+                {% for item in menu1 %}
+                  <li>
+                    <a href="{{ item.url | default('#') }}" class="text-[14px] transition-colors duration-200" style="color: {{ cText }};"
+                       onmouseover="this.style.color='{{ cHeading }}'" onmouseout="this.style.color='{{ cText }}'">
+                      {{ item.title | safe }}
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </nav>
           {% endif %}
-          <ul class="flex flex-col gap-3">
-            {% for item in menu1 %}
-              <li>
-                <a href="{{ item.url | default('#') }}" class="text-[14px] transition-colors duration-200" style="color: var(--color-footer-text);"
-                   onmouseover="this.style.color='var(--color-footer-heading)'" onmouseout="this.style.color='var(--color-footer-text)'">
-                  {{ item.title | safe }}
-                </a>
-              </li>
-            {% endfor %}
-          </ul>
-        </div>
-      {% endif %}
-
-      {# Menu 2 #}
-      {% if menu2 %}
-        <div class="flex flex-col gap-4">
-          {% if menu2Title %}
-            <h4 class="text-[13px] font-medium uppercase tracking-[0.08em]" style="color: var(--color-footer-heading);">
-              {{ menu2Title  | safe }}
-            </h4>
+          {% if menu2 %}
+            <nav class="flex flex-col gap-4 min-w-[140px]">
+              <h4 class="text-[13px] font-semibold uppercase tracking-[0.08em]" style="color: {{ cHeading }};">
+                {{ menu2Title | safe }}
+              </h4>
+              <ul class="flex flex-col gap-3">
+                {% for item in menu2 %}
+                  <li>
+                    <a href="{{ item.url | default('#') }}" class="text-[14px] transition-colors duration-200" style="color: {{ cText }};"
+                       onmouseover="this.style.color='{{ cHeading }}'" onmouseout="this.style.color='{{ cMuted }}'">
+                      {{ item.title | safe }}
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </nav>
           {% endif %}
-          <ul class="flex flex-col gap-3">
-            {% for item in menu2 %}
-              <li>
-                <a href="{{ item.url | default('#') }}" class="text-[14px] transition-colors duration-200" style="color: var(--color-footer-text);"
-                   onmouseover="this.style.color='var(--color-footer-heading)'" onmouseout="this.style.color='var(--color-footer-text)'">
-                  {{ item.title | safe }}
-                </a>
-              </li>
-            {% endfor %}
-          </ul>
         </div>
       {% endif %}
     </div>
 
     {# ——— Bottom Bar ——— #}
     <div class="flex items-center justify-between pt-8 max-sm:pt-6 max-sm:flex-col max-sm:gap-4">
-      <p class="text-[13px]" style="color: var(--color-footer-text-muted);">
+      <p class="text-[13px]" style="color: {{ cMuted }};">
         &copy; {{ "now" | date("Y") }} {{ store.name }}. {{ t('blocks.footer.rights') | default('All rights reserved') }}
       </p>
       <div class="flex items-center gap-6">
-        <a href="/pages/privacy-policy" class="text-[13px] transition-colors duration-200" style="color: var(--color-footer-text-muted);"
-           onmouseover="this.style.color='var(--color-footer-text)'" onmouseout="this.style.color='var(--color-footer-text-muted)'">
+        <a href="/pages/privacy-policy" class="text-[13px] transition-colors duration-200" style="color: {{ cMuted }};"
+           onmouseover="this.style.color='{{ cText }}'" onmouseout="this.style.color='{{ cMuted }}'">
           {{ t('blocks.footer.privacy') | default('Privacy Policy') }}
         </a>
-        <a href="/pages/terms" class="text-[13px] transition-colors duration-200" style="color: var(--color-footer-text-muted);"
-           onmouseover="this.style.color='var(--color-footer-text)'" onmouseout="this.style.color='var(--color-footer-text-muted)'">
+        <a href="/pages/terms" class="text-[13px] transition-colors duration-200" style="color: {{ cMuted }};"
+           onmouseover="this.style.color='{{ cText }}'" onmouseout="this.style.color='{{ cMuted }}'">
           {{ t('blocks.footer.terms') | default('Terms & Conditions') }}
         </a>
       </div>

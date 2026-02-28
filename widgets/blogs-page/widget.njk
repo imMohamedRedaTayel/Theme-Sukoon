@@ -83,6 +83,11 @@
         {% endfor %}
       </div>
 
+      {# ── Pagination ── #}
+      {% if context.pagination and context.pagination.totalPages > 1 %}
+        {% include "ui/pagination.njk" %}
+      {% endif %}
+
     {% else %}
       {# ── Empty State ── #}
       <div class="text-center py-20 flex items-center justify-center flex-col">

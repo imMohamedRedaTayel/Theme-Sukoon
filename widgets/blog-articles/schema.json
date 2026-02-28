@@ -16,7 +16,7 @@
       "type": "blog_articles",
       "label": { "ar": "المقالات", "en": "Articles" }
     },
-    "layout": {
+    "display_layout": {
       "type": "select",
       "label": { "ar": "نمط العرض", "en": "Layout" },
       "default": "grid",

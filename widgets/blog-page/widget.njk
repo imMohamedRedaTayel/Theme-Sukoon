@@ -2,7 +2,7 @@
 {% set blog = context.blog | default({}) %}
 {% set articles = blog.articles | default([]) %}
 {% set cols = widget.data.columns | default('3') %}
-{% set displayLayout = widget.data.layout | default('grid') %}
+{% set displayLayout = widget.data.display_layout | default('grid') %}
 {% set showDate = widget.data.show_date | default(true) %}
 {% set showExcerpt = widget.data.show_excerpt | default(true) %}
 {% set id = widget.id %}
@@ -135,6 +135,11 @@
             </div>
           {% endfor %}
         </div>
+      {% endif %}
+
+      {# ── Pagination ── #}
+      {% if context.pagination and context.pagination.totalPages > 1 %}
+        {% include "ui/pagination.njk" %}
       {% endif %}
 
     {% else %}

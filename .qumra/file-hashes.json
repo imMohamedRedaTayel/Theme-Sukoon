@@ -5,8 +5,8 @@
     "size": 68988
   },
   "assets/style.css": {
-    "hash": "080491aa688a6588bcd609d355f1c7fcb5f9ab15e98818d9724a037547562aa7",
-    "lastSynced": "2026-02-27T23:44:00.061Z",
+    "hash": "748b289e327a0852c826fd686931e8305fd9bcbfdb8c7d3c0bf88c2c5e9bcc14",
+    "lastSynced": "2026-02-28T17:37:51.686Z",
     "size": 21136
   },
   "layouts/layout.njk": {
@@ -30,9 +30,9 @@
     "size": 213
   },
   "pages/blog.json": {
-    "hash": "1e4c559ebd8e89ea711cd89fa83485e5464a203c076748b60186a70f9a6708fe",
-    "lastSynced": "2026-02-27T23:15:51.302Z",
-    "size": 265
+    "hash": "dcbee37d55a07ecf1a4cc74132b84ddefab3ced6dd1a8779c0e9609ddcc3dcd1",
+    "lastSynced": "2026-02-28T18:05:21.867Z",
+    "size": 273
   },
   "pages/blogs.json": {
     "hash": "6623d0fdb9c84814e7cd5949fcfa7ebca5d879d07ca8ac524bf6bfedbfe899ef",
@@ -90,14 +90,14 @@
     "size": 3280
   },
   "widgets/best-articles/schema.json": {
-    "hash": "abee69c7c86714cd3244adc98d19fdfc60ebe6f35822c306421ccf4607fb04a3",
-    "lastSynced": "2026-02-27T23:10:49.782Z",
-    "size": 1495
+    "hash": "60524cbf3f0fd8eafa544e05562bd985a76e3827fedb869083959f746c4e6894",
+    "lastSynced": "2026-02-28T18:05:17.265Z",
+    "size": 1503
   },
   "widgets/best-articles/widget.njk": {
-    "hash": "107eeb47aeae499de1c4407520d5d0b9d51ebd12f9a557ae7a66dca1c9b2f52e",
-    "lastSynced": "2026-02-27T23:42:52.008Z",
-    "size": 6599
+    "hash": "8e630ca728c2e16f526fe85194d42faa0f4c702a74e6a75178277d4f834124f6",
+    "lastSynced": "2026-02-28T18:05:48.398Z",
+    "size": 6607
   },
   "widgets/best-collections/schema.json": {
     "hash": "3269046df443d1be37261c1659610b1072370bcf214f795a26c1f2aaea198a75",
@@ -140,14 +140,14 @@
     "size": 1788
   },
   "widgets/blog-articles/schema.json": {
-    "hash": "9ac1465cfdebfafd242188506cc0c57783bdca6a49363c421929b0d4098692fc",
-    "lastSynced": "2026-02-27T23:10:40.837Z",
-    "size": 1499
+    "hash": "080f8fe1fd1b0a08dc5da2dab7c927f7c1cfdb269df4fa21bf7ed7d1c29941e4",
+    "lastSynced": "2026-02-28T18:05:18.170Z",
+    "size": 1507
   },
   "widgets/blog-articles/widget.njk": {
-    "hash": "4b362025145f5b17f5f9fcd6d16aabd2d9e7c57d0860491e6ab41819aa3318f3",
-    "lastSynced": "2026-02-27T23:42:46.305Z",
-    "size": 6599
+    "hash": "80252093fa990645f573f84f4abae4840bc5fe0908a65ca1937242d3f441400a",
+    "lastSynced": "2026-02-28T18:05:48.802Z",
+    "size": 6607
   },
   "widgets/features/schema.json": {
     "hash": "a981a4621e41cba539f42071a15ca88cded026d92af33dbf42bc5f67357e352a",
@@ -160,14 +160,14 @@
     "size": 520
   },
   "widgets/footer/schema.json": {
-    "hash": "300bce14bf1f084289b8b9bb7a8e0f02671e3610ccdc80b53517c9ab1f162d15",
-    "lastSynced": "2026-02-26T20:33:12.127Z",
+    "hash": "1321b5c6e8e2488738c0bc512473415d6b2b48026f5591a93d235318ce0fa08c",
+    "lastSynced": "2026-02-28T17:53:41.889Z",
     "size": 3060
   },
   "widgets/footer/widget.njk": {
-    "hash": "fcd942b7e310b887a9d39768aa8b4bdb90bac2edb1dd2deaf6aa331c6076c178",
-    "lastSynced": "2026-02-27T08:59:14.101Z",
-    "size": 11634
+    "hash": "6984f9308a20785010993e733df3641c2f6a9c811e6e377c49f0606f32f0114d",
+    "lastSynced": "2026-02-28T17:54:52.360Z",
+    "size": 11326
   },
   "widgets/header/schema.json": {
     "hash": "fa184d22a317f1316ff71729cdb11824d98406451a4964e1ebab8905809d5313",
@@ -215,9 +215,9 @@
     "size": 10518
   },
   "ui/search.njk": {
-    "hash": "a78b5ab5209f61612b8b664d44194caa71f315c7c56266f97a6770c508434385",
-    "lastSynced": "2026-02-27T09:36:35.732Z",
-    "size": 7326
+    "hash": "91faaa52e98555eda13bc07af33c6ed5cbc5e20cbe7b04bbdd71f29d266a41bf",
+    "lastSynced": "2026-02-28T17:33:12.981Z",
+    "size": 7852
   },
   "ui/sidebar.njk": {
     "hash": "363d049e481661fc5a81db7238bf0daa184a744f972aa8d05bb72019c23d466c",
@@ -340,9 +340,9 @@
     "size": 8987
   },
   "ui/filter-mobile.njk": {
-    "hash": "e3c28fe718a420c4245723e2d90c89682a8655c45ccc9761e52fff3f404adec9",
-    "lastSynced": "2026-02-27T21:04:16.636Z",
-    "size": 13766
+    "hash": "2d438d814a6a1c6320c217ee47fe2667e05f629db9f7e38e62a0b98fd838bb1f",
+    "lastSynced": "2026-02-28T17:59:40.459Z",
+    "size": 13731
   },
   "widgets/cta-banner/schema.json": {
     "hash": "4a676464d48cf587ff26d2e2f729a3e01b172a7673eeb5a085466fe7b0fdee47",
@@ -485,9 +485,9 @@
     "size": 784
   },
   "widgets/blog-page/schema.json": {
-    "hash": "a01adddb38846327af472d88dfca35fae616d1d3844b9a66b6d3f4e449446390",
-    "lastSynced": "2026-02-27T23:10:36.880Z",
-    "size": 816
+    "hash": "ccef219ae76ab944485eb76e7abc660064247b0fccebd0b1b4b17ddf0ad3ebc3",
+    "lastSynced": "2026-02-28T18:05:16.639Z",
+    "size": 824
   },
   "widgets/article-page/schema.json": {
     "hash": "7560c0e72fc006f68ee4b5628c06d7384027cc54c98927dfd3d1d577842bcefc",
@@ -495,14 +495,14 @@
     "size": 480
   },
   "widgets/blogs-page/widget.njk": {
-    "hash": "6731344aca670959e67935eabfda409a890b908696d15aff4ee00f0c42c7a0e6",
-    "lastSynced": "2026-02-27T23:30:12.206Z",
-    "size": 5274
+    "hash": "e1f018a97697c01b48a52ed048f9cf8ac245d56251f865ff3a9a7f02dac02890",
+    "lastSynced": "2026-02-28T18:06:14.636Z",
+    "size": 5444
   },
   "widgets/blog-page/widget.njk": {
-    "hash": "0d9ebbd466bd3c1bb2037049ccad034222100f6634bbf2d59c1d9a0f0d9dd001",
-    "lastSynced": "2026-02-27T23:42:41.181Z",
-    "size": 8625
+    "hash": "4f7532e47a3322aa59372506d32e5133ea082530771c07e016cb7068defd71d1",
+    "lastSynced": "2026-02-28T18:06:01.080Z",
+    "size": 8803
   },
   "widgets/article-page/widget.njk": {
     "hash": "6c12b55f6de69052cb2f84b4ef585ecfa82ef10de4e82a0eafbb30e6c27d0808",

@@ -101,7 +101,7 @@
         "ar": "لون العناوين",
         "en": "Heading Color"
       },
-      "default": "#E0EFF2"
+      "default": "#FFFFFF"
     },
     "footer_muted_color": {
       "type": "color",
